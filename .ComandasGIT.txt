@@ -1,0 +1,29 @@
+git status = ver cambios del proyecto (el local con el de la rama seleccionada)
+git add . = añade todo lo de la carpeta
+git checkout -b [nombre de la rama] = para crear una nueva rama
+git checkout [nombre de la rama] = para cambiar de rama
+git commit -m = escribir un mensaje (-m)
+git push origin [nombre de la rama] = subir algo
+git pull origin [nombre de la rama] = para bajarte la rama
+git clone [url] = bajarte el proyecto
+git config = configurar el git
+
+PARA BAJARTE UN PROYECTO (git bash {el del escritorio})
+cd "carpeta eclipse-workspace"
+git clone "url"
+cd "al nuevo proyecto"
+git checkout "nombre de la rama"
+(asi ya tendriamos el proyecto en la rama elegida en local)
+
+PARA SUBIR UN PROYECTO
+cd "dentro del proyecto"
+git status (para ver los cambios a ver si son correctos)
+git add .
+git push origin "nombre de la rama"
+git commit -m
+git push origin "nombre de la rama"(hacer dos veces por si a caso, lo importante es el commit, asi que no pasa nada)
+(y ya estaria subido a la rama elegida)
+
+PARA JUNTAR DOS RAMAS
+hacer primero un merge y luego un commit, no se exactamente como
+
