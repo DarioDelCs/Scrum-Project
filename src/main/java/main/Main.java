@@ -5,9 +5,13 @@ import java.awt.BorderLayout;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 
+import daoImpl.JPAUsuariImpl;
+import idao.IUsuari;
 import view.Login;
 
 public class Main extends JFrame{
+
+	private IUsuari pUser = new JPAUsuariImpl();
 	
 	public static void main(String[] args) {
 		new Main();
@@ -20,6 +24,11 @@ public class Main extends JFrame{
 		
 		addFrame(panel);
 		
+		if(pUser.isConnected()) {
+			setTitle("Scrum Program - (ONLINE)");
+		}else {
+			setTitle("Scrum Program - (OFFLINE)");
+		}
 		add(panel, BorderLayout.CENTER);
 		setSize(800, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

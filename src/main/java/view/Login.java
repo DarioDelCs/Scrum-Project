@@ -27,6 +27,7 @@ import model.Usuari;
 
 public class Login extends JInternalFrame implements ActionListener{
 
+	private IUsuari pUser = new JPAUsuariImpl();
 	private JDesktopPane pjdPanel;
 	private JFrame pFrame;
 	
@@ -100,28 +101,27 @@ public class Login extends JInternalFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		IUsuari f = new JPAUsuariImpl();
-		ArrayList<Usuari> usuaris= f.getUsuaris();
-		for (Usuari usuari : usuaris) {
-			if(ptfLogin.getText().equals(usuari.getName())) {
-				if(ppfPassword.getText().equals(usuari.getPass())) {
-					sUserGroup=usuari.getUserGroup();//usuari.getUserGroup();admin
-					this.hide();
-					JOptionPane.showMessageDialog(null, "usuari y contraseña correctos", "Log in", JOptionPane.OK_OPTION);
-					if(sUserGroup.equals("admin")) {
-						pjdPanel.add(new AdminView(this.pFrame, pjdPanel/*, usuari*/), BorderLayout.CENTER);
-					}else {
-						System.out.println("nooo");
-					}
-				}
-			}
-		}
-//		sUserGroup="admin";
-//		this.hide();
-//		JOptionPane.showMessageDialog(null, "usuari y contraseña correctos", "Log in", JOptionPane.OK_OPTION);
-//		if(sUserGroup.equals("admin")) {
-//			pjdPanel.add(new AdminView(this.pFrame, pjdPanel/*, usuari*/), BorderLayout.CENTER);
+//		ArrayList<Usuari> usuaris= pUser.getUsuaris();
+//		for (Usuari usuari : usuaris) {
+//			if(ptfLogin.getText().equals(usuari.getName())) {
+//				if(ppfPassword.getText().equals(usuari.getPass())) {
+//					sUserGroup=usuari.getUserGroup();//usuari.getUserGroup();admin
+//					this.hide();
+//					JOptionPane.showMessageDialog(null, "usuari y contraseña correctos", "Log in", JOptionPane.OK_OPTION);
+//					if(sUserGroup.equals("admin")) {
+//						pjdPanel.add(new AdminView(this.pFrame, pjdPanel/*, usuari*/), BorderLayout.CENTER);
+//					}else {
+//						System.out.println("nooo");
+//					}
+//				}
+//			}
 //		}
+		sUserGroup="admin";
+		this.dispose();
+		JOptionPane.showMessageDialog(null, "usuari y contraseña correctos", "Log in", JOptionPane.OK_OPTION);
+		if(sUserGroup.equals("admin")) {
+			pjdPanel.add(new AdminView(this.pFrame, pjdPanel, new Usuari(0, "Nombre", "123", "admin")), BorderLayout.CENTER);
+		}
 	}
 
 }
