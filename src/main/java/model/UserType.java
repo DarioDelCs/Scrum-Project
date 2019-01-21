@@ -1,5 +1,8 @@
 package model;
 
 public enum UserType {
-	Developer,ProductOwner,ScrumMaster,AdministradorUsers;
+	Developer,
+	ProductOwner,
+	ScrumMaster,
+	AdministradorUsers;
 }

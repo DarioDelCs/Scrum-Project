@@ -1,13 +1,16 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
@@ -21,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import daoImpl.JPAUsuariImpl;
+import idao.IUsuari;
 import model.Usuari;
 
 public class AdminView extends JInternalFrame implements ActionListener{
@@ -68,21 +73,22 @@ public class AdminView extends JInternalFrame implements ActionListener{
 	
 	private void addTitle() {
 		pNorthPanel = new JPanel();
-		pNorthPanel.setLayout(new BoxLayout(pNorthPanel, BoxLayout.X_AXIS));
-//		panel.setAlignmentY(Component.RIGHT_ALIGNMENT);
-//
-//		constraints.insets = new Insets(10, 10, 10, 10);
+		pNorthPanel.setLayout(new GridBagLayout());
 
-		plUser = new JLabel("Usuario: " + pUsuari.getLogin() + " ("+pUsuari.getUserGroup()+")");//hard
-		pNorthPanel.add(plUser);
-//		plUser.setAlignmentY(Component.RIGHT_ALIGNMENT);
-//		HorizontalAlignment(SwingConstants.RIGHT);
+		GridBagConstraints constraints = new GridBagConstraints();
+		
+		constraints.insets = new Insets(0, 10, 0, 10);
+
+		plUser = new JLabel("Usuario: " + pUsuari.getpName() + " ("+pUsuari.getpProfile()+")");//hard
+		constraints.gridx=0;
+		constraints.gridy=0;
+		pNorthPanel.add(plUser, constraints);
 
 		
 		pbSalir = new JButton("Salir");//hard
-		pNorthPanel.add(pbSalir);
-//		pbSalir.setAlignmentY(Component.RIGHT_ALIGNMENT);
-//		pbSalir.setHorizontalAlignment(SwingConstants.RIGHT);
+		constraints.gridx=1;
+		constraints.gridy=0;
+		pNorthPanel.add(pbSalir, constraints);
 		
 		pbSalir.addActionListener(this);
 		
@@ -153,6 +159,7 @@ public class AdminView extends JInternalFrame implements ActionListener{
 			constraints.gridy=5;
 			constraints.gridwidth = 2;
 			pCenterPanel.add(pbEnviar, constraints);
+			pbEnviar.addActionListener(this);
 			
 			//dimension longitud cuadro textos
 			ptfNombre.setColumns(15);
@@ -195,6 +202,9 @@ public class AdminView extends JInternalFrame implements ActionListener{
 			ppMenu.setVisible(false);
 			this.dispose();
 			pjdPanel.add(new Login(pFrame, pjdPanel));
+		}else if (e.getSource() == pbEnviar){
+			IUsuari users = new JPAUsuariImpl();
+			users.addUsuari(2, ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
 		}
 	}
 

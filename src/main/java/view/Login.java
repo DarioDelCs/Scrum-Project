@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 
 import daoImpl.JPAUsuariImpl;
 import idao.IUsuari;
+import main.Main;
+import model.UserType;
 import model.Usuari;
 
 public class Login extends JInternalFrame implements ActionListener{
@@ -102,27 +104,31 @@ public class Login extends JInternalFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-//		ArrayList<Usuari> usuaris= pUser.getUsuaris();
-//		for (Usuari usuari : usuaris) {
-//			if(ptfLogin.getText().equals(usuari.getName())) {
-//				if(ppfPassword.getText().equals(usuari.getPass())) {
-//					sUserGroup=usuari.getUserGroup();//usuari.getUserGroup();admin
-//					this.hide();
-//					JOptionPane.showMessageDialog(null, "usuari y contraseña correctos", "Log in", JOptionPane.OK_OPTION);
-//					if(sUserGroup.equals("admin")) {
-//						pjdPanel.add(new AdminView(this.pFrame, pjdPanel/*, usuari*/), BorderLayout.CENTER);
-//					}else {
-//						System.out.println("nooo");
-//					}
-//				}
-//			}
-//		}
-		sUserGroup="admin";
-		this.dispose();
-		JOptionPane.showMessageDialog(null, "usuari y contraseña correctos", "Log in", JOptionPane.OK_OPTION);
-		if(sUserGroup.equals("admin")) {
-			pjdPanel.add(new AdminView(this.pFrame, pjdPanel, new Usuari(0, "Nombre", "123", "admin")), BorderLayout.CENTER);
+		ArrayList<Usuari> usuaris= pUser.getUsuaris();
+		for (Usuari usuari : usuaris) {
+			if(ptfLogin.getText().equals(usuari.getpLoginId())) {
+				if(ppfPassword.getText().equals(usuari.getpPass())) {
+					sUserGroup=usuari.getpProfile();
+					this.hide();
+					JOptionPane.showMessageDialog(null, "usuari y contraseña correctos", "Log in", JOptionPane.OK_OPTION);
+					if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
+						pjdPanel.add(new AdminView(this.pFrame, pjdPanel, usuari), BorderLayout.CENTER);
+					}else {
+						System.out.println("Grupo de usuarios no implementado");
+					}
+				}else {
+					System.out.println("Contraseña incorrecta");
+				}
+			}else {
+				System.out.println("nombre incorrecto");
+			}
 		}
+//		sUserGroup="admin";
+//		this.dispose();
+//		JOptionPane.showMessageDialog(null, "usuari y contraseña correctos", "Log in", JOptionPane.OK_OPTION);
+//		if(sUserGroup.equals("admin")) {
+//			pjdPanel.add(new AdminView(this.pFrame, pjdPanel, new Usuari(0, "Nombre", "123", "admin")), BorderLayout.CENTER);
+//		}
 	}
 
 }
