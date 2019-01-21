@@ -51,6 +51,7 @@ public class Login extends JInternalFrame implements ActionListener{
 		setTitle("Login");//hard
 		setResizable(true);
 		setClosable(true);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 //		setSize(this.pFrame.getWidth()/2,this.pFrame.getHeight()/2);
 		pack();
 //		setLocation(pFrame.getHeight()/2-this.getHeight(), pFrame.getWidth()/2-this.getWidth());

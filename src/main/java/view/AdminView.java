@@ -1,17 +1,12 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyVetoException;
-import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,7 +20,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 import model.Usuari;
 
@@ -177,6 +171,7 @@ public class AdminView extends JInternalFrame implements ActionListener{
 			setTitle("Nuevo Usuario");//hard
 			setResizable(true);
 			setClosable(true);
+			setDefaultCloseOperation(HIDE_ON_CLOSE);
 //			setSize(this.pFrame.getWidth()/2,this.pFrame.getHeight()/2);
 //			setLocation(pFrame.getHeight()/2-this.getHeight()/2, pFrame.getWidth()/2-this.getWidth()/2);
 			setVisible(true);
