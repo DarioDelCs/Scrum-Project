@@ -26,9 +26,9 @@ public class Especificaciones {
 	@Column(name = "NOMBRESPRINT")
 	private String pNombreSprint;
 	
-	public Especificaciones(int ID, String Name, String Descripcion, double Horas, int IdProject, String NombreSprint) {
-		super();
-		this.pID = ID;
+	public Especificaciones() {}
+	
+	public Especificaciones(String Name, String Descripcion, double Horas, int IdProject, String NombreSprint) {
 		this.pName = Name;
 		this.pDescripcion = Descripcion;
 		this.pHoras = Horas;
@@ -39,11 +39,7 @@ public class Especificaciones {
 	public int getpID() {
 		return pID;
 	}
-
-	public void setpID(int pID) {
-		this.pID = pID;
-	}
-
+	
 	public String getpName() {
 		return pName;
 	}

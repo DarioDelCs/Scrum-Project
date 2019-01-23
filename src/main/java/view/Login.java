@@ -104,6 +104,7 @@ public class Login extends JInternalFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		boolean badLogin=false;
 		ArrayList<Usuari> usuaris= pUser.getUsuaris();
 		for (Usuari usuari : usuaris) {
 			if(ptfLogin.getText().equals(usuari.getpLoginId())) {
@@ -116,19 +117,18 @@ public class Login extends JInternalFrame implements ActionListener{
 					}else {
 						System.out.println("Grupo de usuarios no implementado");
 					}
+					badLogin=false;
+					break;
 				}else {
-					System.out.println("Contraseña incorrecta");
+					badLogin = true;
 				}
 			}else {
-				System.out.println("nombre incorrecto");
+				badLogin = true;
 			}
 		}
-//		sUserGroup="admin";
-//		this.dispose();
-//		JOptionPane.showMessageDialog(null, "usuari y contraseña correctos", "Log in", JOptionPane.OK_OPTION);
-//		if(sUserGroup.equals("admin")) {
-//			pjdPanel.add(new AdminView(this.pFrame, pjdPanel, new Usuari(0, "Nombre", "123", "admin")), BorderLayout.CENTER);
-//		}
+		if(badLogin) {
+			System.out.println("Usuario y/o contraseña incorrecto");
+		}
 	}
 
 }

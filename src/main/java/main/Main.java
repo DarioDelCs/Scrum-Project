@@ -19,7 +19,7 @@ public class Main extends JFrame{
 
 	private IUsuari pUser = new JPAUsuariImpl();
 	
-	private String[] alUserString = {"Developer","ProductOwner","ScrumMaster","AdministradorUsers"};
+	private String[] alUserString = {"Developer","ProductOwner","ScrumMaster","Administrador"};
 	public static HashMap<UserType, String> hmUser = new HashMap<UserType, String>();
 	private UserType eUserType;
 	

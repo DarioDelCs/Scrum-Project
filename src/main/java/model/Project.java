@@ -24,9 +24,9 @@ public class Project {
 	@Column(name = "PRODUCTOWNER")
 	private int pProductOwner;
 	
+	public Project() {}
+	
 	public Project(int ID, String Name, String Descripcion, int ScrumMaster, int ProductOwner) {
-		super();
-		this.pID = ID;
 		this.pName = Name;
 		this.pDescripcion = Descripcion;
 		this.pScrumMaster = ScrumMaster;
@@ -35,10 +35,6 @@ public class Project {
 
 	public int getpID() {
 		return pID;
-	}
-
-	public void setpID(int pID) {
-		this.pID = pID;
 	}
 
 	public String getpName() {

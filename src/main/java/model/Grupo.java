@@ -18,18 +18,14 @@ public class Grupo {
 	@Column(name = "IDPROJECT")
 	private int pIdProject;
 	
-	public Grupo(int ID, int idProject) {
-		super();
-		this.pID = ID;
+	public Grupo() {}
+	
+	public Grupo(int idProject) {
 		this.pIdProject = idProject;
 	}
 
 	public int getpID() {
 		return pID;
-	}
-
-	public void setpID(int pID) {
-		this.pID = pID;
 	}
 
 	public int getpIdProject() {

@@ -7,10 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
@@ -20,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -170,8 +168,8 @@ public class AdminView extends JInternalFrame implements ActionListener{
 			constraints.gridy=5;
 			pCenterPanel.add(pcbPerfil, constraints);
 			pcbPerfil.addItem("Seleccione un perfil de usuario");
-			pcbPerfil.addItem("Master Owner");
-			pcbPerfil.addItem("Scrum Master");
+			pcbPerfil.addItem("ProductOwner");
+			pcbPerfil.addItem("ScrumMaster");
 			pcbPerfil.addItem("Developer");
 			pcbPerfil.addItem("Administrator");
 			
@@ -204,7 +202,13 @@ public class AdminView extends JInternalFrame implements ActionListener{
 			pjdPanel.add(new Login(pFrame, pjdPanel));
 		}else if (e.getSource() == pbEnviar){
 			IUsuari users = new JPAUsuariImpl();
-			users.addUsuari(2, ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
+//			users.addUsuari(ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
+			JOptionPane.showMessageDialog(null, "Usuario insertado", "Insert", JOptionPane.INFORMATION_MESSAGE);
+			ptfNombre.setText("");
+			ptfLogin.setText("");
+			ptfMail.setText("");
+			ppfPass.setText("");
+			ppfPass2.setText("");
 		}
 	}
 

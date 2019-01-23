@@ -30,12 +30,12 @@ public class JPAUsuariImpl implements IUsuari{
 		return usuaris;
 	}
 
-	public void addUsuari(int pID, String pName, String pLoginId, String pPass, String pProfileId, String pEmail) {
+	public void addUsuari(String pName, String pLoginId, String pPass, String pProfileId, String pEmail) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("bd_scrum_adc");
 		EntityManager entityManager = factory.createEntityManager();
 		entityManager.getTransaction().begin();
 		
-		Usuari newUser = new Usuari(pID, pName, pLoginId, pPass, pProfileId, pEmail);
+		Usuari newUser = new Usuari(pEmail, pLoginId, pName, pPass, pProfileId);
 
 		entityManager.merge(newUser);
 		entityManager.getTransaction().commit();
