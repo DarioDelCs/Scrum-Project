@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import idao.IUsuari;
 import model.Usuari;
@@ -16,14 +17,9 @@ public class JPAUsuariImpl implements IUsuari{
 		EntityManager entityManager = factory.createEntityManager();
 		
 		ArrayList<Usuari> usuaris = new ArrayList<Usuari>();
-		entityManager.getTransaction().begin();
-
-		int count=1;
-		Usuari usuari;
-		while((usuari = entityManager.find(Usuari.class, count))!=null) {
-			usuaris.add(usuari);
-			count++;
-		}
+		String sql =  "SELECT u from Usuaris s";
+		Query query = entityManager.createQuery(sql);
+		usuaris = (ArrayList<Usuari>) query.getResultList();
 
 		entityManager.close();
 		factory.close();
