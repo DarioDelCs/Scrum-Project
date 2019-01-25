@@ -17,7 +17,7 @@ public class JPAUsuariImpl implements IUsuari{
 		EntityManager entityManager = factory.createEntityManager();
 		
 		ArrayList<Usuari> usuaris = new ArrayList<Usuari>();
-		String sql =  "SELECT u from Usuaris s";
+		String sql =  "SELECT u from Usuari u";
 		Query query = entityManager.createQuery(sql);
 		usuaris = (ArrayList<Usuari>) query.getResultList();
 
@@ -37,6 +37,20 @@ public class JPAUsuariImpl implements IUsuari{
 		entityManager.getTransaction().commit();
 		entityManager.close();
 		factory.close();
+	}
+	public ArrayList<Usuari>  getUsuaris(String loginName) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("bd_scrum_adc");
+		EntityManager entityManager = factory.createEntityManager();
+		
+		ArrayList<Usuari> usuaris = new ArrayList<Usuari>();
+		String sql =  "SELECT u from Usuari u where u.pLoginId ='"+loginName+"'";
+		Query query = entityManager.createQuery(sql);
+		usuaris = (ArrayList<Usuari>) query.getResultList();
+	
+		
+		entityManager.close();
+		factory.close();
+		return usuaris;
 	}
 
 

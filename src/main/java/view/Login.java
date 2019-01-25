@@ -109,10 +109,11 @@ public class Login extends JInternalFrame implements ActionListener{
 				if(ppfPassword.getText().equals(usuari.getpPass())) {
 					sUserGroup=usuari.getpProfile();
 					this.hide();
-					JOptionPane.showMessageDialog(null, "usuari y contraseña correctos", "Log in", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Usuari y contraseña correctos", "Log in", JOptionPane.INFORMATION_MESSAGE);
 					if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
 						Tittle.smiNewUser.setEnabled(true);
-//						pjdPanel.add(new AdminView(this.pFrame, pjdPanel), BorderLayout.CENTER);
+						
+						pjdPanel.add(new AdminView(this.pFrame, pjdPanel));
 					}else {
 						System.out.println("Grupo de usuarios no implementado");
 					}

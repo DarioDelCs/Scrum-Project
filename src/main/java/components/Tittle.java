@@ -27,7 +27,7 @@ import idao.IUsuari;
 import model.Usuari;
 import view.AdminView;
 
-public class Tittle implements ActionListener{
+public class Tittle {
 
 	public static JFrame sFrame;
 	public static JDesktopPane jdPanel;
@@ -78,7 +78,7 @@ public class Tittle implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == Tittle.smiNewUser) {
+		if(e.getSource() == smiNewUser) {
 			new AdminView(sFrame, jdPanel);
 		}/*else if (e.getSource() == pbEnviar){
 			IUsuari users = new JPAUsuariImpl();

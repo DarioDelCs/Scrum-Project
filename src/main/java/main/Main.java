@@ -49,6 +49,7 @@ public class Main extends JFrame/* implements ActionListener*/{
 		
 		int count=0;
 		for (UserType eUsers : eUserType.values()) {
+			System.out.println(eUsers);
 			hmUser.put(eUsers, alUserString[count]);
 			count++;
 		}
