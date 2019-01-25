@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import components.Tittle;
 import daoImpl.JPAUsuariImpl;
 import idao.IUsuari;
 import main.Main;
@@ -110,7 +111,8 @@ public class Login extends JInternalFrame implements ActionListener{
 					this.hide();
 					JOptionPane.showMessageDialog(null, "usuari y contraseña correctos", "Log in", JOptionPane.OK_OPTION);
 					if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
-						pjdPanel.add(new AdminView(this.pFrame, pjdPanel, usuari), BorderLayout.CENTER);
+						Tittle.smiNewUser.setEnabled(true);
+//						pjdPanel.add(new AdminView(this.pFrame, pjdPanel), BorderLayout.CENTER);
 					}else {
 						System.out.println("Grupo de usuarios no implementado");
 					}

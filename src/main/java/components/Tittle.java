@@ -52,6 +52,9 @@ public class Tittle implements ActionListener{
 		smUsuarios.add(smiNewUser);
 		spMenu.add(smProyecto);
 		spMenu.add(smUsuarios);
+		
+		smiNewUser.setEnabled(false);
+		
 		frame.add(spMenu, BorderLayout.NORTH);
 	}
 	
@@ -77,19 +80,7 @@ public class Tittle implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == Tittle.smiNewUser) {
 			new AdminView(sFrame, jdPanel);
-		}else if(e.getSource() == pbGenerarPass) {
-			String key = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			String pass = "";
-			for (int i = 0; i < 6; i++) {
-				pass+=(key.charAt((int)(Math.random() * key.length())));
-			}
-			System.out.println(Arrays.toString(ppfPass.getPassword()));
-			ppfPass.setText(pass);
-			ppfPass2.setText(pass);
-			
-			System.out.println("Auto Pass: "+ ppfPass.getText());
-			
-		}else if (e.getSource() == pbEnviar){
+		}/*else if (e.getSource() == pbEnviar){
 			IUsuari users = new JPAUsuariImpl();
 			users.addUsuari(ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
 			JOptionPane.showMessageDialog(null, "Usuario insertado", "Insert", JOptionPane.INFORMATION_MESSAGE);
@@ -98,7 +89,7 @@ public class Tittle implements ActionListener{
 			ptfMail.setText("");
 			ppfPass.setText("");
 			ppfPass2.setText("");
-		}
+		}*/
 	}
 
 }
