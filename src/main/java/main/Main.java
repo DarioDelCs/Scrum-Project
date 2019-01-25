@@ -1,39 +1,78 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
+import components.Tittle;
 import daoImpl.JPAUsuariImpl;
 import idao.IUsuari;
 import model.UserType;
+import model.Usuari;
 import view.Login;
 
-public class Main extends JFrame{
+public class Main extends JFrame/* implements ActionListener*/{
 
 	private IUsuari pUser = new JPAUsuariImpl();
 	
-	private String[] alUserString = {"Developer","ProductOwner","ScrumMaster","Administrador"};
+	private String[] alUserString = {"Developer","ProductOwner","ScrumMaster","Administrator"};
 	public static HashMap<UserType, String> hmUser = new HashMap<UserType, String>();
 	private UserType eUserType;
+	
+	private JPanel pPanel;
+	private JDesktopPane pjdPanel;
+	
 	
 	public static void main(String[] args) {
 		new Main();
 	}
 	
 	public Main() {
-		JDesktopPane panel = new JDesktopPane();
-		panel.setLayout(new BorderLayout());
+		pPanel = new JPanel();
+		pPanel.setLayout(new BorderLayout());
+		pjdPanel = new JDesktopPane();
+//		pjdPanel.setLayout(new BorderLayout());
 		setLayout(new BorderLayout());
 		
-		addFrame(panel);
+		tryConnect();
+		Tittle.addMenu(this);
+		pjdPanel.add(new Login(this, pjdPanel));
 		
+		pPanel.add(Tittle.addTitle(this, pjdPanel), BorderLayout.NORTH);
+		pPanel.add(pjdPanel, BorderLayout.CENTER);
+		
+		int count=0;
+		for (UserType eUsers : eUserType.values()) {
+			hmUser.put(eUsers, alUserString[count]);
+			count++;
+		}
+
+		add(pPanel, BorderLayout.CENTER);
+		setSize(800, 800);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
+	
+	private void tryConnect() {
 		try {
 			EntityManagerFactory factory = Persistence.createEntityManagerFactory("bd_scrum_adc");
 			EntityManager entityManager = factory.createEntityManager();
@@ -45,22 +84,34 @@ public class Main extends JFrame{
 			setTitle("Scrum Program - (OFFLINE)");
 			ex.printStackTrace();
 	    }
-
-		int count=0;
-		for (UserType eUsers : eUserType.values()) {
-			hmUser.put(eUsers, alUserString[count]);
-			count++;
-		}
-		
-		add(panel, BorderLayout.CENTER);
-		setSize(800, 800);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-		setVisible(true);
 	}
 	
-	private void addFrame(JDesktopPane panel) {
-		panel.add(new Login(this, panel), BorderLayout.CENTER);
-	}
+	
+//	private void addTitle() {
+//		pNorthPanel = new JPanel();
+//		pNorthPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+//		
+////		slUser = new JLabel("Usuario: " + sUsuari.getpName() + " ("+sUsuari.getpProfile()+")");//hard
+//		slUser = new JLabel("Prueba");
+//		pNorthPanel.add(slUser);
+//
+//		sbSalir = new JButton("Salir");
+//		pNorthPanel.add(sbSalir);
+//		
+////		pbSalir.addActionListener(this);
+//		
+//		pjdPanel.add(pNorthPanel, BorderLayout.NORTH);
+//		add(pNorthPanel, BorderLayout.NORTH);
+//	}
+
+//	public void actionPerformed(ActionEvent e) {
+//		if (e.getSource() == pbSalir) {
+////			if(pCenterPanel!=null) {
+////				pCenterPanel.setVisible(false);
+////			}
+////			this.dispose();
+////			pjdPanel.add(new Login(this, pjdPanel));
+//		}
+//	}
 
 }

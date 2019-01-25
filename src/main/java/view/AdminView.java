@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,79 +23,34 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import components.Tittle;
 import daoImpl.JPAUsuariImpl;
 import idao.IUsuari;
+import main.Main;
 import model.Usuari;
 
 public class AdminView extends JInternalFrame implements ActionListener{
 	
 	private JFrame pFrame;
-	private JPanel pNorthPanel, pCenterPanel;
+	private JPanel pCenterPanel;
 	private JDesktopPane pjdPanel;
 	private Usuari pUsuari;
-	
-	private JMenuBar ppMenu;
-	private JMenu pmProyecto;
-	private JMenu pmUsuarios;
-	private JMenuItem pmiNewUser;
-	
-	private JLabel plUser;
 
 	private JLabel plNombre, plLogin, plPass, plPass2, plMail;
 	private JTextField ptfNombre, ptfLogin, ptfMail;
 	private JPasswordField ppfPass, ppfPass2;
 	private JComboBox<String> pcbPerfil;
-	private JButton pbGenerarPass, pbEnviar, pbSalir;
+	private JButton pbGenerarPass, pbEnviar;
 	
-	public AdminView(JFrame frame, JDesktopPane dPanel, Usuari usuari) {
+	public AdminView(JFrame frame, JDesktopPane dPanel) {
 		this.pFrame = frame;
 		this.pjdPanel = dPanel;
-		this.pUsuari = usuari;
-
-		addMenu();
-		addTitle();
 		
-	}
-	
-	private void addMenu() {
-		ppMenu=new JMenuBar();
-		pmProyecto=new JMenu("Proyecto");//hard
-		pmUsuarios=new JMenu("Usuarios");//hard
-		pmiNewUser=new JMenuItem("Nuevo Usuario");//hard
-		pmUsuarios.add(pmiNewUser);
-		ppMenu.add(pmProyecto);
-		ppMenu.add(pmUsuarios);
-		pFrame.add(ppMenu, BorderLayout.NORTH);
-		
-		pmiNewUser.addActionListener(this);
-	}
-	
-	private void addTitle() {
-		pNorthPanel = new JPanel();
-		pNorthPanel.setLayout(new GridBagLayout());
-
-		GridBagConstraints constraints = new GridBagConstraints();
-		
-		constraints.insets = new Insets(0, 10, 0, 10);
-
-		plUser = new JLabel("Usuario: " + pUsuari.getpName() + " ("+pUsuari.getpProfile()+")");//hard
-		constraints.gridx=0;
-		constraints.gridy=0;
-		pNorthPanel.add(plUser, constraints);
-
-		
-		pbSalir = new JButton("Salir");//hard
-		constraints.gridx=1;
-		constraints.gridy=0;
-		pNorthPanel.add(pbSalir, constraints);
-		
-		pbSalir.addActionListener(this);
-		
-		pjdPanel.add(pNorthPanel, BorderLayout.NORTH);
+		Tittle.smiNewUser.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == pmiNewUser) {
+		if(e.getSource() == Tittle.smiNewUser) {
 			pCenterPanel = new JPanel();
 			pCenterPanel.setLayout(new GridBagLayout());
 			GridBagConstraints constraints = new GridBagConstraints();
@@ -187,22 +143,15 @@ public class AdminView extends JInternalFrame implements ActionListener{
 			for (int i = 0; i < 6; i++) {
 				pass+=(key.charAt((int)(Math.random() * key.length())));
 			}
+			System.out.println(Arrays.toString(ppfPass.getPassword()));
 			ppfPass.setText(pass);
 			ppfPass2.setText(pass);
 			
 			System.out.println("Auto Pass: "+ ppfPass.getText());
 			
-		}else if (e.getSource() == pbSalir) {
-			if(pCenterPanel!=null) {
-				pCenterPanel.setVisible(false);
-			}
-			pNorthPanel.setVisible(false);
-			ppMenu.setVisible(false);
-			this.dispose();
-			pjdPanel.add(new Login(pFrame, pjdPanel));
 		}else if (e.getSource() == pbEnviar){
 			IUsuari users = new JPAUsuariImpl();
-//			users.addUsuari(ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
+			users.addUsuari(ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
 			JOptionPane.showMessageDialog(null, "Usuario insertado", "Insert", JOptionPane.INFORMATION_MESSAGE);
 			ptfNombre.setText("");
 			ptfLogin.setText("");
