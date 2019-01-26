@@ -7,12 +7,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -26,6 +28,7 @@ import daoImpl.JPAUsuariImpl;
 import idao.IUsuari;
 import model.Usuari;
 import view.AdminView;
+import view.Login;
 
 public class Tittle {
 
@@ -35,25 +38,45 @@ public class Tittle {
 	public static JMenuBar spMenu;
 	public static JMenu smProyecto;
 	public static JMenu smUsuarios;
-	public static JMenuItem smiNewUser;
+	public static JMenuItem smiNewUser,smiSearchModUser,smiNewProyect,smiSeeProyects;
 	
 	public static JPanel sNorthPanel;
 
-	public static JButton sbSalir;
+	public static JButton sbSalirLogin;
 	
 	public static JLabel slUser;
 	public static Usuari sUsuari;
 	
-	public static void addMenu(JFrame frame) {
+	public static void addMenu(JFrame frame, JDesktopPane dPanel) {
+		sFrame = frame;
+		jdPanel = dPanel;
+		
 		spMenu=new JMenuBar();
 		smProyecto=new JMenu("Proyecto");//hard
 		smUsuarios=new JMenu("Usuarios");//hard
 		smiNewUser=new JMenuItem("Nuevo Usuario");//hard
+		smiSearchModUser=new JMenuItem("Buscar/modificar usuario");//hard
+		smiNewProyect=new JMenuItem("Crear Proyecto");//hard
+		smiSeeProyects=new JMenuItem("Mostrar proyectos");//hard
+
 		smUsuarios.add(smiNewUser);
+		smUsuarios.add(smiSearchModUser);
+		smProyecto.add(smiNewProyect);
+		smProyecto.add(smiSeeProyects);
 		spMenu.add(smProyecto);
 		spMenu.add(smUsuarios);
-		
+
 		smiNewUser.setEnabled(false);
+		smiSearchModUser.setEnabled(false);
+		smiNewProyect.setEnabled(false);
+		smiSeeProyects.setEnabled(false);
+		
+		smiNewUser.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				jdPanel.add(new AdminView(sFrame, jdPanel));
+			}
+		});
 		
 		frame.add(spMenu, BorderLayout.NORTH);
 	}
@@ -66,30 +89,45 @@ public class Tittle {
 		sNorthPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		
 //		slUser = new JLabel("Usuario: " + sUsuari.getpName() + " ("+sUsuari.getpProfile()+")");//hard
-		slUser = new JLabel("Prueba");
+		slUser = new JLabel("Usuario: ");
 		sNorthPanel.add(slUser);
 
-		sbSalir = new JButton("Salir");
-		sNorthPanel.add(sbSalir);
+		sbSalirLogin = new JButton("Login");//mas tarde poner tambien como login
+		sNorthPanel.add(sbSalirLogin);
 		
-//		pbSalir.addActionListener(this);
+		sbSalirLogin.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				listenerLoginExit();
+			}
+		});
 		
 		return sNorthPanel;
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == smiNewUser) {
-			new AdminView(sFrame, jdPanel);
-		}/*else if (e.getSource() == pbEnviar){
-			IUsuari users = new JPAUsuariImpl();
-			users.addUsuari(ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
-			JOptionPane.showMessageDialog(null, "Usuario insertado", "Insert", JOptionPane.INFORMATION_MESSAGE);
-			ptfNombre.setText("");
-			ptfLogin.setText("");
-			ptfMail.setText("");
-			ppfPass.setText("");
-			ppfPass2.setText("");
-		}*/
+	public static void listenerLoginExit() {		
+		if(!slUser.getText().equals("Usuario: ") && jdPanel.getAllFrames().length==0) {
+			sbSalirLogin.setText("Login");
+			Tittle.smiNewUser.setEnabled(false);
+			jdPanel.removeAll();
+			jdPanel.repaint();
+		}
+		jdPanel.add(new Login(sFrame, jdPanel));
 	}
+	
+//	public void actionPerformed(ActionEvent e) {
+//		if(e.getSource() == smiNewUser) {
+//			new AdminView(sFrame, jdPanel);
+//		}/*else if (e.getSource() == pbEnviar){
+//			IUsuari users = new JPAUsuariImpl();
+//			users.addUsuari(ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
+//			JOptionPane.showMessageDialog(null, "Usuario insertado", "Insert", JOptionPane.INFORMATION_MESSAGE);
+//			ptfNombre.setText("");
+//			ptfLogin.setText("");
+//			ptfMail.setText("");
+//			ppfPass.setText("");
+//			ppfPass2.setText("");
+//		}*/
+//	}
 
 }

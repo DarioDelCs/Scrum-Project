@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -51,7 +52,7 @@ public class Login extends JInternalFrame implements ActionListener{
 		setTitle("Login");//hard
 		setResizable(true);
 		setClosable(true);
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+//		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 //		setSize(this.pFrame.getWidth()/2,this.pFrame.getHeight()/2);
 		pack();
 //		setLocation(pFrame.getHeight()/2-this.getHeight(), pFrame.getWidth()/2-this.getWidth());
@@ -102,33 +103,44 @@ public class Login extends JInternalFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		boolean badLogin=false;
-		ArrayList<Usuari> usuaris= pUser.getUsuaris();
-		for (Usuari usuari : usuaris) {
-			if(ptfLogin.getText().equals(usuari.getpLoginId())) {
-				if(ppfPassword.getText().equals(usuari.getpPass())) {
-					sUserGroup=usuari.getpProfile();
-					this.hide();
-					JOptionPane.showMessageDialog(null, "Usuari y contraseña correctos", "Log in", JOptionPane.INFORMATION_MESSAGE);
-					if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
-						Tittle.smiNewUser.setEnabled(true);
-						
-						pjdPanel.add(new AdminView(this.pFrame, pjdPanel));
-					}else {
-						System.out.println("Grupo de usuarios no implementado");
-					}
-					badLogin=false;
-					break;
-				}else {
-					badLogin = true;
-				}
-			}else {
-				badLogin = true;
-			}
+//		boolean badLogin=false;
+//		ArrayList<Usuari> usuaris= pUser.getUsuaris();
+//		for (Usuari usuari : usuaris) {
+//			if(ptfLogin.getText().equals(usuari.getpLoginId())) {
+//				if(ppfPassword.getText().equals(usuari.getpPass())) {
+//					sUserGroup=usuari.getpProfile();
+//					this.hide();
+//					JOptionPane.showMessageDialog(null, "Usuari y contraseña correctos", "Log in", JOptionPane.INFORMATION_MESSAGE);
+//					if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
+//						Tittle.smiNewUser.setEnabled(true);
+//						Tittle.slUser.setText("Usuari: "+ptfLogin.getText());//cambiar por nombre y grupo
+//						pjdPanel.add(new AdminView(this.pFrame, pjdPanel));
+//					}else {
+//						System.out.println("Grupo de usuarios no implementado");
+//					}
+//					badLogin=false;
+//					break;
+//				}else {
+//					badLogin = true;
+//				}
+//			}else {
+//				badLogin = true;
+//			}
+//		}
+//		if(badLogin) {
+//			System.out.println("Usuario y/o contraseña incorrecto");
+//		}
+		
+
+		try {
+			this.setClosed(true);
+		} catch (PropertyVetoException e1) {
+			System.out.println("Error, no se ha podido cerrar la ventana de login");
 		}
-		if(badLogin) {
-			System.out.println("Usuario y/o contraseña incorrecto");
-		}
+		Tittle.smiNewUser.setEnabled(true);
+		Tittle.slUser.setText("Usuari: "+ptfLogin.getText());//cambiar por nombre y grupo
+		Tittle.sbSalirLogin.setText("Salir");
+		
 	}
 
 }

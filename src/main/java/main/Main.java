@@ -37,11 +37,10 @@ public class Main extends JFrame/* implements ActionListener*/{
 		pPanel = new JPanel();
 		pPanel.setLayout(new BorderLayout());
 		pjdPanel = new JDesktopPane();
-//		pjdPanel.setLayout(new BorderLayout());
 		setLayout(new BorderLayout());
 		
-		tryConnect();
-		Tittle.addMenu(this);
+//		tryConnect();
+		Tittle.addMenu(this, pjdPanel);
 		pjdPanel.add(new Login(this, pjdPanel));
 		
 		pPanel.add(Tittle.addTitle(this, pjdPanel), BorderLayout.NORTH);
@@ -49,7 +48,6 @@ public class Main extends JFrame/* implements ActionListener*/{
 		
 		int count=0;
 		for (UserType eUsers : eUserType.values()) {
-			System.out.println(eUsers);
 			hmUser.put(eUsers, alUserString[count]);
 			count++;
 		}
