@@ -27,14 +27,14 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import components.Tittle;
-import daoImpl.JPAUsuariImpl;
+import daoImpl.MySQLUsuariImpl;
 import idao.IUsuari;
 import main.Main;
 import model.Usuari;
 
-public class AdminView extends JInternalFrame implements ActionListener{
+public class CreateUser extends JInternalFrame implements ActionListener{
 	
-	private IUsuari pUser = new JPAUsuariImpl();
+	private IUsuari pUser = new MySQLUsuariImpl();
 	private JFrame pFrame;
 	private JPanel pCenterPanel;
 	private JDesktopPane pjdPanel;
@@ -46,7 +46,7 @@ public class AdminView extends JInternalFrame implements ActionListener{
 	private JComboBox<String> pcbPerfil;
 	private JButton pbGenerarPass, pbEnviar;
 	
-	public AdminView(JFrame frame, JDesktopPane dPanel) {
+	public CreateUser(JFrame frame, JDesktopPane dPanel) {
 		this.pFrame = frame;
 		this.pjdPanel = dPanel;
 		
@@ -172,7 +172,7 @@ public class AdminView extends JInternalFrame implements ActionListener{
 				correoOk = comprobarEmail(ptfMail.getText());
 				passOk = comprobarPass();
 				if (correoOk && passOk ) {
-					IUsuari users = new JPAUsuariImpl();
+					IUsuari users = new MySQLUsuariImpl();
 					users.addUsuari(ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
 					JOptionPane.showMessageDialog(null, "Usuario insertado", "Insert", JOptionPane.INFORMATION_MESSAGE);
 					ptfNombre.setText("");
@@ -229,12 +229,12 @@ public class AdminView extends JInternalFrame implements ActionListener{
 		}
 		userName = name.charAt(0)+subname;
 		int cont = 1;
-		ArrayList<Usuari> userList = pUser.getUsuaris();
 		boolean noEncontrado = false;
 		while (!noEncontrado) {
 			noEncontrado = true;
-			for (Usuari u : userList) {
-				if (u.getpLoginId().equals(userName)) {
+			for (int i = 0; i < pUser.countUsers(); i++) {
+				Usuari user = pUser.getUsuari(i);
+				if (user.getpLoginId().equals(userName)) {
 					noEncontrado = false;
 				}
 			}

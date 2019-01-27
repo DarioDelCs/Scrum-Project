@@ -24,10 +24,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import daoImpl.JPAUsuariImpl;
+import daoImpl.MySQLUsuariImpl;
 import idao.IUsuari;
 import model.Usuari;
-import view.AdminView;
+import view.CreateUser;
 import view.CreateProject;
 import view.Login;
 
@@ -75,7 +75,7 @@ public class Tittle {
 		smiNewUser.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				jdPanel.add(new AdminView(sFrame, jdPanel));
+				jdPanel.add(new CreateUser(sFrame, jdPanel));
 			}
 		});
 		smiNewProyect.addActionListener(new ActionListener() {
@@ -115,6 +115,7 @@ public class Tittle {
 		if(!slUser.getText().equals("Usuario: ") && jdPanel.getAllFrames().length==0) {
 			sbSalirLogin.setText("Login");
 			Tittle.smiNewUser.setEnabled(false);
+			Tittle.smiNewProyect.setEnabled(false);
 			jdPanel.removeAll();
 			jdPanel.repaint();
 		}

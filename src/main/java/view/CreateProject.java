@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import daoImpl.JPAProjectImpl;
+import daoImpl.MySQLProjectImpl;
 import model.Usuari;
 
 public class CreateProject extends JInternalFrame implements ActionListener {
@@ -27,7 +27,7 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 	private JDesktopPane pjdPanel;
 	private Usuari pUsuari;
 	
-	private JPAProjectImpl project;
+	private MySQLProjectImpl project;
 
 	private JLabel plNombreProyecto, plDescripcion, plScrumMaster, plProductOwner;
 	private JTextField ptfNombreProyecto, ptfDescripcion;
@@ -37,9 +37,11 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 	public CreateProject(JFrame frame, JDesktopPane dPanel) {
 		this.pFrame = frame;
 		this.pjdPanel = dPanel;
+		
+		view();
 	}
 
-	public void actionPerformed(ActionEvent e) {
+	public void view() {
 		// if(e.getSource() == Tittle.smiNewUser) {
 		pCenterPanel = new JPanel();
 		pCenterPanel.setLayout(new GridBagLayout());
@@ -81,28 +83,32 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 		constraints.gridx = 0;
 		constraints.gridy = 5;
 		pCenterPanel.add(pcbProductOwner, constraints);
-		project.getUsers("ProductOwner");//Metodo para coger a los ProductOwners
+//		project.getUsers("ProductOwner");//Metodo para coger a los ProductOwners
 	
 		pcbScrumMaster = new JComboBox<String>();
 		constraints.gridx = 0;
 		constraints.gridy = 5;
 		pCenterPanel.add(pcbScrumMaster, constraints);
-		project.getUsers("ScrumMaster");//Metodo para coger a los ScrumMasters
-
+//		project.getUsers("ScrumMaster");//Metodo para coger a los ScrumMasters
+		
 		setTitle("Nuevo Proyecto");// hard
 		setResizable(true);
 		setClosable(true);
-		setDefaultCloseOperation(HIDE_ON_CLOSE);
 //		setSize(this.pFrame.getWidth()/2,this.pFrame.getHeight()/2);
 //		setLocation(pFrame.getHeight()/2-this.getHeight()/2, pFrame.getWidth()/2-this.getWidth()/2);
 		setVisible(true);
+		setSize(680,532);
 		add(pCenterPanel, BorderLayout.CENTER);
+	}
 
+	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == pbAnadir) {
 			ptfNombreProyecto.setText("");
 			ptfDescripcion.setText("");
 
 		}
 	}
+	
+	
 
 }

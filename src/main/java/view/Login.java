@@ -20,7 +20,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import components.Tittle;
-import daoImpl.JPAUsuariImpl;
+import daoImpl.MySQLUsuariImpl;
 import idao.IUsuari;
 import main.Main;
 import model.UserType;
@@ -28,7 +28,7 @@ import model.Usuari;
 
 public class Login extends JInternalFrame implements ActionListener{
 
-	private IUsuari pUser = new JPAUsuariImpl();
+	private IUsuari pUser = new MySQLUsuariImpl();
 	private JDesktopPane pjdPanel;
 	private JFrame pFrame;
 	
@@ -104,17 +104,17 @@ public class Login extends JInternalFrame implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {
 //		boolean badLogin=false;
-//		ArrayList<Usuari> usuaris= pUser.getUsuaris();
-//		for (Usuari usuari : usuaris) {
-//			if(ptfLogin.getText().equals(usuari.getpLoginId())) {
-//				if(ppfPassword.getText().equals(usuari.getpPass())) {
-//					sUserGroup=usuari.getpProfile();
+//		for (int i = 0; i < pUser.countUsers(); i++) {
+//			Usuari user = pUser.getUsuari(i);
+//			if(ptfLogin.getText().equals(user.getpLoginId())) {
+//				if(ppfPassword.getText().equals(user.getpPass())) {
+//					sUserGroup=user.getpProfile();
 //					this.hide();
 //					JOptionPane.showMessageDialog(null, "Usuari y contraseña correctos", "Log in", JOptionPane.INFORMATION_MESSAGE);
 //					if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
 //						Tittle.smiNewUser.setEnabled(true);
 //						Tittle.slUser.setText("Usuari: "+ptfLogin.getText());//cambiar por nombre y grupo
-//						pjdPanel.add(new AdminView(this.pFrame, pjdPanel));
+////						pjdPanel.add(new AdminView(this.pFrame, pjdPanel));
 //					}else {
 //						System.out.println("Grupo de usuarios no implementado");
 //					}
@@ -131,7 +131,7 @@ public class Login extends JInternalFrame implements ActionListener{
 //			System.out.println("Usuario y/o contraseña incorrecto");
 //		}
 		
-
+		//admin
 		try {
 			this.setClosed(true);
 		} catch (PropertyVetoException e1) {
@@ -141,6 +141,36 @@ public class Login extends JInternalFrame implements ActionListener{
 		Tittle.slUser.setText("Usuari: "+ptfLogin.getText());//cambiar por nombre y grupo
 		Tittle.sbSalirLogin.setText("Salir");
 		
+		//scrummaster
+		Tittle.smiNewProyect.setEnabled(true);
+		//mas todo lo de arriba (menos lo de smiNewUser)
+		
+		
+		
+		//como se hacia antes:
+		/*ArrayList<Usuari> usuaris= pUser.getUsuaris();
+		for (Usuari usuari : usuaris) {
+			if(ptfLogin.getText().equals(usuari.getpLoginId())) {
+				if(ppfPassword.getText().equals(usuari.getpPass())) {
+					sUserGroup=usuari.getpProfile();
+					this.hide();
+					JOptionPane.showMessageDialog(null, "Usuari y contraseña correctos", "Log in", JOptionPane.INFORMATION_MESSAGE);
+					if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
+						Tittle.smiNewUser.setEnabled(true);
+						Tittle.slUser.setText("Usuari: "+ptfLogin.getText());//cambiar por nombre y grupo
+//						pjdPanel.add(new AdminView(this.pFrame, pjdPanel));
+					}else {
+						System.out.println("Grupo de usuarios no implementado");
+					}
+					badLogin=false;
+					break;
+				}else {
+					badLogin = true;
+				}
+			}else {
+				badLogin = true;
+			}
+		}*/
 	}
 
 }

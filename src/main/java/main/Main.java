@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import components.Tittle;
-import daoImpl.JPAUsuariImpl;
+import daoImpl.MySQLUsuariImpl;
 import idao.IUsuari;
 import model.UserType;
 import model.Usuari;
@@ -19,7 +19,7 @@ import view.Login;
 
 public class Main extends JFrame/* implements ActionListener*/{
 
-	private IUsuari pUser = new JPAUsuariImpl();
+	private IUsuari pUser = new MySQLUsuariImpl();
 	
 	private String[] alUserString = {"Developer","ProductOwner","ScrumMaster","Administrator"};
 	public static HashMap<UserType, String> hmUser = new HashMap<UserType, String>();
