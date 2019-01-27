@@ -28,6 +28,7 @@ import daoImpl.JPAUsuariImpl;
 import idao.IUsuari;
 import model.Usuari;
 import view.AdminView;
+import view.CreateProject;
 import view.Login;
 
 public class Tittle {
@@ -77,7 +78,12 @@ public class Tittle {
 				jdPanel.add(new AdminView(sFrame, jdPanel));
 			}
 		});
-		
+		smiNewProyect.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				jdPanel.add(new CreateProject(sFrame, jdPanel));
+			}
+		});
 		frame.add(spMenu, BorderLayout.NORTH);
 	}
 	

@@ -26,7 +26,7 @@ public class Project {
 	
 	public Project() {}
 	
-	public Project(int ID, String Name, String Descripcion, int ScrumMaster, int ProductOwner) {
+	public Project(String Name, String Descripcion, int ScrumMaster, int ProductOwner) {
 		this.pName = Name;
 		this.pDescripcion = Descripcion;
 		this.pScrumMaster = ScrumMaster;
