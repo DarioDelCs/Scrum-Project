@@ -112,14 +112,16 @@ public class Tittle {
 	}
 	
 	public static void listenerLoginExit() {		
-		if(!slUser.getText().equals("Usuario: ") && jdPanel.getAllFrames().length==0) {
+		if(sbSalirLogin.getText().equals("Salir")) {
 			sbSalirLogin.setText("Login");
 			Tittle.smiNewUser.setEnabled(false);
 			Tittle.smiNewProyect.setEnabled(false);
 			jdPanel.removeAll();
 			jdPanel.repaint();
+			jdPanel.add(new Login(sFrame, jdPanel));
+		}else if(sbSalirLogin.getText().equals("Login") && jdPanel.getAllFrames().length==0) {
+			jdPanel.add(new Login(sFrame, jdPanel));
 		}
-		jdPanel.add(new Login(sFrame, jdPanel));
 	}
 	
 //	public void actionPerformed(ActionEvent e) {

@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -109,6 +111,7 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 		constraints.gridy = 3;
 		plPass2Check.setForeground(Color.red);
 		pCenterPanel.add(plPass2Check,constraints);
+		plPass2Check.setVisible(false);
 		
 		plMail = new JLabel("Mail");//hard					//LUEGO HACER QUE SE COMPRUEBE
 		constraints.gridx=0;
@@ -160,12 +163,12 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 			for (int i = 0; i < 6; i++) {
 				pass+=(key.charAt((int)(Math.random() * key.length())));
 			}
-			System.out.println(Arrays.toString(ppfPass.getPassword()));
+
 			ppfPass.setText(pass);
 			ppfPass2.setText(pass);
-			
-			System.out.println("Auto Pass: "+ ppfPass.getText());
-			
+
+		    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(pass), null);
+			JOptionPane.showMessageDialog(null, "La contraseña es: "+pass+"\n(copiada al portapapeles)");
 		}else if (e.getSource() == pbEnviar){
 			boolean correoOk,passOk;
 			if(!ptfNombre.getText().equals("") && pcbPerfil.getSelectedIndex()!=0) {
@@ -183,10 +186,11 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 				} else {
 					if (!correoOk) {
 						JOptionPane.showMessageDialog(null, "El correo introducido no es un correo electronico valido", "Error", JOptionPane.WARNING_MESSAGE);
-					}if (!passOk) {
-						
 					}
+					plPass2Check.setVisible(!passOk);
 				}
+			}else {
+				JOptionPane.showMessageDialog(null, "No puede haber campos vacios", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		

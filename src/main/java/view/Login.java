@@ -1,20 +1,17 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -22,9 +19,6 @@ import javax.swing.JTextField;
 import components.Tittle;
 import daoImpl.MySQLUsuariImpl;
 import idao.IUsuari;
-import main.Main;
-import model.UserType;
-import model.Usuari;
 
 public class Login extends JInternalFrame implements ActionListener{
 
@@ -121,14 +115,16 @@ public class Login extends JInternalFrame implements ActionListener{
 //					badLogin=false;
 //					break;
 //				}else {
-//					badLogin = true;
+//					JOptionPane.showMessageDialog(null, "Contraseña incorrecto", "Error en el login", JOptionPane.WARNING_MESSAGE);
+//					badLogin = false;
+//					break;
 //				}
 //			}else {
 //				badLogin = true;
 //			}
 //		}
 //		if(badLogin) {
-//			System.out.println("Usuario y/o contraseña incorrecto");
+//			JOptionPane.showMessageDialog(null, "Usuario incorrecto", "Error en el login", JOptionPane.WARNING_MESSAGE);
 //		}
 		
 		//admin
