@@ -2,7 +2,7 @@ package idao;
 
 import model.Usuari;
 
-public interface IUsuari {	
+public interface OLD_IUsuari {	
 	// Métodos de la Interfaz:
 	public int countUsers();
 	public Usuari getUsuari(int number);

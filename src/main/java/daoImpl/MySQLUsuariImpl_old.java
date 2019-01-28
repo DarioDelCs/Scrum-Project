@@ -7,10 +7,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import idao.IUsuari;
+import idao.OLD_IUsuari;
 import model.Usuari;
 
-public class MySQLUsuariImpl_old implements IUsuari{
+public class MySQLUsuariImpl_old implements OLD_IUsuari{
 	
 	public int countUsers() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("bd_scrum_adc");

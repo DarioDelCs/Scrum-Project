@@ -26,7 +26,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import daoImpl.Conexion;
-import idao.IUsuari;
+import idao.OLD_IUsuari;
 import model.Usuari;
 
 public class CreateUser extends JInternalFrame implements ActionListener, FocusListener{
@@ -147,7 +147,6 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 		setVisible(true);
 		setSize(680,532);
 		add(pCenterPanel, BorderLayout.CENTER);
-	
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -188,7 +187,6 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 				JOptionPane.showMessageDialog(null, "No puede haber campos vacios", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 		}
-		
 	}
 	
 	private boolean comprobarEmail(String email) {
@@ -206,14 +204,20 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 
 	public void focusLost(FocusEvent e) {
 		if(e.getSource()==ptfNombre) {
-			try{
-				String[] nom = ptfNombre.getText().split(" ");
-				if(!ptfNombre.getText().equals("")) {
-					ptfLogin.setText(nom[0].charAt(0)+""+nom[nom.length-2].charAt(0)+""+nom[nom.length-1]);
+			if(!ptfNombre.getText().equals("")) {
+				try{
+					String[] nom = ptfNombre.getText().split(" ");
+					if(nom.length>=3) {
+						if(!ptfNombre.getText().equals("")) {
+							ptfLogin.setText(nom[0].charAt(0)+""+nom[nom.length-2].charAt(0)+""+nom[nom.length-1]);
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "Nombre demaisado corto", "Error", JOptionPane.WARNING_MESSAGE);
+					}
+				}catch (Exception err) {
+					JOptionPane.showMessageDialog(null, "Este nombre no es valido", "Error", JOptionPane.WARNING_MESSAGE);
+					ptfNombre.setText("");
 				}
-			}catch (Exception err) {
-				JOptionPane.showMessageDialog(null, "Este nombre no es valido", "Error", JOptionPane.WARNING_MESSAGE);
-				ptfNombre.setText("");
 			}
 		}
 	}

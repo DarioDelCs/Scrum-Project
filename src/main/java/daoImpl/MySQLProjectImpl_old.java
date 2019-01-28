@@ -6,12 +6,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import idao.IProject;
+import idao.OLD_IProject;
 import model.Project;
 import model.Usuari;
 
 
-public class MySQLProjectImpl_old implements IProject {
+public class MySQLProjectImpl_old implements OLD_IProject {
 
 	public int countProjects() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("bd_scrum_adc");

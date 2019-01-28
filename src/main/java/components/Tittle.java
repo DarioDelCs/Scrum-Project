@@ -82,8 +82,7 @@ public class Tittle {
 		sNorthPanel = new JPanel();
 		sNorthPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		
-//		slUser = new JLabel("Usuario: " + sUsuari.getpName() + " ("+sUsuari.getpProfile()+")");//hard
-		slUser = new JLabel("Usuario: ");
+		slUser = new JLabel("");
 		sNorthPanel.add(slUser);
 
 		sbSalirLogin = new JButton("Login");//mas tarde poner tambien como login
@@ -102,6 +101,7 @@ public class Tittle {
 	public static void listenerLoginExit() {		
 		if(sbSalirLogin.getText().equals("Salir")) {
 			sbSalirLogin.setText("Login");
+			slUser.setText("");
 			Tittle.smiNewUser.setEnabled(false);
 			Tittle.smiNewProyect.setEnabled(false);
 			jdPanel.removeAll();

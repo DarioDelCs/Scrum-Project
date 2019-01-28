@@ -3,7 +3,7 @@ package idao;
 import model.Project;
 
 
-public interface IProject {
+public interface OLD_IProject {
 	// Métodos de la Interfaz:
 	public int countProjects();
 	public Project getProject(int number);

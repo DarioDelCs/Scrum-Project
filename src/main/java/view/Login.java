@@ -12,15 +12,19 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import components.Tittle;
-import idao.IUsuari;
+import daoImpl.Conexion;
+import idao.OLD_IUsuari;
+import main.Main;
+import model.UserType;
+import model.Usuari;
 
 public class Login extends JInternalFrame implements ActionListener{
-
 
 	private JDesktopPane pjdPanel;
 	private JFrame pFrame;
@@ -96,37 +100,37 @@ public class Login extends JInternalFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-//		boolean badLogin=false;
-//		for (int i = 0; i < pUser.countUsers(); i++) {
-//			Usuari user = pUser.getUsuari(i);
-//			if(ptfLogin.getText().equals(user.getpLoginId())) {
-//				if(ppfPassword.getText().equals(user.getpPass())) {
-//					sUserGroup=user.getpProfile();
-//					this.hide();
-//					JOptionPane.showMessageDialog(null, "Usuari y contraseña correctos", "Log in", JOptionPane.INFORMATION_MESSAGE);
-//					if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
-//						Tittle.smiNewUser.setEnabled(true);
-//						Tittle.slUser.setText("Usuari: "+ptfLogin.getText());//cambiar por nombre y grupo
-////						pjdPanel.add(new AdminView(this.pFrame, pjdPanel));
-//					}else {
-//						System.out.println("Grupo de usuarios no implementado");
-//					}
-//					badLogin=false;
-//					break;
-//				}else {
-//					JOptionPane.showMessageDialog(null, "Contraseña incorrecto", "Error en el login", JOptionPane.WARNING_MESSAGE);
-//					badLogin = false;
-//					break;
-//				}
-//			}else {
-//				badLogin = true;
-//			}
-//		}
-//		if(badLogin) {
-//			JOptionPane.showMessageDialog(null, "Usuario incorrecto", "Error en el login", JOptionPane.WARNING_MESSAGE);
-//		}
+		Usuari user = Conexion.getConexion().getUsuari(ptfLogin.getText(), ppfPassword.getText());
+		if(user != null) {
+			sUserGroup=user.getpProfile();
+			this.hide();
+			JOptionPane.showMessageDialog(null, "Usuari y contraseña correctos", "Log in", JOptionPane.INFORMATION_MESSAGE);
+			if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
+				try {
+					this.setClosed(true);
+				} catch (PropertyVetoException e1) {
+					System.out.println("Error, no se ha podido cerrar la ventana de login");
+				}
+				Tittle.smiNewUser.setEnabled(true);
+				Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
+				Tittle.sbSalirLogin.setText("Salir");
+			}else if(sUserGroup.equals(Main.hmUser.get(UserType.ScrumMaster))){
+				try {
+					this.setClosed(true);
+				} catch (PropertyVetoException e1) {
+					System.out.println("Error, no se ha podido cerrar la ventana de login");
+				}
+				Tittle.smiNewProyect.setEnabled(true);
+				Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
+				Tittle.sbSalirLogin.setText("Salir");
+			}else {
+				JOptionPane.showMessageDialog(null, "Grupo de usuario no implementado", "Disculpen las molestias", JOptionPane.WARNING_MESSAGE);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "Usuario/contraseña incorrecto", "Error en el login", JOptionPane.WARNING_MESSAGE);
+		}
 		
-		//admin
+		/*//admin
 		try {
 			this.setClosed(true);
 		} catch (PropertyVetoException e1) {
@@ -139,33 +143,7 @@ public class Login extends JInternalFrame implements ActionListener{
 		//scrummaster
 		Tittle.smiNewProyect.setEnabled(true);
 		//mas todo lo de arriba (menos lo de smiNewUser)
-		
-		
-		
-		//como se hacia antes:
-		/*ArrayList<Usuari> usuaris= pUser.getUsuaris();
-		for (Usuari usuari : usuaris) {
-			if(ptfLogin.getText().equals(usuari.getpLoginId())) {
-				if(ppfPassword.getText().equals(usuari.getpPass())) {
-					sUserGroup=usuari.getpProfile();
-					this.hide();
-					JOptionPane.showMessageDialog(null, "Usuari y contraseña correctos", "Log in", JOptionPane.INFORMATION_MESSAGE);
-					if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
-						Tittle.smiNewUser.setEnabled(true);
-						Tittle.slUser.setText("Usuari: "+ptfLogin.getText());//cambiar por nombre y grupo
-//						pjdPanel.add(new AdminView(this.pFrame, pjdPanel));
-					}else {
-						System.out.println("Grupo de usuarios no implementado");
-					}
-					badLogin=false;
-					break;
-				}else {
-					badLogin = true;
-				}
-			}else {
-				badLogin = true;
-			}
-		}*/
+		*/
 	}
 
 }

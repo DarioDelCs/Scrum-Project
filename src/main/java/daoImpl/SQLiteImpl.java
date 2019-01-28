@@ -6,11 +6,6 @@ import model.Usuari;
 
 public class SQLiteImpl implements IConexion{
 
-	public int countProjects() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	public Project getProject(int number) {
 		// TODO Auto-generated method stub
 		return null;
@@ -21,12 +16,7 @@ public class SQLiteImpl implements IConexion{
 		
 	}
 
-	public int countUsers() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public Usuari getUsuari(int number) {
+	public Usuari getUsuari(String nombre, String password) {
 		// TODO Auto-generated method stub
 		return null;
 	}

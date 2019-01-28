@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -12,18 +13,6 @@ import model.Project;
 import model.Usuari;
 
 public class MySQLImpl implements IConexion{
-
-	public int countProjects() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
-		EntityManager entityManager = factory.createEntityManager();
-		
-		String sql =  "SELECT COUNT(*) FROM Usuari";
-		Query query = entityManager.createQuery(sql);
-		
-		entityManager.close();
-		factory.close();
-		return query.getFirstResult();
-	}
 	
 	public Project getProject(int number) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
@@ -66,25 +55,19 @@ public class MySQLImpl implements IConexion{
 //		factory.close();
 //		return usuaris;
 //	}
-	public int countUsers() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
-		EntityManager entityManager = factory.createEntityManager();
-		
-		String sql =  "SELECT COUNT(*) FROM Usuari";
-		Query query = entityManager.createQuery(sql);
-		
-		entityManager.close();
-		factory.close();
-		return query.getFirstResult();
-	}
 	
-	public Usuari getUsuari(int number) {
+	public Usuari getUsuari(String login, String password) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
 		EntityManager entityManager = factory.createEntityManager();
 		
-		String sql =  "SELECT u from Usuari u LIMIT "+number+",1";
-		Query query = entityManager.createQuery(sql);
-		Usuari usuari = (Usuari) query.getSingleResult();
+		String sql =  "SELECT u from Usuari u WHERE login_id = '"+login+"' AND password = '"+password+"'";
+		Usuari usuari;
+		try{
+			Query query = entityManager.createQuery(sql);
+			usuari = (Usuari) query.getSingleResult();
+		}catch(NoResultException e) {
+			return null;
+		}
 
 		entityManager.close();
 		factory.close();

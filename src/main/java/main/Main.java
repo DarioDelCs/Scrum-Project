@@ -12,19 +12,18 @@ import javax.swing.JPanel;
 
 import components.Tittle;
 import daoImpl.Conexion;
-import idao.IUsuari;
+import idao.OLD_IUsuari;
 import model.UserType;
 import view.Login;
 
 public class Main extends JFrame/* implements ActionListener*/{
 
-	private String[] alUserString = {"Developer","ProductOwner","ScrumMaster","Administrator"};
+	private String[] alUserString = {"Developer","ProductOwner","ScrumMaster","Administrador"};
 	public static HashMap<UserType, String> hmUser = new HashMap<UserType, String>();
 	private UserType eUserType;
 	public static boolean isOnline;
 	private JPanel pPanel;
 	private JDesktopPane pjdPanel;
-	
 	
 	public static void main(String[] args) {
 		new Main();
@@ -57,7 +56,6 @@ public class Main extends JFrame/* implements ActionListener*/{
 	}
 	
 	private void tryConnect() {
-	
 		if (Conexion.checkOnline()) {
 			setTitle("Scrum Program - (ONLINE)");
 			isOnline = true;
