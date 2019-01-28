@@ -9,8 +9,8 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,21 +20,16 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import components.Tittle;
 import daoImpl.MySQLUsuariImpl;
 import idao.IUsuari;
-import main.Main;
 import model.Usuari;
 
-public class CreateUser extends JInternalFrame implements ActionListener{
+public class CreateUser extends JInternalFrame implements ActionListener, FocusListener{
 	
 	private IUsuari pUser = new MySQLUsuariImpl();
 	private JFrame pFrame;
@@ -70,6 +65,7 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 		ptfNombre = new JTextField();
 		constraints.gridx=1;
 		constraints.gridy=0;
+		ptfNombre.addFocusListener(this);
 		pCenterPanel.add(ptfNombre, constraints);
 		
 		plLogin = new JLabel("Login generado");//hard		//LUEGO HACER AUTOGENERADO
@@ -78,7 +74,6 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 		pCenterPanel.add(plLogin, constraints);
 		ptfLogin = new JTextField();
 		ptfLogin.setEditable(false);
-	//	ptfLogin.setText(crearLogin());
 		constraints.gridx=1;
 		constraints.gridy=1;
 		pCenterPanel.add(ptfLogin, constraints);
@@ -185,7 +180,8 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 					ppfPass2.setText("");
 				} else {
 					if (!correoOk) {
-						JOptionPane.showMessageDialog(null, "El correo introducido no es un correo electronico valido", "Error", JOptionPane.WARNING_MESSAGE);
+			            JOptionPane.showMessageDialog(null, "El formato del email no es valido", "Error email", JOptionPane.ERROR_MESSAGE);
+			            ptfMail.setText("");
 					}
 					plPass2Check.setVisible(!passOk);
 				}
@@ -197,57 +193,33 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 	}
 	
 	private boolean comprobarEmail(String email) {
-		Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-		Matcher mather = pattern.matcher(email);
-		return mather.find();
-//		if (mather.find() == true) {
-//			return true;
-//		} else {
-//			return false;
-//		}
+        Pattern pattern = Pattern.compile("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b");
+        Matcher matcher = pattern.matcher(email);
 
+        return matcher.find();
 	}
+	
 	private boolean comprobarPass() {
 		String pass1 = ppfPass.getText();
 		String pass2 = ppfPass2.getText();
 		return (pass1.equals(pass2) && !pass1.equals(""));
 	}
-	
-	private String crearLogin() {
-		String userName = "";
-		String name="",subname="",subname2;
-		String[] parts = ptfNombre.getText().split(" ");
-		//Fa falta fer un algoritme adequat que contempli casos com cognoms tal que: de la Rosa....
-		for (int i= 0; i< parts.length;++i) {
-			if (i== 0) {
-				name = parts[0];
-			}
-			if (i== 1 ||( i == parts.length-1 && parts.length > 1)) {
-				subname = parts[i];
-			}
-		/*
-			if (i== 2) {
-				subname2 = parts[2];
-			}
-			*/
-		}
-		userName = name.charAt(0)+subname;
-		int cont = 1;
-		boolean noEncontrado = false;
-		while (!noEncontrado) {
-			noEncontrado = true;
-			for (int i = 0; i < pUser.countUsers(); i++) {
-				Usuari user = pUser.getUsuari(i);
-				if (user.getpLoginId().equals(userName)) {
-					noEncontrado = false;
+
+	public void focusLost(FocusEvent e) {
+		if(e.getSource()==ptfNombre) {
+			try{
+				String[] nom = ptfNombre.getText().split(" ");
+				if(!ptfNombre.getText().equals("")) {
+					ptfLogin.setText(nom[0].charAt(0)+""+nom[nom.length-2].charAt(0)+""+nom[nom.length-1]);
 				}
-			}
-			if (!noEncontrado) {
-				userName = userName+cont;
-				++cont;
+			}catch (Exception err) {
+				JOptionPane.showMessageDialog(null, "Este nombre no es valido", "Error", JOptionPane.WARNING_MESSAGE);
+				ptfNombre.setText("");
 			}
 		}
-		return userName;
+	}
+	
+	public void focusGained(FocusEvent e) {	
 	}
 
 }

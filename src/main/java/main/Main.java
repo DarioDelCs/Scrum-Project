@@ -14,7 +14,6 @@ import components.Tittle;
 import daoImpl.MySQLUsuariImpl;
 import idao.IUsuari;
 import model.UserType;
-import model.Usuari;
 import view.Login;
 
 public class Main extends JFrame/* implements ActionListener*/{
