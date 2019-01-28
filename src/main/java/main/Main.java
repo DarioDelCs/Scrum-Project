@@ -11,19 +11,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import components.Tittle;
-import daoImpl.MySQLUsuariImpl;
+import daoImpl.Conexion;
 import idao.IUsuari;
 import model.UserType;
 import view.Login;
 
 public class Main extends JFrame/* implements ActionListener*/{
 
-	private IUsuari pUser = new MySQLUsuariImpl();
-	
 	private String[] alUserString = {"Developer","ProductOwner","ScrumMaster","Administrator"};
 	public static HashMap<UserType, String> hmUser = new HashMap<UserType, String>();
 	private UserType eUserType;
-	
+	public static boolean isOnline;
 	private JPanel pPanel;
 	private JDesktopPane pjdPanel;
 	
@@ -38,7 +36,7 @@ public class Main extends JFrame/* implements ActionListener*/{
 		pjdPanel = new JDesktopPane();
 		setLayout(new BorderLayout());
 		
-//		tryConnect();
+		tryConnect();
 		Tittle.addMenu(this, pjdPanel);
 		pjdPanel.add(new Login(this, pjdPanel));
 		
@@ -50,7 +48,7 @@ public class Main extends JFrame/* implements ActionListener*/{
 			hmUser.put(eUsers, alUserString[count]);
 			count++;
 		}
-
+		
 		add(pPanel, BorderLayout.CENTER);
 		setSize(800, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,17 +57,17 @@ public class Main extends JFrame/* implements ActionListener*/{
 	}
 	
 	private void tryConnect() {
-		try {
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("bd_scrum_adc");
-			EntityManager entityManager = factory.createEntityManager();
+	
+		if (Conexion.checkOnline()) {
 			setTitle("Scrum Program - (ONLINE)");
-			entityManager.close();
-			factory.close();
-		} catch (Exception ex) {
-	    	System.out.println("Error: "+ex.getMessage());
+			isOnline = true;
+		}else {
 			setTitle("Scrum Program - (OFFLINE)");
-			ex.printStackTrace();
-	    }
+			isOnline = false;
+		}
+		Conexion.getConexion();
+		Conexion.getConexion().resultados();
+	
 	}
 	
 	

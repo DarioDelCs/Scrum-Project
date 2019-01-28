@@ -10,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import daoImpl.Conexion;
 import model.UserType;
 import model.Usuari;
 
@@ -20,6 +21,8 @@ public class Test {
 	public static UserType eUserType;
 	
 	public static void main(String[] args) {
+		Conexion.getConexion();
+		
 		
 		Connection conn = null;
         try {

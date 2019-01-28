@@ -17,12 +17,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import components.Tittle;
-import daoImpl.MySQLUsuariImpl;
 import idao.IUsuari;
 
 public class Login extends JInternalFrame implements ActionListener{
 
-	private IUsuari pUser = new MySQLUsuariImpl();
+
 	private JDesktopPane pjdPanel;
 	private JFrame pFrame;
 	

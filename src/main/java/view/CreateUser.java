@@ -25,13 +25,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import daoImpl.MySQLUsuariImpl;
+import daoImpl.Conexion;
 import idao.IUsuari;
 import model.Usuari;
 
 public class CreateUser extends JInternalFrame implements ActionListener, FocusListener{
 	
-	private IUsuari pUser = new MySQLUsuariImpl();
 	private JFrame pFrame;
 	private JPanel pCenterPanel;
 	private JDesktopPane pjdPanel;
@@ -170,8 +169,8 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 				correoOk = comprobarEmail(ptfMail.getText());
 				passOk = comprobarPass();
 				if (correoOk && passOk ) {
-					IUsuari users = new MySQLUsuariImpl();
-					users.addUsuari(ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
+					
+					Conexion.getConexion().addUsuari(ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
 					JOptionPane.showMessageDialog(null, "Usuario insertado", "Insert", JOptionPane.INFORMATION_MESSAGE);
 					ptfNombre.setText("");
 					ptfLogin.setText("");

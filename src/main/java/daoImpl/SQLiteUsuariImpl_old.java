@@ -3,7 +3,7 @@ package daoImpl;
 import idao.IUsuari;
 import model.Usuari;
 
-public class SQLiteUsuariImpl implements IUsuari{
+public class SQLiteUsuariImpl_old implements IUsuari{
 
 	public int countUsers() {
 		// TODO Auto-generated method stub

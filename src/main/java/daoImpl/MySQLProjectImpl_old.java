@@ -11,7 +11,7 @@ import model.Project;
 import model.Usuari;
 
 
-public class MySQLProjectImpl implements IProject {
+public class MySQLProjectImpl_old implements IProject {
 
 	public int countProjects() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("bd_scrum_adc");

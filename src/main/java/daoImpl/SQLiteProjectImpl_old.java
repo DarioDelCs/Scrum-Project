@@ -3,7 +3,7 @@ package daoImpl;
 import idao.IProject;
 import model.Project;
 
-public class SQLiteProjectImpl implements IProject{
+public class SQLiteProjectImpl_old implements IProject{
 
 	public int countProjects() {
 		// TODO Auto-generated method stub

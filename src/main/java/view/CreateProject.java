@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import daoImpl.MySQLProjectImpl;
+
 import model.Usuari;
 
 public class CreateProject extends JInternalFrame implements ActionListener {
@@ -26,9 +26,6 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 	private JPanel pCenterPanel;
 	private JDesktopPane pjdPanel;
 	private Usuari pUsuari;
-	
-	private MySQLProjectImpl project;
-
 	private JLabel plNombreProyecto, plDescripcion, plScrumMaster, plProductOwner;
 	private JTextField ptfNombreProyecto, ptfDescripcion;
 	private JComboBox<String> pcbScrumMaster, pcbProductOwner;
