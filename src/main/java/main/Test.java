@@ -20,7 +20,30 @@ public class Test {
 	public static UserType eUserType;
 	
 	public static void main(String[] args) {
-		int count=0;
+		
+		Connection conn = null;
+        try {
+            // db parameters
+            String url = "jdbc:sqlite:./chinook.db";
+            // create a connection to the database
+            conn = DriverManager.getConnection(url);
+            
+            System.out.println("Connection to SQLite has been established.");
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+		
+		
+		/*int count=0;
 		for (UserType eUsers : eUserType.values()) {
 			hmUser.put(eUsers, alUserString[count]);
 			count++;
@@ -41,7 +64,7 @@ public class Test {
 		entityManager.persist(new Usuari("name", "login", "pas", "asfd", "Email"));
 		entityManager.getTransaction().commit();
 		entityManager.close();
-		factory.close();
+		factory.close();*/
 	}
 
 }
