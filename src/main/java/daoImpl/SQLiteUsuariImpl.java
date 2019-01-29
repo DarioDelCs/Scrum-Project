@@ -20,12 +20,12 @@ import model.Usuari;
 
 public class SQLiteUsuariImpl implements IUsuari{
 
-	public Usuari getUsuari(String login, String password) {
+	public Usuari getUsuari(String login) {
         // create a connection to the database
 		try {
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
 			
-			String sql =  "SELECT * from users WHERE login_id = '"+login+"' AND password = '"+password+"'";
+			String sql =  "SELECT * from users WHERE login_id = '"+login+"'";
 			Statement stmt  = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -95,7 +95,7 @@ public class SQLiteUsuariImpl implements IUsuari{
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
 			Statement stmt  = conn.createStatement();
 			
-			String sql =  "SELECT nombre from users WHERE profilename = '"+profilename+"'";
+			String sql =  "SELECT * from users WHERE profilename = '"+profilename+"'";
 			ResultSet rs = stmt.executeQuery(sql);
 			String nameUser = null;
 			
@@ -103,7 +103,7 @@ public class SQLiteUsuariImpl implements IUsuari{
 				if(nameUser!=null) {
 					nameUser = nameUser+";";
 				}
-				nameUser = rs.getString("nombre");
+				nameUser = rs.getString("nombre")+"("+rs.getString("login_id")+")";
 	        }
 			
 	        stmt.close();

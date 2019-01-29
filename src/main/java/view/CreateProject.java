@@ -113,6 +113,7 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 		constraints.gridx = 2;
 		constraints.gridy = 10;
 		pCenterPanel.add(pbAnadir, constraints);
+		pbAnadir.addActionListener(this);
 				
 		setTitle("Nuevo Proyecto");// hard
 		setResizable(true);
@@ -126,7 +127,7 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == pbAnadir) {
-			Conexion.iProject.addProject(ptfNombreProyecto.getText(), ptfDescripcion, pcbScrumMaster.getSelectedItem().toString(), pcbProductOwner.getSelectedItem().toString());
+			Conexion.iProject.addProject(ptfNombreProyecto.getText(), ptfDescripcion.getText(), pcbScrumMaster.getSelectedItem().toString(), pcbProductOwner.getSelectedItem().toString());
 			ptfNombreProyecto.setText("");
 			ptfDescripcion.setText("");
 		}

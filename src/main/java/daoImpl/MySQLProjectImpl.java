@@ -37,7 +37,10 @@ public class MySQLProjectImpl implements IProject {
 			EntityManager entityManager = factory.createEntityManager();
 			entityManager.getTransaction().begin();
 			
-			Project newUser = new Project(pNameProject, pDescripcion, pScrumMaster, pProductOwner);
+			int scrumID = new MySQLUsuariImpl().getUsuari(pScrumMaster.split("\\(")[1].split("\\)")[0]).getpID();
+			int ownerID = new MySQLUsuariImpl().getUsuari(pProductOwner.split("\\(")[1].split("\\)")[0]).getpID();
+			
+			Project newUser = new Project(pNameProject, pDescripcion, scrumID, ownerID);
 	
 			entityManager.merge(newUser);
 			entityManager.getTransaction().commit();
@@ -45,7 +48,7 @@ public class MySQLProjectImpl implements IProject {
 			factory.close();
 
 			if(!new SQLiteProjectImpl().addProject(pNameProject, pDescripcion, pScrumMaster, pProductOwner)) {
-	            JOptionPane.showMessageDialog(null, "No se ha podido añadir el usuario en la db embebida", "Error añadir usuario", JOptionPane.ERROR_MESSAGE);
+	            JOptionPane.showMessageDialog(null, "No se ha podido añadir el proyecto en la db embebida", "Error añadir usuario", JOptionPane.ERROR_MESSAGE);
 			}
 			
 			return true;

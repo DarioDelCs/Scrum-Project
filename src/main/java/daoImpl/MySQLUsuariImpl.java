@@ -14,12 +14,12 @@ import idao.IUsuari;
 import model.Usuari;
 
 public class MySQLUsuariImpl implements IUsuari{
-	
-	public Usuari getUsuari(String login, String password) {
+
+	public Usuari getUsuari(String login) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
 		EntityManager entityManager = factory.createEntityManager();
 		
-		String sql =  "SELECT u from Usuari u WHERE login_id = '"+login+"' AND password = '"+password+"'";
+		String sql =  "SELECT u from Usuari u WHERE login_id = '"+login+"'";
 		Usuari usuari;
 		try{
 			Query query = entityManager.createQuery(sql);
@@ -33,22 +33,9 @@ public class MySQLUsuariImpl implements IUsuari{
 		
 		return usuari;
 	}
-	
-	public boolean existUser(String login) {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
-		EntityManager entityManager = factory.createEntityManager();
 
-		String sql =  "SELECT u from Usuari u WHERE login_id = '"+login+"'";
-		try{
-			Query query = entityManager.createQuery(sql);
-			Usuari usuari = (Usuari) query.getSingleResult();
-		}catch(NoResultException e) {
-			return false;
-		}
-		
-		entityManager.close();
-		factory.close();
-		return true;
+	public boolean existUser(String login) {
+		return (getUsuari(login)!=null)?true:false;
 	}
 
 	public boolean addUsuari(String pName, String pLoginId, String pPass, String pProfileId, String pEmail) {
@@ -86,7 +73,7 @@ public class MySQLUsuariImpl implements IUsuari{
 
 			nameUser = new String[users.size()];
 			for (int i = 0; i < users.size(); i++) {
-				nameUser[i]=users.get(i).getpName();
+				nameUser[i]=users.get(i).getpName()+"("+users.get(i).getpProfile()+")";
 			}
 			
 			entityManager.close();

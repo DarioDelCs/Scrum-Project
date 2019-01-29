@@ -35,18 +35,21 @@ public class SQLiteProjectImpl implements IProject{
 		}
 	}
 
-	public boolean addProject(String pNameProject, String pDescripcion, int pScrumMaster, int pProductOwner) {
+	public boolean addProject(String pNameProject, String pDescripcion, String pScrumMaster, String pProductOwner) {
 		try {
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
 			Statement stmt  = conn.createStatement();
+
+			int scrumID = new SQLiteUsuariImpl().getUsuari(pScrumMaster.split("\\(")[1].split("\\)")[0]).getpID();
+			int ownerID = new SQLiteUsuariImpl().getUsuari(pProductOwner.split("\\(")[1].split("\\)")[0]).getpID();
 			
-			String sql =  "INSERT INTO proyecto (nombre, descripcion, scrummaster, productowner) VALUES ('"+pNameProject+"', '"+pDescripcion+"', '"+pScrumMaster+"', '"+pProductOwner+"');";
+			String sql =  "INSERT INTO proyecto (nombre, descripcion, scrummaster, productowner) VALUES ('"+pNameProject+"', '"+pDescripcion+"', '"+scrumID+"', '"+ownerID+"');";
 			stmt.executeUpdate(sql);
-			
+
 			if(!Main.isOnline) {
 				new WriteLogController().writeInLog(sql);
 			}
-			
+
 	        stmt.close();
 	        conn.close();
 	        return true;					
@@ -55,5 +58,4 @@ public class SQLiteProjectImpl implements IProject{
 	        return false;
 		}
 	}
-
 }
