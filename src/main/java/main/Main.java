@@ -3,16 +3,12 @@ package main;
 import java.awt.BorderLayout;
 import java.util.HashMap;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import components.Tittle;
 import daoImpl.Conexion;
-import idao.OLD_IUsuari;
 import model.UserType;
 import view.Login;
 
@@ -35,7 +31,13 @@ public class Main extends JFrame/* implements ActionListener*/{
 		pjdPanel = new JDesktopPane();
 		setLayout(new BorderLayout());
 		
-		tryConnect();
+		if(Conexion.isConnected()) {
+			setTitle("Scrum Program - (ONLINE)");
+			isOnline=true;
+		}else {
+			setTitle("Scrum Program - (OFFLINE)");
+			isOnline=false;
+		}
 		Tittle.addMenu(this, pjdPanel);
 		pjdPanel.add(new Login(this, pjdPanel));
 		
@@ -55,7 +57,7 @@ public class Main extends JFrame/* implements ActionListener*/{
 		setVisible(true);
 	}
 	
-	private void tryConnect() {
+	/*private void tryConnect() {
 		if (Conexion.checkOnline()) {
 			setTitle("Scrum Program - (ONLINE)");
 			isOnline = true;
@@ -66,34 +68,5 @@ public class Main extends JFrame/* implements ActionListener*/{
 		Conexion.getConexion();
 		Conexion.getConexion().resultados();
 	
-	}
-	
-	
-//	private void addTitle() {
-//		pNorthPanel = new JPanel();
-//		pNorthPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-//		
-////		slUser = new JLabel("Usuario: " + sUsuari.getpName() + " ("+sUsuari.getpProfile()+")");//hard
-//		slUser = new JLabel("Prueba");
-//		pNorthPanel.add(slUser);
-//
-//		sbSalir = new JButton("Salir");
-//		pNorthPanel.add(sbSalir);
-//		
-////		pbSalir.addActionListener(this);
-//		
-//		pjdPanel.add(pNorthPanel, BorderLayout.NORTH);
-//		add(pNorthPanel, BorderLayout.NORTH);
-//	}
-
-//	public void actionPerformed(ActionEvent e) {
-//		if (e.getSource() == pbSalir) {
-////			if(pCenterPanel!=null) {
-////				pCenterPanel.setVisible(false);
-////			}
-////			this.dispose();
-////			pjdPanel.add(new Login(this, pjdPanel));
-//		}
-//	}
-
+	}*/
 }

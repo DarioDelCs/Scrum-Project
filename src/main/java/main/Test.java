@@ -2,11 +2,14 @@ package main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -21,28 +24,56 @@ public class Test {
 	public static UserType eUserType;
 	
 	public static void main(String[] args) {
-		Conexion.getConexion();
+//		Conexion.getConexion();
+		
+		 Connection conn;
+			try {
+				conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
+				
+				String sql =  "SELECT * from users WHERE login_id = 'NUAdmin' AND password = '123'";
+		        Statement stmt  = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery(sql);
+		       
+		        System.out.println(rs.next());
+		       // loop through the result set
+		       while (rs.next()) {
+		           System.out.println(rs.getString("user_id"));
+		       }
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		
-		Connection conn = null;
+//		Connection conn = null;
         try {
             // db parameters
-            String url = "jdbc:sqlite:./chinook.db";
+            String url = "jdbc:sqlite:./data2.sqlite";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
             
             System.out.println("Connection to SQLite has been established.");
+
+    		String sql =  "SELECT * from usuario";
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql);
+           
+           // loop through the result set
+           while (rs.next()) {
+               System.out.println(rs.getString("user_id"));
+           }
+            
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+//            try {
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (SQLException ex) {
+//                System.out.println(ex.getMessage());
+//            }
         }
 		
 		

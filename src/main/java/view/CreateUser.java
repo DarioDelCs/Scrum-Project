@@ -26,7 +26,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import daoImpl.Conexion;
-import idao.OLD_IUsuari;
+import idao.IUsuari;
 import model.Usuari;
 
 public class CreateUser extends JInternalFrame implements ActionListener, FocusListener{
@@ -72,7 +72,7 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 		constraints.gridy=1;
 		pCenterPanel.add(plLogin, constraints);
 		ptfLogin = new JTextField();
-		ptfLogin.setEditable(false);
+//		ptfLogin.setEditable(false);
 		constraints.gridx=1;
 		constraints.gridy=1;
 		pCenterPanel.add(ptfLogin, constraints);
@@ -132,8 +132,8 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 		constraints.gridy=5;
 		pCenterPanel.add(pcbPerfil, constraints);
 		pcbPerfil.addItem("Seleccione un perfil de usuario");
-		pcbPerfil.addItem("Product Owner");
-		pcbPerfil.addItem("Scrum Master");
+		pcbPerfil.addItem("ProductOwner");
+		pcbPerfil.addItem("ScrumMaster");
 		pcbPerfil.addItem("Developer");
 		pcbPerfil.addItem("Administrador");
 		
@@ -168,9 +168,14 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 				correoOk = comprobarEmail(ptfMail.getText());
 				passOk = comprobarPass();
 				if (correoOk && passOk ) {
-					
-					Conexion.getConexion().addUsuari(ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
-					JOptionPane.showMessageDialog(null, "Usuario insertado", "Insert", JOptionPane.INFORMATION_MESSAGE);
+					String login = ptfLogin.getText();
+					int addNum = 0;
+					while(Conexion.getIUser().existUser(ptfLogin.getText())) {
+						ptfLogin.setText(login+addNum);
+						addNum++;
+					}
+					Conexion.getIUser().addUsuari(ptfNombre.getText(), login, ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
+					JOptionPane.showMessageDialog(null, "Usuario insertado\nTu login va a ser: "+ptfLogin.getText(), "Insert", JOptionPane.INFORMATION_MESSAGE);
 					ptfNombre.setText("");
 					ptfLogin.setText("");
 					ptfMail.setText("");

@@ -3,7 +3,7 @@ package idao;
 import model.Project;
 import model.Usuari;
 
-public interface IConexion {
+public interface OLD_IConexion {
 	public Project getProject(int number);
 	public void addProject(String pNameProject, String pDescripcion, int pScrumMaster, int pProductOwner);
 	public Usuari getUsuari(String login, String password);

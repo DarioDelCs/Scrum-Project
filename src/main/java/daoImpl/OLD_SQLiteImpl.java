@@ -1,10 +1,10 @@
 package daoImpl;
 
-import idao.IConexion;
+import idao.OLD_IConexion;
 import model.Project;
 import model.Usuari;
 
-public class SQLiteImpl implements IConexion{
+public class OLD_SQLiteImpl implements OLD_IConexion{
 
 	public Project getProject(int number) {
 		// TODO Auto-generated method stub

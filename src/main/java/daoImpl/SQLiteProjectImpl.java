@@ -1,9 +1,9 @@
 package daoImpl;
 
-import idao.OLD_IProject;
+import idao.IProject;
 import model.Project;
 
-public class SQLiteProjectImpl_old implements OLD_IProject{
+public class SQLiteProjectImpl implements IProject{
 
 	public int countProjects() {
 		// TODO Auto-generated method stub

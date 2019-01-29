@@ -8,11 +8,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import idao.IConexion;
+import idao.OLD_IConexion;
 import model.Project;
 import model.Usuari;
 
-public class MySQLImpl implements IConexion{
+public class OLD_MySQLImpl implements OLD_IConexion{
 	
 	public Project getProject(int number) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");

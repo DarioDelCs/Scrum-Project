@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 
 import components.Tittle;
 import daoImpl.Conexion;
-import idao.OLD_IUsuari;
+import idao.IUsuari;
 import main.Main;
 import model.UserType;
 import model.Usuari;
@@ -100,7 +100,7 @@ public class Login extends JInternalFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Usuari user = Conexion.getConexion().getUsuari(ptfLogin.getText(), ppfPassword.getText());
+		Usuari user = Conexion.getIUser().getUsuari(ptfLogin.getText(), ppfPassword.getText());
 		if(user != null) {
 			sUserGroup=user.getpProfile();
 			this.hide();

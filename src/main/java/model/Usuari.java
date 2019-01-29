@@ -33,8 +33,7 @@ public class Usuari {
 
 	public Usuari() {};
 	
-	
-	public Usuari( String pEmail, String pLoginId, String pName, String pPass, String pProfileId) {
+	public Usuari(String pEmail, String pLoginId, String pName, String pPass, String pProfileId) {
 		this.pName = pName;
 		this.pLoginId = pLoginId;
 		this.pPass = pPass;

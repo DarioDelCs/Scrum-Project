@@ -4,39 +4,42 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import idao.IConexion;
-import idao.OLD_IUsuari;
+import idao.IProject;
+import idao.IUsuari;
 import main.Main;
 
 public class Conexion {
-
-	private static IConexion conector;
 	
-	public static IConexion getConexion() {
-		if (conector== null) {
-			conector = generarConector();			
-		}
-		return conector;
-	}
+	private static IUsuari iUser;
+	private static IProject iProject;
 	
-	private static IConexion generarConector()  {
-		if (Main.isOnline) {
-			conector = new MySQLImpl();
-			return conector;
-		}else {
-			conector = new SQLiteImpl();
-			return conector;
-		}
-	}
-	
-	public static boolean checkOnline() {
+	public static boolean isConnected() {
 		try {
 			EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
 			EntityManager entityManager = factory.createEntityManager();
+			iUser = new MySQLUsuariImpl();
+			iProject = new MySQLProjectImpl();
 			return true;
 		}catch (Exception e){
+			iUser = new SQLiteUsuariImpl();
+			iProject = new SQLiteProjectImpl();
 			return false;
 		}
+	}
+	
+	//esto se puede omitir si ponermos los atributos publicos
+	public static IUsuari getIUser() {
+		if(iUser == null) {
+			isConnected();
+		}
+		return iUser;
+	}
+	
+	public static IProject getIProject() {
+		if(iProject == null) {
+			isConnected();
+		}
+		return iProject;
 	}
 }
 
