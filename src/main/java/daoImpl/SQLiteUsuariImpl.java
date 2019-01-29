@@ -83,7 +83,7 @@ public class SQLiteUsuariImpl implements IUsuari{
 			
 	        stmt.close();
 	        conn.close();
-	        return true;
+	        return true;					
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 	        return false;

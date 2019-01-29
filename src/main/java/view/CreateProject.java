@@ -126,6 +126,7 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == pbAnadir) {
+			Conexion.iProject.addProject(ptfNombreProyecto.getText(), ptfDescripcion, pcbScrumMaster.getSelectedItem().toString(), pcbProductOwner.getSelectedItem().toString());
 			ptfNombreProyecto.setText("");
 			ptfDescripcion.setText("");
 		}
