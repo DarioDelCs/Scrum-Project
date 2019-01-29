@@ -105,21 +105,16 @@ public class Login extends JInternalFrame implements ActionListener{
 			sUserGroup=user.getpProfile();
 			this.hide();
 			JOptionPane.showMessageDialog(null, "Usuari y contraseña correctos", "Log in", JOptionPane.INFORMATION_MESSAGE);
+			try {
+				this.setClosed(true);
+			} catch (PropertyVetoException e1) {
+				System.out.println("Error, no se ha podido cerrar la ventana de login");
+			}
 			if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
-				try {
-					this.setClosed(true);
-				} catch (PropertyVetoException e1) {
-					System.out.println("Error, no se ha podido cerrar la ventana de login");
-				}
 				Tittle.smiNewUser.setEnabled(true);
 				Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
 				Tittle.sbSalirLogin.setText("Salir");
 			}else if(sUserGroup.equals(Main.hmUser.get(UserType.ScrumMaster))){
-				try {
-					this.setClosed(true);
-				} catch (PropertyVetoException e1) {
-					System.out.println("Error, no se ha podido cerrar la ventana de login");
-				}
 				Tittle.smiNewProyect.setEnabled(true);
 				Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
 				Tittle.sbSalirLogin.setText("Salir");

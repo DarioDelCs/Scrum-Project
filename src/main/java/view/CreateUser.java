@@ -26,7 +26,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import daoImpl.Conexion;
-import idao.IUsuari;
 import model.Usuari;
 
 public class CreateUser extends JInternalFrame implements ActionListener, FocusListener{
