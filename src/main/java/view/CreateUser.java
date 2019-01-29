@@ -169,11 +169,11 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 				if (correoOk && passOk ) {
 					String login = ptfLogin.getText();
 					int addNum = 0;
-					while(Conexion.getIUser().existUser(ptfLogin.getText())) {
+					while(Conexion.iUser.existUser(ptfLogin.getText())) {
 						ptfLogin.setText(login+addNum);
 						addNum++;
 					}
-					Conexion.getIUser().addUsuari(ptfNombre.getText(), login, ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
+					Conexion.iUser.addUsuari(ptfNombre.getText(), login, ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
 					JOptionPane.showMessageDialog(null, "Usuario insertado\nTu login va a ser: "+ptfLogin.getText(), "Insert", JOptionPane.INFORMATION_MESSAGE);
 					ptfNombre.setText("");
 					ptfLogin.setText("");

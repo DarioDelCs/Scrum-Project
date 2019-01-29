@@ -5,6 +5,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import components.WriteLogController;
 import idao.IUsuari;
@@ -80,6 +87,32 @@ public class SQLiteUsuariImpl implements IUsuari{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 	        return false;
+		}
+	}
+
+	public String[] getUersProfilename(String profilename) {
+		try {
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
+			Statement stmt  = conn.createStatement();
+			
+			String sql =  "SELECT nombre from users WHERE profilename = '"+profilename+"'";
+			ResultSet rs = stmt.executeQuery(sql);
+			String nameUser = null;
+			
+			while(rs.next()) {
+				if(nameUser!=null) {
+					nameUser = nameUser+";";
+				}
+				nameUser = rs.getString("nombre");
+	        }
+			
+	        stmt.close();
+	        rs.close();
+	        conn.close();
+			return nameUser.split(";");
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+	        return null;
 		}
 	}
 }

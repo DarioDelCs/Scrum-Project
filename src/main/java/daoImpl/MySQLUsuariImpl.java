@@ -1,6 +1,7 @@
 package daoImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -70,6 +71,31 @@ public class MySQLUsuariImpl implements IUsuari{
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 			return false;
+		}
+	}
+
+	public String[] getUersProfilename(String profilename) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
+		EntityManager entityManager = factory.createEntityManager();
+		
+		String sql =  "SELECT u FROM Usuari u WHERE profilename = '"+profilename+"'";
+		String[] nameUser;
+		try{
+			Query query = entityManager.createQuery(sql);
+			List<Usuari> users = query.getResultList();
+
+			nameUser = new String[users.size()];
+			for (int i = 0; i < users.size(); i++) {
+				nameUser[i]=users.get(i).getpName();
+			}
+			
+			entityManager.close();
+			factory.close();
+			return nameUser;
+		}catch(NoResultException e) {
+			entityManager.close();
+			factory.close();
+			return null;
 		}
 	}
 }

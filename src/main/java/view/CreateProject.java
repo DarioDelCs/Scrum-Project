@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-
+import daoImpl.Conexion;
 import model.Usuari;
 
 public class CreateProject extends JInternalFrame implements ActionListener {
@@ -86,7 +86,7 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 		constraints.gridy = 6;
 		pCenterPanel.add(plScrumMaster, constraints);
 		
-		pcbScrumMaster = new JComboBox();
+		pcbScrumMaster = new JComboBox(Conexion.iUser.getUersProfilename("ScrumMaster"));
 		constraints.gridx = 2;
 		constraints.gridy = 6;
 		constraints.gridwidth = 2;
@@ -100,7 +100,7 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 		constraints.gridy = 8;
 		pCenterPanel.add(plProductOwner, constraints);
 		
-		pcbProductOwner = new JComboBox();
+		pcbProductOwner = new JComboBox(Conexion.iUser.getUersProfilename("ProductOwner"));
 		constraints.gridx = 2;
 		constraints.gridy = 8;
 		constraints.gridwidth = 2;

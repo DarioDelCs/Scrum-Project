@@ -7,5 +7,5 @@ public interface IUsuari {
 	public Usuari getUsuari(String login, String password);
 	public boolean existUser(String login);
 	public boolean addUsuari(String pName, String pLoginId, String pPass, String pProfileId, String pEmail);
-//	public ArrayList<Usuari> getUsuaris(String loginName);
+	public String[] getUersProfilename(String profilename);
 }
