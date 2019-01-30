@@ -29,7 +29,6 @@ public class Test {
 		 Connection conn;
 			try {
 				conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
-				
 				String sql =  "SELECT * from users WHERE login_id = 'NUAdmin' AND password = '123'";
 		        Statement stmt  = conn.createStatement();
 		        ResultSet rs = stmt.executeQuery(sql);
@@ -37,7 +36,7 @@ public class Test {
 		        System.out.println(rs.next());
 		       // loop through the result set
 		       while (rs.next()) {
-		           System.out.println(rs.getString("user_id"));
+		           System.out.println(rs.getString(1));
 		       }
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

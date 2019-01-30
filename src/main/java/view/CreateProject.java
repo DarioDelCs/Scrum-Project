@@ -14,6 +14,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -127,9 +128,11 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == pbAnadir) {
-			Conexion.iProject.addProject(ptfNombreProyecto.getText(), ptfDescripcion.getText(), pcbScrumMaster.getSelectedItem().toString(), pcbProductOwner.getSelectedItem().toString());
+			if(Conexion.iProject.addProject(ptfNombreProyecto.getText(), ptfDescripcion.getText(), pcbScrumMaster.getSelectedItem().toString(), pcbProductOwner.getSelectedItem().toString())) {
+				JOptionPane.showMessageDialog(null, "Proyecto añadido", "Insercion", JOptionPane.INFORMATION_MESSAGE);
+				ptfDescripcion.setText("");
+			}
 			ptfNombreProyecto.setText("");
-			ptfDescripcion.setText("");
 		}
 	}
 	

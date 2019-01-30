@@ -25,6 +25,7 @@ public class MySQLUsuariImpl implements IUsuari{
 			Query query = entityManager.createQuery(sql);
 			usuari = (Usuari) query.getSingleResult();
 		}catch(NoResultException e) {
+			System.out.println(e.getMessage());
 			return null;
 		}
 
@@ -73,7 +74,7 @@ public class MySQLUsuariImpl implements IUsuari{
 
 			nameUser = new String[users.size()];
 			for (int i = 0; i < users.size(); i++) {
-				nameUser[i]=users.get(i).getpName()+"("+users.get(i).getpProfile()+")";
+				nameUser[i]=users.get(i).getpName()+"("+users.get(i).getpLoginId()+")";
 			}
 			
 			entityManager.close();

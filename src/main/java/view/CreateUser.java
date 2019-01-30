@@ -71,7 +71,7 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 		constraints.gridy=1;
 		pCenterPanel.add(plLogin, constraints);
 		ptfLogin = new JTextField();
-//		ptfLogin.setEditable(false);
+		ptfLogin.setEditable(false);
 		constraints.gridx=1;
 		constraints.gridy=1;
 		pCenterPanel.add(ptfLogin, constraints);

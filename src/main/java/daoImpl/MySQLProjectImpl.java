@@ -21,7 +21,7 @@ public class MySQLProjectImpl implements IProject {
 		String sql =  "SELECT p from Project p WHERE nombre = '"+nombreProject+"'";
 		try{
 			Query query = entityManager.createQuery(sql);
-			Usuari usuari = (Usuari) query.getSingleResult();
+			Project project = (Project) query.getSingleResult();
 		}catch(NoResultException e) {
 			return false;
 		}
@@ -36,14 +36,19 @@ public class MySQLProjectImpl implements IProject {
 			EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
 			EntityManager entityManager = factory.createEntityManager();
 			entityManager.getTransaction().begin();
-			
+
 			int scrumID = new MySQLUsuariImpl().getUsuari(pScrumMaster.split("\\(")[1].split("\\)")[0]).getpID();
 			int ownerID = new MySQLUsuariImpl().getUsuari(pProductOwner.split("\\(")[1].split("\\)")[0]).getpID();
 			
-			Project newUser = new Project(pNameProject, pDescripcion, scrumID, ownerID);
+			Project newProject = new Project(pNameProject, pDescripcion, scrumID, ownerID);
 	
-			entityManager.merge(newUser);
-			entityManager.getTransaction().commit();
+			if(!existProject(newProject.getpName())) {
+				entityManager.merge(newProject);
+				entityManager.getTransaction().commit();
+			}else {
+	            JOptionPane.showMessageDialog(null, "El proyecto ya existe", "Error añadir proyecto", JOptionPane.WARNING_MESSAGE);
+	            return false;
+			}
 			entityManager.close();
 			factory.close();
 
@@ -54,6 +59,7 @@ public class MySQLProjectImpl implements IProject {
 			return true;
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 	}
