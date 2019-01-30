@@ -87,7 +87,7 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 		constraints.gridy = 6;
 		pCenterPanel.add(plScrumMaster, constraints);
 		
-		pcbScrumMaster = new JComboBox(Conexion.iUser.getUersProfilename("ScrumMaster"));
+		pcbScrumMaster = new JComboBox(Conexion.getIUser().getUersProfilename("ScrumMaster"));
 		constraints.gridx = 2;
 		constraints.gridy = 6;
 		constraints.gridwidth = 2;
@@ -101,7 +101,7 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 		constraints.gridy = 8;
 		pCenterPanel.add(plProductOwner, constraints);
 		
-		pcbProductOwner = new JComboBox(Conexion.iUser.getUersProfilename("ProductOwner"));
+		pcbProductOwner = new JComboBox(Conexion.getIUser().getUersProfilename("ProductOwner"));
 		constraints.gridx = 2;
 		constraints.gridy = 8;
 		constraints.gridwidth = 2;
@@ -128,7 +128,7 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == pbAnadir) {
-			if(Conexion.iProject.addProject(ptfNombreProyecto.getText(), ptfDescripcion.getText(), pcbScrumMaster.getSelectedItem().toString(), pcbProductOwner.getSelectedItem().toString())) {
+			if(Conexion.getIProject().addProject(ptfNombreProyecto.getText(), ptfDescripcion.getText(), pcbScrumMaster.getSelectedItem().toString(), pcbProductOwner.getSelectedItem().toString())) {
 				JOptionPane.showMessageDialog(null, "Proyecto añadido", "Insercion", JOptionPane.INFORMATION_MESSAGE);
 				ptfDescripcion.setText("");
 			}

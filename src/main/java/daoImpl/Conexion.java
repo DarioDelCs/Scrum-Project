@@ -10,8 +10,8 @@ import main.Main;
 
 public class Conexion {
 
-	public static IUsuari iUser;
-	public static IProject iProject;
+	private static IUsuari iUser;
+	private static IProject iProject;
 	
 	public static boolean isConnected() {
 		try {
@@ -28,7 +28,7 @@ public class Conexion {
 	}
 	
 	//esto se puede omitir si ponermos los atributos publicos
-	/*public static IUsuari getIUser() {
+	public static IUsuari getIUser() {
 		if(iUser == null) {
 			isConnected();
 		}
@@ -40,6 +40,6 @@ public class Conexion {
 			isConnected();
 		}
 		return iProject;
-	}*/
+	}
 }
 

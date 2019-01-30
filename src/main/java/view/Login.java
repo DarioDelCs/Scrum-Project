@@ -100,7 +100,7 @@ public class Login extends JInternalFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Usuari user = Conexion.iUser.getUsuari(ptfLogin.getText());//, ppfPassword.getText()
+		Usuari user = Conexion.getIUser().getUsuari(ptfLogin.getText());//, ppfPassword.getText()
 		if(user != null) {
 			if(user.getpPass().equals(ppfPassword.getText())) {
 				sUserGroup=user.getpProfile();
