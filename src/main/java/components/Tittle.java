@@ -18,6 +18,7 @@ import model.Usuari;
 import view.CreateUser;
 import view.CreateProject;
 import view.Login;
+import view.SeeProject;
 
 public class Tittle {
 
@@ -70,6 +71,12 @@ public class Tittle {
 			
 			public void actionPerformed(ActionEvent e) {
 				jdPanel.add(new CreateProject(sFrame, jdPanel));
+			}
+		});
+		smiSeeProyects.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				jdPanel.add(new SeeProject(sFrame, jdPanel));
 			}
 		});
 		frame.add(spMenu, BorderLayout.NORTH);
