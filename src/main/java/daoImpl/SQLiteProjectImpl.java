@@ -37,7 +37,7 @@ public class SQLiteProjectImpl implements IProject{
 	}
 
 	public boolean addProject(String pNameProject, String pDescripcion, String pScrumMaster, String pProductOwner) {
-		if(!existProject(pNameProject)) {
+//		if(!existProject(pNameProject)) {
 			try {
 				Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
 				Statement stmt  = conn.createStatement();
@@ -59,9 +59,9 @@ public class SQLiteProjectImpl implements IProject{
 				System.out.println(e.getMessage());
 		        return false;
 			}
-		}else {
-            JOptionPane.showMessageDialog(null, "El proyecto ya existe", "Error añadir proyecto", JOptionPane.WARNING_MESSAGE);
-            return false;
-		}
+//		}else {
+//            JOptionPane.showMessageDialog(null, "El proyecto ya existe", "Error añadir proyecto", JOptionPane.WARNING_MESSAGE);
+//            return false;
+//		}
 	}
 }

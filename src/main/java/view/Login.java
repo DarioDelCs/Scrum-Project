@@ -117,10 +117,21 @@ public class Login extends JInternalFrame implements ActionListener{
 					Tittle.sbSalirLogin.setText("Salir");
 				}else if(sUserGroup.equals(Main.hmUser.get(UserType.ScrumMaster))){
 					Tittle.smiNewProyect.setEnabled(true);
+					Tittle.smiSearchModUser.setEnabled(true);
+					Tittle.smiSeeProyects.setEnabled(true);
 					Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
 					Tittle.sbSalirLogin.setText("Salir");
-				}else {
-					JOptionPane.showMessageDialog(null, "Grupo de usuario no implementado", "Disculpen las molestias", JOptionPane.WARNING_MESSAGE);
+				}else if(sUserGroup.equals(Main.hmUser.get(UserType.ProductOwner))){
+					Tittle.smiSearchModUser.setEnabled(true);
+					Tittle.smiSeeProyects.setEnabled(true);
+//					Tittle.smiNewProyect.setEnabled(true);
+					Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
+					Tittle.sbSalirLogin.setText("Salir");
+				}else if(sUserGroup.equals(Main.hmUser.get(UserType.Developer))){
+					Tittle.smiSearchModUser.setEnabled(true);
+					Tittle.smiSeeProyects.setEnabled(true);
+					Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
+					Tittle.sbSalirLogin.setText("Salir");
 				}
 			}else {
 				JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Error en el login", JOptionPane.WARNING_MESSAGE);

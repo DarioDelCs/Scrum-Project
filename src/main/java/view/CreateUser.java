@@ -173,13 +173,16 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 						ptfLogin.setText(login+addNum);
 						addNum++;
 					}
-					Conexion.getIUser().addUsuari(ptfNombre.getText(), login, ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
-					JOptionPane.showMessageDialog(null, "Usuario insertado\nTu login va a ser: "+ptfLogin.getText(), "Insert", JOptionPane.INFORMATION_MESSAGE);
-					ptfNombre.setText("");
-					ptfLogin.setText("");
-					ptfMail.setText("");
-					ppfPass.setText("");
-					ppfPass2.setText("");
+					if(Conexion.getIUser().addUsuari(ptfNombre.getText(), login, ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText())) {
+						JOptionPane.showMessageDialog(null, "Usuario insertado\nTu login va a ser: "+ptfLogin.getText(), "Insert", JOptionPane.INFORMATION_MESSAGE);
+						ptfNombre.setText("");
+						ptfLogin.setText("");
+						ptfMail.setText("");
+						ppfPass.setText("");
+						ppfPass2.setText("");
+					}else {
+						JOptionPane.showMessageDialog(null, "No se ha podido insertar el usuario", "Insert ERROR", JOptionPane.ERROR_MESSAGE);
+					}
 				} else {
 					if (!correoOk) {
 			            JOptionPane.showMessageDialog(null, "El formato del email no es valido", "Error email", JOptionPane.ERROR_MESSAGE);

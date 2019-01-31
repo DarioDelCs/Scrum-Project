@@ -42,18 +42,18 @@ public class MySQLProjectImpl implements IProject {
 			
 			Project newProject = new Project(pNameProject, pDescripcion, scrumID, ownerID);
 	
-			if(!existProject(newProject.getpName())) {
+//			if(!existProject(newProject.getpName())) {
 				entityManager.merge(newProject);
 				entityManager.getTransaction().commit();
-			}else {
-	            JOptionPane.showMessageDialog(null, "El proyecto ya existe", "Error añadir proyecto", JOptionPane.WARNING_MESSAGE);
-	            return false;
-			}
+//			}else {
+//	            JOptionPane.showMessageDialog(null, "El proyecto ya existe", "Error añadir proyecto", JOptionPane.WARNING_MESSAGE);
+//	            return false;
+//			}
 			entityManager.close();
 			factory.close();
 
 			if(!new SQLiteProjectImpl().addProject(pNameProject, pDescripcion, pScrumMaster, pProductOwner)) {
-	            JOptionPane.showMessageDialog(null, "No se ha podido añadir el proyecto en la db embebida", "Error añadir usuario", JOptionPane.ERROR_MESSAGE);
+//	            JOptionPane.showMessageDialog(null, "No se ha podido añadir el proyecto en la db embebida", "Error añadir proyecto", JOptionPane.ERROR_MESSAGE);
 			}
 			
 			return true;

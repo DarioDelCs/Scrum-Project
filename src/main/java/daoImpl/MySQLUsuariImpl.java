@@ -53,7 +53,7 @@ public class MySQLUsuariImpl implements IUsuari{
 			factory.close();
 			
 			if(!new SQLiteUsuariImpl().addUsuari(pName, pLoginId, pPass, pProfileId, pEmail)) {
-	            JOptionPane.showMessageDialog(null, "No se ha podido añadir el usuario en la db embebida", "Error añadir usuario", JOptionPane.ERROR_MESSAGE);
+//	            JOptionPane.showMessageDialog(null, "No se ha podido añadir el usuario en la db embebida", "Error añadir usuario", JOptionPane.ERROR_MESSAGE);
 			}
 			return true;
 		}catch(Exception e) {
