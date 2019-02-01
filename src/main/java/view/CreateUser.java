@@ -140,7 +140,6 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 		setResizable(true);
 		setClosable(true);
 		pack();
-	
 //		setSize(this.pFrame.getWidth()/2,this.pFrame.getHeight()/2);
 //		setLocation(pFrame.getHeight()/2-this.getHeight()/2, pFrame.getWidth()/2-this.getWidth()/2);
 		setVisible(true);

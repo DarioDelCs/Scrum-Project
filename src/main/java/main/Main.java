@@ -3,8 +3,6 @@ package main;
 import java.awt.BorderLayout;
 import java.util.HashMap;
 
-import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureQuery;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,24 +23,6 @@ public class Main extends JFrame/* implements ActionListener*/{
 	
 	public static void main(String[] args) {
 		new Main();
-		/*ESTA EN "RUTINAS"
-		 DELIMITER $$
-		 CREATE PROCEDURE change_Faction(IN id_personaje INT, IN id_faccion_destino INT)
-		 	BEGIN
-			 	UPDATE personaje
-				SET faccion_id = id_faccion_destino
-				WHERE personaje_id = id_personaje;
-		    END$$
-		  DELIMITER ; 
-		------------
-		DELIMITER $$
-	CREATE PROCEDURE insertUser(IN nombre CHARACTER(100), IN loginId CHARACTER(100), IN pass CHARACTER(100), IN profileName CHARACTER(100), IN email CHARACTER(100))
-		BEGIN
-			INSERT INTO users ('nombre', 'login_id', 'password', 'profilename', 'email')
-            VALUES (nombre, loginId, pass, profileName, email);
-		END$$
-DELIMITER ; 
-		 */
 	}
 	
 	public Main() {

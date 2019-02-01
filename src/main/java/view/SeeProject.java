@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyVetoException;
 import java.util.List;
 
@@ -16,26 +18,22 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import model.Project;
 
 import daoImpl.Conexion;
 
-public class SeeProject extends JInternalFrame implements ActionListener {
+public class SeeProject extends JInternalFrame implements ActionListener, MouseListener {
 
 	private JDesktopPane pjdPanel;
 	private JFrame pFrame;
 	
 	private JPanel pPanel, pPanelS;
 	private JScrollPane psPanel;
-	private JList list ;
 	
 	
 	private JLabel plNombre, plOwner, plMaster;
@@ -75,8 +73,7 @@ public class SeeProject extends JInternalFrame implements ActionListener {
 		pPanelS.setLayout(new BoxLayout(pPanelS, BoxLayout.Y_AXIS));
 		pPanelS.setBackground(Color.WHITE);
 
-		//psPanel = new JScrollPane(pPanelS);
-		list  = new JList();
+		psPanel = new JScrollPane(pPanelS);
 		constraints.gridx=0;
 		constraints.gridy=0;
 		constraints.gridheight=4;
@@ -129,33 +126,15 @@ public class SeeProject extends JInternalFrame implements ActionListener {
 		pPanel.add(pbMostrarSpecs, constraints);
 
 		constraints.gridwidth=1;
-		psPanel.setViewportView(list);
 		
 		projects = Conexion.getIProject().getProjects();
 		
 		for (Project project : projects) {
-			
-			pPanelS.add(new JLabel(project.getpName()));
+			JLabel label = new JLabel(project.getpName());
+			pPanelS.add(label);
+			label.addMouseListener(this);
 			
 		}
-		
-		list.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-            	for (Project project : projects) {
-            		if (!event.getValueIsAdjusting()){
-                        JList source = (JList)event.getSource();
-                        String selected = source.getSelectedValue().toString();
-                        if(selected.equals(project.getpName())) {
-                        	ptfNombre.setText(project.getpName());
-                        	ptfOwner.setText(Conexion.getIUser().getUsuari(project.getpProductOwner()));
-                        	ptfMaster.setText(Conexion.getIUser().getUsuari(project.getpScrumMaster()));
-                        }
-                    }
-        		}
-            }
-        });
-		
-		//list.addListSelectionListener(arg0);
 		pbMostrarSpecs.addActionListener(this);
 		
 		add(pPanel);
@@ -163,12 +142,24 @@ public class SeeProject extends JInternalFrame implements ActionListener {
 
 	
 	public void actionPerformed(ActionEvent e) {
-		try {
-			this.setClosed(true);
-		} catch (PropertyVetoException e1) {
-			System.out.println("Error, no se ha podido cerrar la ventana de login");
-		}
 		pjdPanel.add(new SeeSpecs(pFrame, pjdPanel));
 	}
+
+
+	public void mousePressed(MouseEvent e) {
+		for (Project project : projects) {
+			if(((JLabel)e.getSource()).getText()==project.getpName()) {
+				ptfNombre.setText(project.getpName());
+		    	ptfOwner.setText(Conexion.getIUser().getUsuari(project.getpProductOwner()));
+		    	ptfMaster.setText(Conexion.getIUser().getUsuari(project.getpScrumMaster()));
+		    	ptaDescipcion.setText(project.getpDescripcion());
+			}
+		}
+	}
+
+	public void mouseReleased(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {}
 	
 }
