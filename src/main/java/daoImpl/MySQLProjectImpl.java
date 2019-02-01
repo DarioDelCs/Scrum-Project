@@ -1,15 +1,18 @@
 package daoImpl;
 
+
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.swing.JOptionPane;
+
 
 import idao.IProject;
 import model.Project;
-import model.Usuari;
+
 
 
 public class MySQLProjectImpl implements IProject {
@@ -29,6 +32,24 @@ public class MySQLProjectImpl implements IProject {
 		entityManager.close();
 		factory.close();
 		return true;
+	}
+	public List<Project> getProjects() {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
+		EntityManager entityManager = factory.createEntityManager();
+		
+		String sql =  "SELECT p from Project p ";
+		
+		try{
+			Query query = entityManager.createQuery(sql);
+			List<Project> projects = query.getResultList();
+			entityManager.close();
+			factory.close();
+			return projects;
+		}catch(NoResultException e) {
+			entityManager.close();
+			factory.close();
+			return null;
+		}
 	}
 	
 	public boolean addProject(String pNameProject, String pDescripcion, String pScrumMaster, String pProductOwner) {
