@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -63,5 +64,10 @@ public class SQLiteProjectImpl implements IProject{
 //            JOptionPane.showMessageDialog(null, "El proyecto ya existe", "Error añadir proyecto", JOptionPane.WARNING_MESSAGE);
 //            return false;
 //		}
+	}
+
+	public List<Project> getProjects() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

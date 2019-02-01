@@ -1,13 +1,16 @@
 package daoImpl;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
+import javax.persistence.ParameterMode;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.StoredProcedureQuery;
 import javax.swing.JOptionPane;
 
 import idao.IUsuari;
@@ -85,5 +88,34 @@ public class MySQLUsuariImpl implements IUsuari{
 			factory.close();
 			return null;
 		}
+	}
+	
+	public boolean inserUser(String nombre, String loginId, String pass, String profileName, String email) {
+		try{
+			EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
+			EntityManager entityManager = factory.createEntityManager();
+			
+			StoredProcedureQuery query = entityManager
+				.createStoredProcedureQuery("insertUser", Usuari.class)//nombre procedure
+
+			    .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)//el primer valor que tipo es y si es in o out
+			    .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+			    .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
+			    .registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
+			    .registerStoredProcedureParameter(5, String.class, ParameterMode.IN)
+			    
+			    .setParameter(1, nombre)
+			    .setParameter(2, loginId)
+			    .setParameter(3, pass)
+			    .setParameter(4, profileName)
+			    .setParameter(5, email);
+		    
+			return query.execute();
+//			System.out.println("Fin OK");
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Fin KO");
+		}
+		return false;
 	}
 }

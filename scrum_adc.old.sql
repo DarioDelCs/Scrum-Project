@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-02-2019 a las 17:01:26
+-- Tiempo de generación: 30-01-2019 a las 16:08:57
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 5.6.38
 
@@ -22,17 +22,6 @@ SET time_zone = "+00:00";
 -- Base de datos: `scrum_adc`
 --
 
-DELIMITER $$
---
--- Procedimientos
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insertUser` (IN `nombre` VARCHAR(100) CHARSET utf8, IN `loginId` VARCHAR(100) CHARSET utf8, IN `pass` VARCHAR(100) CHARSET utf8, IN `profileName` VARCHAR(100) CHARSET utf8, IN `email` VARCHAR(100) CHARSET utf8)  BEGIN
-			INSERT INTO users (nombre, login_id, password, profilename, email)
-            VALUES (nombre, loginId, pass, profileName, email);
-		END$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -41,11 +30,11 @@ DELIMITER ;
 
 CREATE TABLE `especificaciones` (
   `IdEspecificacion` int(11) NOT NULL,
+  `Nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `Descripcion` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `Horas` int(11) NOT NULL,
   `idProyecto` int(11) NOT NULL,
-  `Sprint` int(11) NOT NULL,
-  `Marcada` tinyint(1) NOT NULL
+  `Sprint` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -156,13 +145,13 @@ ALTER TABLE `grupo`
 -- AUTO_INCREMENT de la tabla `proyecto`
 --
 ALTER TABLE `proyecto`
-  MODIFY `idProyecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idProyecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `USER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `USER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas
