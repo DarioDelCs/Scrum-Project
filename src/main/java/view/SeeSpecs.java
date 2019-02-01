@@ -9,6 +9,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import components.Specs;
 
@@ -17,7 +18,8 @@ public class SeeSpecs extends JInternalFrame {
 	private JDesktopPane pjdPanel;
 	private JFrame pFrame;
 	
-	private JPanel pNorthPanel, pCenterPanel;
+	private JPanel pNorthPanel, pPanelOfScroll;
+	private JScrollPane psCenterPanel;
 	
 	private JButton pbGuardar, pbAnadir, pbEliminar;
 	
@@ -31,15 +33,15 @@ public class SeeSpecs extends JInternalFrame {
 		setResizable(true);
 		setClosable(true);
 //		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-//		setSize(this.pFrame.getWidth()/2,this.pFrame.getHeight()/2);
-		pack();
+		setSize(this.pFrame.getWidth()/5*3,this.pFrame.getHeight()/3*2);
 //		setLocation(pFrame.getHeight()/2-this.getHeight(), pFrame.getWidth()/2-this.getWidth());
 		setVisible(true);
 	}
 	
 	private void view() {
-		pCenterPanel = new JPanel();
-		pCenterPanel.setLayout(new BoxLayout(pCenterPanel, BoxLayout.Y_AXIS));
+		pPanelOfScroll = new JPanel();
+		psCenterPanel = new JScrollPane(pPanelOfScroll);
+		pPanelOfScroll.setLayout(new BoxLayout(pPanelOfScroll, BoxLayout.Y_AXIS));
 
 		pNorthPanel = new JPanel();
 		pNorthPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -57,11 +59,11 @@ public class SeeSpecs extends JInternalFrame {
 //		ptfLogin.addActionListener(this);
 //		ppfPassword.addActionListener(this);
 
-		for (int i = 0; i < 4; i++) {
-			new Specs(pCenterPanel);
+		for (int i = 0; i < 5; i++) {
+			new Specs(pPanelOfScroll);
 		}
 		
-		add(pCenterPanel, BorderLayout.CENTER);
+		add(psCenterPanel, BorderLayout.CENTER);
 		add(pNorthPanel, BorderLayout.NORTH);
 //		add(pPanel);
 	}

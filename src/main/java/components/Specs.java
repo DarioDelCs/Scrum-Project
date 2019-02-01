@@ -1,5 +1,6 @@
 package components;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -55,6 +56,13 @@ public class Specs extends JPanel {
 		constraints.gridx=4;
 		constraints.gridy=0;
 		add(pcbMarcar, constraints);
+
+		psPanel = new JScrollPane(new JTextArea());
+		constraints.gridx=0;
+		constraints.gridy=1;
+		constraints.gridwidth=5;
+		add(psPanel, constraints);
+		psPanel.setPreferredSize(new Dimension(0, 80));
 		
 		panel.add(this);
 	}
