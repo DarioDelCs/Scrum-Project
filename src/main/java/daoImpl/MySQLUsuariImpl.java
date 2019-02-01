@@ -36,7 +36,25 @@ public class MySQLUsuariImpl implements IUsuari{
 		
 		return usuari;
 	}
+	public String getUsuari(int user_id) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
+		EntityManager entityManager = factory.createEntityManager();
+		
+		String sql =  "SELECT u from Usuari u WHERE user_id = '"+user_id+"'";
+		Usuari usuari;
+		try{
+			Query query = entityManager.createQuery(sql);
+			usuari = (Usuari) query.getSingleResult();
+		}catch(NoResultException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
 
+		entityManager.close();
+		factory.close();
+		
+		return usuari.getpName();
+	}
 	public boolean existUser(String login) {
 		return (getUsuari(login)!=null)?true:false;
 	}

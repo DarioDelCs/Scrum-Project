@@ -16,10 +16,13 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import model.Project;
 
@@ -32,6 +35,8 @@ public class SeeProject extends JInternalFrame implements ActionListener {
 	
 	private JPanel pPanel, pPanelS;
 	private JScrollPane psPanel;
+	private JList list ;
+	
 	
 	private JLabel plNombre, plOwner, plMaster;
 	private JTextField ptfNombre, ptfOwner, ptfMaster;
@@ -39,6 +44,8 @@ public class SeeProject extends JInternalFrame implements ActionListener {
 	private JTextArea ptaDescipcion; 
 	
 	private JButton pbMostrarSpecs;
+	
+	private List<Project> projects;
 	
 	public SeeProject(JFrame frame, JDesktopPane dPanel) {
 		this.pjdPanel = dPanel;
@@ -68,7 +75,8 @@ public class SeeProject extends JInternalFrame implements ActionListener {
 		pPanelS.setLayout(new BoxLayout(pPanelS, BoxLayout.Y_AXIS));
 		pPanelS.setBackground(Color.WHITE);
 
-		psPanel = new JScrollPane(pPanelS);
+		//psPanel = new JScrollPane(pPanelS);
+		list  = new JList();
 		constraints.gridx=0;
 		constraints.gridy=0;
 		constraints.gridheight=4;
@@ -121,19 +129,39 @@ public class SeeProject extends JInternalFrame implements ActionListener {
 		pPanel.add(pbMostrarSpecs, constraints);
 
 		constraints.gridwidth=1;
+		psPanel.setViewportView(list);
 		
-		List<Project> projects = Conexion.getIProject().getProjects();
+		projects = Conexion.getIProject().getProjects();
 		
 		for (Project project : projects) {
 			
 			pPanelS.add(new JLabel(project.getpName()));
 			
 		}
+		
+		list.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+            	for (Project project : projects) {
+            		if (!event.getValueIsAdjusting()){
+                        JList source = (JList)event.getSource();
+                        String selected = source.getSelectedValue().toString();
+                        if(selected.equals(project.getpName())) {
+                        	ptfNombre.setText(project.getpName());
+                        	ptfOwner.setText(Conexion.getIUser().getUsuari(project.getpProductOwner()));
+                        	ptfMaster.setText(Conexion.getIUser().getUsuari(project.getpScrumMaster()));
+                        }
+                    }
+        		}
+            }
+        });
+		
+		//list.addListSelectionListener(arg0);
 		pbMostrarSpecs.addActionListener(this);
 		
 		add(pPanel);
 	}
 
+	
 	public void actionPerformed(ActionEvent e) {
 		try {
 			this.setClosed(true);
