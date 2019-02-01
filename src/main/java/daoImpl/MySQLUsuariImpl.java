@@ -28,7 +28,6 @@ public class MySQLUsuariImpl implements IUsuari{
 			Query query = entityManager.createQuery(sql);
 			usuari = (Usuari) query.getSingleResult();
 		}catch(NoResultException e) {
-			System.out.println(e.getMessage());
 			return null;
 		}
 
@@ -48,9 +47,22 @@ public class MySQLUsuariImpl implements IUsuari{
 			EntityManager entityManager = factory.createEntityManager();
 			entityManager.getTransaction().begin();
 			
-			Usuari newUser = new Usuari(pEmail, pLoginId, pName, pPass, pProfileId);
+			StoredProcedureQuery query = entityManager
+				.createStoredProcedureQuery("insertUser")//nombre procedure
 	
-			entityManager.merge(newUser);
+			    .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)//el primer valor que tipo es y si es in o out
+			    .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+			    .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
+			    .registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
+			    .registerStoredProcedureParameter(5, String.class, ParameterMode.IN)
+			    
+			    .setParameter(1, pName)
+			    .setParameter(2, pLoginId)
+			    .setParameter(3, pPass)
+			    .setParameter(4, pProfileId)
+			    .setParameter(5, pEmail);
+			query.execute();
+	
 			entityManager.getTransaction().commit();
 			entityManager.close();
 			factory.close();
@@ -94,9 +106,11 @@ public class MySQLUsuariImpl implements IUsuari{
 		try{
 			EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
 			EntityManager entityManager = factory.createEntityManager();
+
+			entityManager.getTransaction().begin();
 			
 			StoredProcedureQuery query = entityManager
-				.createStoredProcedureQuery("insertUser", Usuari.class)//nombre procedure
+				.createStoredProcedureQuery("insertUser")//nombre procedure
 
 			    .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)//el primer valor que tipo es y si es in o out
 			    .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
@@ -110,7 +124,11 @@ public class MySQLUsuariImpl implements IUsuari{
 			    .setParameter(4, profileName)
 			    .setParameter(5, email);
 		    
-			return query.execute();
+			query.execute();
+
+			entityManager.getTransaction().commit();
+			entityManager.close();
+			factory.close();
 //			System.out.println("Fin OK");
 		}catch (Exception e) {
 			e.printStackTrace();

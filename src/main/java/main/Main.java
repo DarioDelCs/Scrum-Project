@@ -16,7 +16,7 @@ import view.Login;
 
 public class Main extends JFrame/* implements ActionListener*/{
 
-	private String[] alUserString = {"Developer","ProductOwner","ScrumMaster","Administrator"};
+	private String[] alUserString = {"Developer","ProductOwner","ScrumMaster","Administrador"};
 	public static HashMap<UserType, String> hmUser = new HashMap<UserType, String>();
 	private UserType eUserType;
 	public static boolean isOnline;

@@ -7,8 +7,15 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.HashMap;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.ParameterMode;
+import javax.persistence.Persistence;
+import javax.persistence.StoredProcedureQuery;
+
 import daoImpl.Conexion;
 import model.UserType;
+import model.Usuari;
 
 public class Test {
 
@@ -17,9 +24,33 @@ public class Test {
 	public static UserType eUserType;
 	
 	public static void main(String[] args) {
-		
-		
-
+		aux(2,2);
+	}
+	
+	private static void aux(int num1, int num2) {
+//		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
+//		EntityManager entityManager = factory.createEntityManager();
+//		try{
+//			entityManager.getTransaction().begin();
+//			StoredProcedureQuery query = entityManager
+//				.createStoredProcedureQuery("aux")//nombre procedure
+//
+//			    .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)//el primer valor que tipo es y si es in o out
+//			    .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
+//			    
+//			    .setParameter(1, num1)
+//			    .setParameter(2, num2);
+//		    
+//			query.execute();
+////			System.out.println("Fin OK");
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//			System.out.println("Fin KO");
+//		}
+//
+//		entityManager.getTransaction().commit();
+//		entityManager.close();
+//		factory.close();
 		/*Connection conn;
 		try {
 			conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
@@ -56,7 +87,7 @@ public class Test {
 			System.out.println(false);
 		}
 		
-		System.out.println(Conexion.getIUser().inserUser("online", "log", "pass", "profile", "email"));
+		System.out.println(Conexion.getIUser().inserUser("onlinae", "laog", "paass", "profaile", "emaail"));
 		
 		
 		
