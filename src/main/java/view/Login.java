@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 
 import components.Tittle;
 import daoImpl.Conexion;
-import idao.IUsuari;
 import main.Main;
 import model.UserType;
 import model.Usuari;
@@ -49,7 +48,6 @@ public class Login extends JInternalFrame implements ActionListener{
 		setTitle("Login");//hard
 		setResizable(true);
 		setClosable(true);
-//		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 //		setSize(this.pFrame.getWidth()/2,this.pFrame.getHeight()/2);
 		pack();
 //		setLocation(pFrame.getHeight()/2-this.getHeight(), pFrame.getWidth()/2-this.getWidth());
@@ -100,7 +98,7 @@ public class Login extends JInternalFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Usuari user = Conexion.getIUser().getUsuari(ptfLogin.getText());//, ppfPassword.getText()
+		Usuari user = Conexion.getIUser().getUsuari(ptfLogin.getText());
 		if(user != null) {
 			if(user.getpPass().equals(ppfPassword.getText())) {
 				sUserGroup=user.getpProfile();
@@ -112,26 +110,22 @@ public class Login extends JInternalFrame implements ActionListener{
 					System.out.println("Error, no se ha podido cerrar la ventana de login");
 				}
 				if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
-					Tittle.smiNewUser.setEnabled(true);
-					Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
-					Tittle.sbSalirLogin.setText("Salir");
+					Tittle.newUser(true);
+					Tittle.userInUse("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");
+					Tittle.buttonExitLoginText("Salir");
 				}else if(sUserGroup.equals(Main.hmUser.get(UserType.ScrumMaster))){
-					Tittle.smiNewProyect.setEnabled(true);
-					Tittle.smiSearchModUser.setEnabled(true);
-					Tittle.smiSeeProyects.setEnabled(true);
-					Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
-					Tittle.sbSalirLogin.setText("Salir");
+					Tittle.newProyect(true);
+					Tittle.seeProyects(true);
+					Tittle.userInUse("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");
+					Tittle.buttonExitLoginText("Salir");
 				}else if(sUserGroup.equals(Main.hmUser.get(UserType.ProductOwner))){
-					Tittle.smiSearchModUser.setEnabled(true);
-					Tittle.smiSeeProyects.setEnabled(true);
-//					Tittle.smiNewProyect.setEnabled(true);
-					Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
-					Tittle.sbSalirLogin.setText("Salir");
+					Tittle.seeProyects(true);
+					Tittle.userInUse("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");
+					Tittle.buttonExitLoginText("Salir");
 				}else if(sUserGroup.equals(Main.hmUser.get(UserType.Developer))){
-					Tittle.smiSearchModUser.setEnabled(true);
-					Tittle.smiSeeProyects.setEnabled(true);
-					Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
-					Tittle.sbSalirLogin.setText("Salir");
+					Tittle.seeProyects(true);
+					Tittle.userInUse("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");
+					Tittle.buttonExitLoginText("Salir");
 				}
 			}else {
 				JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Error en el login", JOptionPane.WARNING_MESSAGE);
@@ -139,21 +133,6 @@ public class Login extends JInternalFrame implements ActionListener{
 		}else {
 			JOptionPane.showMessageDialog(null, "Usuario incorrecto", "Error en el login", JOptionPane.WARNING_MESSAGE);
 		}
-		
-		/*//admin
-		try {
-			this.setClosed(true);
-		} catch (PropertyVetoException e1) {
-			System.out.println("Error, no se ha podido cerrar la ventana de login");
-		}
-		Tittle.smiNewUser.setEnabled(true);
-		Tittle.slUser.setText("Usuari: "+ptfLogin.getText());//cambiar por nombre y grupo
-		Tittle.sbSalirLogin.setText("Salir");
-		
-		//scrummaster
-		Tittle.smiNewProyect.setEnabled(true);
-		//mas todo lo de arriba (menos lo de smiNewUser)
-		*/
 	}
 
 }

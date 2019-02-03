@@ -47,7 +47,7 @@ public class SQLiteUsuariImpl implements IUsuari{
 			return null;
 		}
 	}
-	public String getUsuari(int user_id) {
+	public String getUsuariFromId(int user_id) {
         // create a connection to the database
 		try {
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
@@ -140,26 +140,5 @@ public class SQLiteUsuariImpl implements IUsuari{
 			System.out.println(e.getMessage());
 	        return null;
 		}
-	}
-
-	public boolean inserUser(String nombre, String loginId, String pass, String profileName, String email) {
-		try {
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
-			Statement stmt  = conn.createStatement();
-			
-			String sql =  "CALL insertUsers('"+nombre+"', '"+loginId+"', '"+pass+"', '"+profileName+"', '"+email+"');";
-			ResultSet rs = stmt.executeQuery(sql);
-
-			System.out.println(rs.next());
-			
-			
-	        stmt.close();
-	        rs.close();
-	        conn.close();
-		}catch (SQLException e) {
-			System.out.println(e.getMessage());
-//	        return null;
-		}
-		return false;
 	}
 }

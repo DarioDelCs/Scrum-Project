@@ -1,39 +1,49 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import components.Specs;
+import daoImpl.Conexion;
+import model.Especificaciones;
+import model.Project;
 
 public class SeeSpecs extends JInternalFrame {
 
 	private JDesktopPane pjdPanel;
 	private JFrame pFrame;
+	private Project pProject;
 	
 	private JPanel pNorthPanel, pPanelOfScroll;
 	private JScrollPane psCenterPanel;
 	
 	private JButton pbGuardar, pbAnadir, pbEliminar;
 	
-	public SeeSpecs(JFrame frame, JDesktopPane dPanel) {
+	private List<Especificaciones> specs;
+	
+	public SeeSpecs(JFrame frame, JDesktopPane dPanel, Project project) {
 		this.pjdPanel = dPanel;
 		this.pFrame = frame;
+		this.pProject = project;
 		
 		view();
 
 		setTitle("Especificaciones");//hard
 		setResizable(true);
 		setClosable(true);
-//		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		setSize(this.pFrame.getWidth()/5*3,this.pFrame.getHeight()/3*2);
+		setMaximumSize(new Dimension(this.pFrame.getWidth()/5*3,this.pFrame.getHeight()/3*2));
+		pack();
 //		setLocation(pFrame.getHeight()/2-this.getHeight(), pFrame.getWidth()/2-this.getWidth());
 		setVisible(true);
 	}
@@ -55,17 +65,18 @@ public class SeeSpecs extends JInternalFrame {
 		pbEliminar= new JButton("Eliminar");
 		pNorthPanel.add(pbEliminar);
 
-//		pbEnviar.addActionListener(this);
-//		ptfLogin.addActionListener(this);
-//		ppfPassword.addActionListener(this);
+//		pbAnadir.addActionListener(this);
 
-		for (int i = 0; i < 5; i++) {
-			new Specs(pPanelOfScroll);
+		specs = Conexion.getISpecs().getAllSpecs();
+		
+		for (Especificaciones spec : specs) {
+			if(spec.getIdProject()==pProject.getpID()) {
+				pPanelOfScroll.add(new Specs(spec.getMarcada(), spec.getDescripcion(), spec.getHoras(), spec.getIdProject(), spec.getSprint()));
+			}
 		}
 		
 		add(psCenterPanel, BorderLayout.CENTER);
 		add(pNorthPanel, BorderLayout.NORTH);
-//		add(pPanel);
 	}
 
 }

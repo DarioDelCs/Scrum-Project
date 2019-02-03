@@ -5,11 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.beans.PropertyVetoException;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -24,10 +21,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import model.Project;
-
+import model.UserType;
 import daoImpl.Conexion;
+import main.Main;
 
-public class SeeProject extends JInternalFrame implements ActionListener, MouseListener {
+public class SeeProject extends JInternalFrame implements MouseListener {
 
 	private JDesktopPane pjdPanel;
 	private JFrame pFrame;
@@ -42,8 +40,9 @@ public class SeeProject extends JInternalFrame implements ActionListener, MouseL
 	private JTextArea ptaDescipcion; 
 	
 	private JButton pbMostrarSpecs;
-	
+
 	private List<Project> projects;
+	private Project pProjectInUse;
 	
 	public SeeProject(JFrame frame, JDesktopPane dPanel) {
 		this.pjdPanel = dPanel;
@@ -54,7 +53,6 @@ public class SeeProject extends JInternalFrame implements ActionListener, MouseL
 		setTitle("Proyectos");//hard
 		setResizable(true);
 		setClosable(true);
-//		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 //		setSize(this.pFrame.getWidth()/2,this.pFrame.getHeight()/2);
 		pack();
 //		setLocation(pFrame.getHeight()/2-this.getHeight(), pFrame.getWidth()/2-this.getWidth());
@@ -124,6 +122,13 @@ public class SeeProject extends JInternalFrame implements ActionListener, MouseL
 		constraints.gridx=1;
 		constraints.gridy=5;
 		pPanel.add(pbMostrarSpecs, constraints);
+		if(Login.sUserGroup.equals(Main.hmUser.get(UserType.ScrumMaster))) {
+			pbMostrarSpecs.setEnabled(true);
+		}else if(Login.sUserGroup.equals(Main.hmUser.get(UserType.ProductOwner))) {
+			pbMostrarSpecs.setEnabled(true);
+		}else {
+			pbMostrarSpecs.setEnabled(false);
+		}
 
 		constraints.gridwidth=1;
 		
@@ -133,26 +138,26 @@ public class SeeProject extends JInternalFrame implements ActionListener, MouseL
 			JLabel label = new JLabel(project.getpName());
 			pPanelS.add(label);
 			label.addMouseListener(this);
-			
 		}
-		pbMostrarSpecs.addActionListener(this);
+		pbMostrarSpecs.addMouseListener(this);
 		
 		add(pPanel);
 	}
-
 	
-	public void actionPerformed(ActionEvent e) {
-		pjdPanel.add(new SeeSpecs(pFrame, pjdPanel));
-	}
-
-
 	public void mousePressed(MouseEvent e) {
-		for (Project project : projects) {
-			if(((JLabel)e.getSource()).getText()==project.getpName()) {
-				ptfNombre.setText(project.getpName());
-		    	ptfOwner.setText(Conexion.getIUser().getUsuari(project.getpProductOwner()));
-		    	ptfMaster.setText(Conexion.getIUser().getUsuari(project.getpScrumMaster()));
-		    	ptaDescipcion.setText(project.getpDescripcion());
+		if(e.getSource() == pbMostrarSpecs) {
+			if(pProjectInUse!=null) {
+				pjdPanel.add(new SeeSpecs(pFrame, pjdPanel, pProjectInUse));
+			}
+		}else{//si es un JLabel de un panel
+			for (Project project : projects) {
+				if(((JLabel)e.getSource()).getText()==project.getpName()) {
+					ptfNombre.setText(project.getpName());
+			    	ptfOwner.setText(Conexion.getIUser().getUsuariFromId(project.getpProductOwner()));
+			    	ptfMaster.setText(Conexion.getIUser().getUsuariFromId(project.getpScrumMaster()));
+			    	ptaDescipcion.setText(project.getpDescripcion());
+			    	pProjectInUse = project;
+				}
 			}
 		}
 	}

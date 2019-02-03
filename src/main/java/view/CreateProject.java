@@ -20,14 +20,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import daoImpl.Conexion;
-import model.Usuari;
 
 public class CreateProject extends JInternalFrame implements ActionListener {
 
 	private JFrame pFrame;
 	private JPanel pCenterPanel;
 	private JDesktopPane pjdPanel;
-	private Usuari pUsuari;
 
 	private JLabel plNombreProyecto, plDescripcion, plScrumMaster, plProductOwner;
 	private JTextField ptfNombreProyecto;
@@ -141,7 +139,5 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 			}
 		}
 	}
-	
-	
 
 }

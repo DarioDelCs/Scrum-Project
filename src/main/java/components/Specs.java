@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
+import javax.swing.SpinnerNumberModel;
 
 public class Specs extends JPanel {
 	
@@ -25,7 +26,7 @@ public class Specs extends JPanel {
 	private JScrollPane psPanel;
 	private JTextArea ptaDescripcion;
 	
-	public Specs(JPanel panel){//panel con box layout
+	public Specs(int marcada, String Descripcion, double Horas, int IdProject, int Sprint){//la info de las especificaciones
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 		
@@ -42,7 +43,7 @@ public class Specs extends JPanel {
 		constraints.gridy=0;
 		add(plHoras, constraints);
 		
-		psHoras = new JSpinner();
+		psHoras = new JSpinner(new SpinnerNumberModel((int)Horas, 0, 99, 1));
 		constraints.gridx=2;
 		constraints.gridy=0;
 		add(psHoras, constraints);
@@ -56,15 +57,16 @@ public class Specs extends JPanel {
 		constraints.gridx=4;
 		constraints.gridy=0;
 		add(pcbMarcar, constraints);
+		pcbMarcar.setSelected(marcada==1);
 
-		psPanel = new JScrollPane(new JTextArea());
+		psPanel = new JScrollPane(new JTextArea(Descripcion));
 		constraints.gridx=0;
 		constraints.gridy=1;
 		constraints.gridwidth=5;
 		add(psPanel, constraints);
 		psPanel.setPreferredSize(new Dimension(0, 80));
 		
-		panel.add(this);
+//		panel.add(this);
 	}
 
 }

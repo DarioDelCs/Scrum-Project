@@ -12,12 +12,13 @@ import daoImpl.Conexion;
 import model.UserType;
 import view.Login;
 
-public class Main extends JFrame/* implements ActionListener*/{
+public class Main extends JFrame{
+	
+	public static boolean isOnline;
+	public static HashMap<UserType, String> hmUser = new HashMap<UserType, String>();
 
 	private String[] alUserString = {"Developer","ProductOwner","ScrumMaster","Administrador"};
-	public static HashMap<UserType, String> hmUser = new HashMap<UserType, String>();
 	private UserType eUserType;
-	public static boolean isOnline;
 	private JPanel pPanel;
 	private JDesktopPane pjdPanel;
 	
@@ -56,17 +57,4 @@ public class Main extends JFrame/* implements ActionListener*/{
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
-	
-	/*private void tryConnect() {
-		if (Conexion.checkOnline()) {
-			setTitle("Scrum Program - (ONLINE)");
-			isOnline = true;
-		}else {
-			setTitle("Scrum Program - (OFFLINE)");
-			isOnline = false;
-		}
-		Conexion.getConexion();
-		Conexion.getConexion().resultados();
-	
-	}*/
 }

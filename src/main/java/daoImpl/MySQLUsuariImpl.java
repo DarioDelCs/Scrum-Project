@@ -36,7 +36,8 @@ public class MySQLUsuariImpl implements IUsuari{
 		
 		return usuari;
 	}
-	public String getUsuari(int user_id) {
+	
+	public String getUsuariFromId(int user_id) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
 		EntityManager entityManager = factory.createEntityManager();
 		
@@ -55,6 +56,7 @@ public class MySQLUsuariImpl implements IUsuari{
 		
 		return usuari.getpName();
 	}
+	
 	public boolean existUser(String login) {
 		return (getUsuari(login)!=null)?true:false;
 	}
@@ -118,40 +120,5 @@ public class MySQLUsuariImpl implements IUsuari{
 			factory.close();
 			return null;
 		}
-	}
-	
-	public boolean inserUser(String nombre, String loginId, String pass, String profileName, String email) {
-		try{
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
-			EntityManager entityManager = factory.createEntityManager();
-
-			entityManager.getTransaction().begin();
-			
-			StoredProcedureQuery query = entityManager
-				.createStoredProcedureQuery("insertUser")//nombre procedure
-
-			    .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)//el primer valor que tipo es y si es in o out
-			    .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
-			    .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
-			    .registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
-			    .registerStoredProcedureParameter(5, String.class, ParameterMode.IN)
-			    
-			    .setParameter(1, nombre)
-			    .setParameter(2, loginId)
-			    .setParameter(3, pass)
-			    .setParameter(4, profileName)
-			    .setParameter(5, email);
-		    
-			query.execute();
-
-			entityManager.getTransaction().commit();
-			entityManager.close();
-			factory.close();
-//			System.out.println("Fin OK");
-		}catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Fin KO");
-		}
-		return false;
 	}
 }

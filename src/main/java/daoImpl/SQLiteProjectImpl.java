@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -12,7 +13,9 @@ import javax.swing.JOptionPane;
 import components.WriteLogController;
 import idao.IProject;
 import main.Main;
+import model.Especificaciones;
 import model.Project;
+import model.Usuari;
 
 public class SQLiteProjectImpl implements IProject{
 	
@@ -67,7 +70,27 @@ public class SQLiteProjectImpl implements IProject{
 	}
 
 	public List<Project> getProjects() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
+			
+			String sql =  "SELECT * from especificaciones";
+			Statement stmt  = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Project> projects=new ArrayList<Project>();
+	        while(rs.next()) {
+	        	projects.add(new Project(rs.getString("nombre"),rs.getString("descripcion"),
+	        			rs.getInt("scrummaster"), rs.getInt("productowner")));
+	        }
+	        
+	        stmt.close();
+	        rs.close();
+	        conn.close();
+	        return projects;
+	        
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
 	}
 }

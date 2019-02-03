@@ -66,7 +66,7 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 		ptfNombre.addFocusListener(this);
 		pCenterPanel.add(ptfNombre, constraints);
 		
-		plLogin = new JLabel("Login generado");//hard		//LUEGO HACER AUTOGENERADO
+		plLogin = new JLabel("Login generado");//hard
 		constraints.gridx=0;
 		constraints.gridy=1;
 		pCenterPanel.add(plLogin, constraints);
