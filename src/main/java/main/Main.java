@@ -7,6 +7,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import components.Replicator;
 import components.Tittle;
 import daoImpl.Conexion;
 import model.UserType;
@@ -35,6 +36,8 @@ public class Main extends JFrame{
 		if(Conexion.isConnected()) {
 			setTitle("Scrum Program - (ONLINE)");
 			isOnline=true;
+			Replicator replicator = new Replicator();
+			replicator.run();
 		}else {
 			setTitle("Scrum Program - (OFFLINE)");
 			isOnline=false;
