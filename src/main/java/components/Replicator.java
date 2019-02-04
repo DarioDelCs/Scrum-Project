@@ -54,6 +54,9 @@ public class Replicator extends Thread {
 			if (qErrores.size() > 0) {
 				volcarError();
 			}
+			bw = new BufferedWriter(new FileWriter(log));
+			bw.write("");
+			bw.close();
 			cerrarIO();
 
 		} catch (Exception e) {
