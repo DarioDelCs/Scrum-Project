@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 
 import daoImpl.Conexion;
 import main.Main;
+import model.Especificaciones;
 import model.Project;
 import model.UserType;
 import model.Usuari;
@@ -54,15 +55,16 @@ public class Replicator extends Thread {
 				volcarError();
 			}
 			cerrarIO();
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			
+
 		}
 
 	}
+
 	private static void cerrarIO() throws IOException {
 		if (br != null) {
 			br.close();
@@ -71,6 +73,7 @@ public class Replicator extends Thread {
 			bw.close();
 		}
 	}
+
 	private static void executeQuery(String a) {
 		String tipo = a.split(" ")[0];
 		if (tipo.equals("INSERT")) {
@@ -119,7 +122,7 @@ public class Replicator extends Thread {
 			try {
 				Project p = new Project(pNameProject, pDescripcion, Integer.parseInt(scrumID),
 						Integer.parseInt(ownerID));
-				if (!Conexion.getIUser().existUser(pNameProject)) {
+				if (!Conexion.getIProject().existProject(pNameProject)) {
 					entityManager.persist(p);
 					entityManager.getTransaction().commit();
 				} else {
@@ -128,6 +131,28 @@ public class Replicator extends Thread {
 				entityManager.persist(p);
 				entityManager.getTransaction().commit();
 			} catch (Exception e) {
+				qErrores.add(query);
+			}
+		}else if (tabla.equals("especificaciones")) {
+			tmp = tmp.substring(1, tmp.length() - 2);	
+			String[] valores = tmp.split(",");
+			int marcada = 0;
+			String Descripcion = valores[1].substring(1,valores[1].length()-1);
+			double Horas = Double.parseDouble(valores[2].substring(1,valores[2].length()-1));
+			int IdProject = Integer.parseInt(valores[3].substring(1,valores[3].length()-1));
+			int Sprint = Integer.parseInt(valores[4].substring(1,valores[4].length()-1));
+			System.out.println(Descripcion+" "+Horas+" "+IdProject+" "+Sprint);
+			try {
+				Especificaciones e =  new Especificaciones(marcada, Descripcion, Horas, IdProject, Sprint);
+						if (!Conexion.getISpecs().existSpec(Descripcion, Horas, IdProject, Sprint)) {
+							entityManager.persist(e);
+							entityManager.getTransaction().commit();
+						} else {
+							qErrores.add(query);
+						}
+						entityManager.persist(e);
+						entityManager.getTransaction().commit();
+			}catch (Exception e) {
 				qErrores.add(query);
 			}
 		}
@@ -144,18 +169,18 @@ public class Replicator extends Thread {
 		String list = "";
 
 		try {
-			 bw = new BufferedWriter(new FileWriter(log, true));
+			bw = new BufferedWriter(new FileWriter(log, true));
 			for (String a : qErrores) {
 				list = list + a + "\n";
 				bw.append(a + "\n");
 
 			}
-			
+
 			JOptionPane.showMessageDialog(null, "Las siguientes queries no se han podido replicar:\n" + list, "Error",
 					JOptionPane.WARNING_MESSAGE);
 		} catch (Exception e) {
 			System.out.println("Error al volcar detalle ERROR LOG ejecuciones query");
-		}finally {
+		} finally {
 			bw.close();
 		}
 	}

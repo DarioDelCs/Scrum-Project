@@ -56,4 +56,21 @@ public class MySQLSpecsImpl implements ISpecs{
 			return false;
 		}
 	}
+
+	public boolean existSpec(String desc, double horas, int idProject, int sprint) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
+		EntityManager entityManager = factory.createEntityManager();
+
+		String sql =  "SELECT e from Especificaciones e WHERE DESCRIPCION = '"+desc+"' and HORAS ="+horas+" and IDPROYECTO ="+idProject+" and SPRINT ="+sprint;
+		try{
+			Query query = entityManager.createQuery(sql);
+			Project project = (Project) query.getSingleResult();
+		}catch(NoResultException e) {
+			return false;
+		}
+		
+		entityManager.close();
+		factory.close();
+		return true;
+	}
 }

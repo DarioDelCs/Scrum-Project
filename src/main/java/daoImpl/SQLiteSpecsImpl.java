@@ -44,7 +44,7 @@ public class SQLiteSpecsImpl implements ISpecs {
 		try {
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
 			
-			String sql =  "INSERT INTO `especificaciones`(`Marcada`, `Descripcion`, `Horas`, `idProyecto`, `Sprint`) VALUES (0,'"+desc+"',"+horas+","+idProject+","+sprint+")";
+			String sql =  "INSERT INTO especificaciones (Marcada,Descripcion,Horas,idProyecto,Sprint) VALUES (0,'"+desc+"',"+horas+","+idProject+","+sprint+")";
 			Statement stmt  = conn.createStatement();
 			
 			stmt.executeUpdate(sql);
@@ -54,6 +54,26 @@ public class SQLiteSpecsImpl implements ISpecs {
 			}
 			
 			stmt.close();
+	        conn.close();
+	        return true;
+	        
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+
+	public boolean existSpec(String desc, double horas, int idProject, int sprint) {
+		try {
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
+			
+			String sql =  "Select * from especificaciones where Descripcion ='"+desc+"' and Horas ='"+horas+"' and idProyecto ='"+idProject+"'and Sprint = '"+sprint+"';";
+			Statement stmt  = conn.createStatement();
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			stmt.close();
+			rs.close();
 	        conn.close();
 	        return true;
 	        
