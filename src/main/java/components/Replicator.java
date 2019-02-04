@@ -134,14 +134,13 @@ public class Replicator extends Thread {
 				qErrores.add(query);
 			}
 		}else if (tabla.equals("especificaciones")) {
-			tmp = tmp.substring(1, tmp.length() - 2);	
+			tmp = tmp.substring(1, tmp.length() - 1);	
 			String[] valores = tmp.split(",");
 			int marcada = 0;
-			String Descripcion = valores[1].substring(1,valores[1].length()-1);
-			double Horas = Double.parseDouble(valores[2].substring(1,valores[2].length()-1));
-			int IdProject = Integer.parseInt(valores[3].substring(1,valores[3].length()-1));
-			int Sprint = Integer.parseInt(valores[4].substring(1,valores[4].length()-1));
-			System.out.println(Descripcion+" "+Horas+" "+IdProject+" "+Sprint);
+			String Descripcion = valores[1];
+			Double Horas =	Double.parseDouble(valores[2]);
+			int IdProject =Integer.parseInt(valores[3]);
+			int Sprint =Integer.parseInt(valores[4]);
 			try {
 				Especificaciones e =  new Especificaciones(marcada, Descripcion, Horas, IdProject, Sprint);
 						if (!Conexion.getISpecs().existSpec(Descripcion, Horas, IdProject, Sprint)) {
