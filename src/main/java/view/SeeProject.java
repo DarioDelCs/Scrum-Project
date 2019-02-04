@@ -133,7 +133,6 @@ public class SeeProject extends JInternalFrame implements MouseListener {
 		constraints.gridwidth=1;
 		
 		projects = Conexion.getIProject().getProjects();
-		
 		for (Project project : projects) {
 			JLabel label = new JLabel(project.getpName());
 			pPanelS.add(label);
@@ -146,9 +145,9 @@ public class SeeProject extends JInternalFrame implements MouseListener {
 	
 	public void mousePressed(MouseEvent e) {
 		if(e.getSource() == pbMostrarSpecs) {
-			if(pProjectInUse!=null) {
+//			if(pProjectInUse!=null) {
 				pjdPanel.add(new SeeSpecs(pFrame, pjdPanel, pProjectInUse));
-			}
+//			}
 		}else{//si es un JLabel de un panel
 			for (Project project : projects) {
 				if(((JLabel)e.getSource()).getText()==project.getpName()) {

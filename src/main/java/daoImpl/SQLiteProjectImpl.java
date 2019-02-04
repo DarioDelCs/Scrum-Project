@@ -8,14 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import components.WriteLogController;
 import idao.IProject;
 import main.Main;
-import model.Especificaciones;
 import model.Project;
-import model.Usuari;
 
 public class SQLiteProjectImpl implements IProject{
 	

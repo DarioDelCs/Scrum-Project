@@ -33,4 +33,27 @@ public class MySQLSpecsImpl implements ISpecs{
 			return null;
 		}
 	}
+
+	public boolean createSpec(String desc, double horas, int idProject, int sprint) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
+		EntityManager entityManager = factory.createEntityManager();
+		
+		Especificaciones spec = new Especificaciones(0, desc, horas, idProject, sprint);
+		
+		if(!new SQLiteSpecsImpl().createSpec(desc, horas, idProject, sprint)) {
+//            JOptionPane.showMessageDialog(null, "No se ha podido añadir el proyecto en la db embebida", "Error añadir proyecto", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		try{
+			entityManager.merge(spec);
+			entityManager.getTransaction().commit();
+			entityManager.close();
+			factory.close();
+			return true;
+		}catch(NoResultException e) {
+			entityManager.close();
+			factory.close();
+			return false;
+		}
+	}
 }

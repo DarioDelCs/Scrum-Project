@@ -33,6 +33,7 @@ public class MySQLProjectImpl implements IProject {
 		factory.close();
 		return true;
 	}
+	
 	public List<Project> getProjects() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
 		EntityManager entityManager = factory.createEntityManager();

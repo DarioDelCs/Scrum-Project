@@ -3,17 +3,19 @@ package main;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.ParameterMode;
-import javax.persistence.Persistence;
-import javax.persistence.StoredProcedureQuery;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 import daoImpl.Conexion;
+import model.Project;
 import model.UserType;
 import model.Usuari;
 
@@ -28,6 +30,15 @@ public class Test {
 	}
 	
 	private static void aux(int num1, int num2) {
+		
+
+		JSpinner pSpinner = new JSpinner(new SpinnerNumberModel(5, 0, 99, 1));
+
+
+		System.out.println((Integer)pSpinner.getValue());
+		
+		
+		
 //		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
 //		EntityManager entityManager = factory.createEntityManager();
 //		try{

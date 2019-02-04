@@ -7,5 +7,6 @@ import model.Especificaciones;
 public interface ISpecs {
 
 	public List<Especificaciones> getAllSpecs();
+	public boolean createSpec(String desc, double horas, int idProject, int sprint);
 	
 }

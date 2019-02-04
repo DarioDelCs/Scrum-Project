@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -10,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -19,7 +20,7 @@ import daoImpl.Conexion;
 import model.Especificaciones;
 import model.Project;
 
-public class SeeSpecs extends JInternalFrame {
+public class SeeSpecs extends JInternalFrame implements ActionListener{
 
 	private JDesktopPane pjdPanel;
 	private JFrame pFrame;
@@ -65,7 +66,7 @@ public class SeeSpecs extends JInternalFrame {
 		pbEliminar= new JButton("Eliminar");
 		pNorthPanel.add(pbEliminar);
 
-//		pbAnadir.addActionListener(this);
+		pbAnadir.addActionListener(this);
 
 		specs = Conexion.getISpecs().getAllSpecs();
 		
@@ -77,6 +78,10 @@ public class SeeSpecs extends JInternalFrame {
 		
 		add(psCenterPanel, BorderLayout.CENTER);
 		add(pNorthPanel, BorderLayout.NORTH);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		pjdPanel.add(new CreateSpec(pFrame, pjdPanel, pProject));
 	}
 
 }

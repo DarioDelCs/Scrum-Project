@@ -8,7 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import components.WriteLogController;
 import idao.ISpecs;
+import main.Main;
 import model.Especificaciones;
 
 public class SQLiteSpecsImpl implements ISpecs {
@@ -35,6 +37,29 @@ public class SQLiteSpecsImpl implements ISpecs {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
+		}
+	}
+
+	public boolean createSpec(String desc, double horas, int idProject, int sprint) {
+		try {
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
+			
+			String sql =  "INSERT INTO `especificaciones`(`Marcada`, `Descripcion`, `Horas`, `idProyecto`, `Sprint`) VALUES (0,'"+desc+"',"+horas+","+idProject+","+sprint+")";
+			Statement stmt  = conn.createStatement();
+			
+			stmt.executeUpdate(sql);
+
+			if(!Main.isOnline) {
+				new WriteLogController().writeInLog(sql);
+			}
+			
+			stmt.close();
+	        conn.close();
+	        return true;
+	        
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
 		}
 	}
 }
