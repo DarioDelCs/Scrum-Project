@@ -1,6 +1,5 @@
 package daoImpl;
 
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,7 +7,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-
 
 import idao.IProject;
 import model.Project;
@@ -24,14 +22,15 @@ public class MySQLProjectImpl implements IProject {
 		String sql =  "SELECT p from Project p WHERE nombre = '"+nombreProject+"'";
 		try{
 			Query query = entityManager.createQuery(sql);
-			Project project = (Project) query.getSingleResult();
+			query.getSingleResult();
+			entityManager.close();
+			factory.close();
+			return true;
 		}catch(NoResultException e) {
+			entityManager.close();
+			factory.close();
 			return false;
 		}
-		
-		entityManager.close();
-		factory.close();
-		return true;
 	}
 	
 	public List<Project> getProjects() {
@@ -54,9 +53,9 @@ public class MySQLProjectImpl implements IProject {
 	}
 	
 	public boolean addProject(String pNameProject, String pDescripcion, String pScrumMaster, String pProductOwner) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
+		EntityManager entityManager = factory.createEntityManager();
 		try{
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
-			EntityManager entityManager = factory.createEntityManager();
 			entityManager.getTransaction().begin();
 
 			int scrumID = new MySQLUsuariImpl().getUsuari(pScrumMaster.split("\\(")[1].split("\\)")[0]).getpID();
@@ -81,7 +80,8 @@ public class MySQLProjectImpl implements IProject {
 			return true;
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
-			e.printStackTrace();
+			entityManager.close();
+			factory.close();
 			return false;
 		}
 	}

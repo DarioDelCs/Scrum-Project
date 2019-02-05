@@ -1,7 +1,5 @@
 package daoImpl;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,7 +9,6 @@ import javax.persistence.ParameterMode;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
-import javax.swing.JOptionPane;
 
 import idao.IUsuari;
 import model.Usuari;
@@ -27,14 +24,14 @@ public class MySQLUsuariImpl implements IUsuari{
 		try{
 			Query query = entityManager.createQuery(sql);
 			usuari = (Usuari) query.getSingleResult();
+			entityManager.close();
+			factory.close();
+			return usuari;
 		}catch(NoResultException e) {
+			entityManager.close();
+			factory.close();
 			return null;
 		}
-
-		entityManager.close();
-		factory.close();
-		
-		return usuari;
 	}
 	
 	public String getUsuariFromId(int user_id) {
@@ -46,15 +43,15 @@ public class MySQLUsuariImpl implements IUsuari{
 		try{
 			Query query = entityManager.createQuery(sql);
 			usuari = (Usuari) query.getSingleResult();
+			entityManager.close();
+			factory.close();
+			return usuari.getpName();
 		}catch(NoResultException e) {
 			System.out.println(e.getMessage());
+			entityManager.close();
+			factory.close();
 			return null;
 		}
-
-		entityManager.close();
-		factory.close();
-		
-		return usuari.getpName();
 	}
 	
 	public boolean existUser(String login) {
@@ -62,9 +59,9 @@ public class MySQLUsuariImpl implements IUsuari{
 	}
 
 	public boolean addUsuari(String pName, String pLoginId, String pPass, String pProfileId, String pEmail) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
+		EntityManager entityManager = factory.createEntityManager();
 		try{
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
-			EntityManager entityManager = factory.createEntityManager();
 			entityManager.getTransaction().begin();
 			
 			StoredProcedureQuery query = entityManager
@@ -93,6 +90,8 @@ public class MySQLUsuariImpl implements IUsuari{
 			return true;
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
+			entityManager.close();
+			factory.close();
 			return false;
 		}
 	}

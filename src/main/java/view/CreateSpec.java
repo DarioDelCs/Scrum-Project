@@ -42,6 +42,14 @@ public class CreateSpec extends JInternalFrame implements ActionListener{
 		this.pProject = project;
 		
 		view();
+
+		setTitle("Nueva tarea");// hard
+		setResizable(true);
+		setClosable(true);
+		pack();
+//		setSize(this.pFrame.getWidth()/2,this.pFrame.getHeight()/2);
+//		setLocation(pFrame.getHeight()/2-this.getHeight()/2, pFrame.getWidth()/2-this.getWidth()/2);
+		setVisible(true);
 	}
 	
 	public void view() {
@@ -74,6 +82,9 @@ public class CreateSpec extends JInternalFrame implements ActionListener{
 		constraints.gridx = 1;
 		constraints.gridy = 1;
 		pCenterPanel.add(pcbSprint, constraints);
+		pcbSprint.addItem("Sprint 1");
+		pcbSprint.addItem("Sprint 2");
+		pcbSprint.addItem("Sprint 3");
 		
 		plHoras = new JLabel("Numero de horas");
 		constraints.gridx = 2;
@@ -91,38 +102,30 @@ public class CreateSpec extends JInternalFrame implements ActionListener{
 		pCenterPanel.add(pbAnadir, constraints);
 		
 		pbAnadir.addActionListener(this);
-				
-		setTitle("Nueva tarea");// hard
-		setResizable(true);
-		setClosable(true);
-		pack();
-//		setSize(this.pFrame.getWidth()/2,this.pFrame.getHeight()/2);
-//		setLocation(pFrame.getHeight()/2-this.getHeight()/2, pFrame.getWidth()/2-this.getWidth()/2);
-		setVisible(true);
 		add(pCenterPanel, BorderLayout.CENTER);
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if(!ptaDescription.getText().equals("") && (Integer)psHoras.getValue()!=0) {
-//		if(!) {
-			if(Conexion.getISpecs().createSpec(plDesciption.getText(), (Double)psHoras.getValue(), pProject.getpID(), Integer.parseInt(pcbSprint.getSelectedItem().toString().replaceAll("Sprint ", "")))) {
-				JOptionPane.showMessageDialog(null, "Especificacion añadida", "Insercion", JOptionPane.INFORMATION_MESSAGE);
-				ptaDescription.setText("");
-				psHoras.setValue(0);
-				int option = JOptionPane.showConfirmDialog(null, "Abandonar pantalla para crear Tarea?", "Confirmacion", JOptionPane.OK_CANCEL_OPTION);
-				if(option==JOptionPane.OK_OPTION) {
-					try {
-						this.setClosed(true);
-					} catch (PropertyVetoException e1) {
-						System.out.println("Error, no se ha podido cerrar la ventana de login");
+			if(!Conexion.getISpecs().existSpec(ptaDescription.getText(), Double.parseDouble(psHoras.getValue().toString()), pProject.getpID(), Integer.parseInt(pcbSprint.getSelectedItem().toString().replaceAll("Sprint ", "")))) {
+				if(Conexion.getISpecs().createSpec(ptaDescription.getText(), Double.parseDouble(psHoras.getValue().toString()), pProject.getpID(), Integer.parseInt(pcbSprint.getSelectedItem().toString().replaceAll("Sprint ", "")))) {
+					JOptionPane.showMessageDialog(null, "Especificacion añadida", "Insercion", JOptionPane.INFORMATION_MESSAGE);
+					ptaDescription.setText("");
+					psHoras.setValue(0);
+					int option = JOptionPane.showConfirmDialog(null, "Abandonar pantalla para crear Tarea?", "Confirmacion", JOptionPane.OK_CANCEL_OPTION);
+					if(option==JOptionPane.OK_OPTION) {
+						try {
+							this.setClosed(true);
+						} catch (PropertyVetoException e1) {
+							System.out.println("Error, no se ha podido cerrar la ventana de login");
+						}
 					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Error al añadir una especificacion", "Insercion ERROR", JOptionPane.ERROR_MESSAGE);
 				}
 			}else {
-				JOptionPane.showMessageDialog(null, "Error al añadir una especificacion", "Insercion ERROR", JOptionPane.ERROR_MESSAGE);
+	            JOptionPane.showMessageDialog(null, "El proyecto ya existe", "Error añadir proyecto", JOptionPane.WARNING_MESSAGE);
 			}
-//		}else {
-//            JOptionPane.showMessageDialog(null, "El proyecto ya existe", "Error añadir proyecto", JOptionPane.WARNING_MESSAGE);
-//		}
 		}
 	}
 }

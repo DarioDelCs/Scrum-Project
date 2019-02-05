@@ -90,6 +90,7 @@ public class SeeProject extends JInternalFrame implements MouseListener {
 		constraints.gridy=0;
 		pPanel.add(ptfNombre, constraints);
 		ptfNombre.setColumns(12);
+		ptfNombre.setEditable(false);
 		
 		plOwner = new JLabel("Product Owner: ");//hard
 		constraints.gridx=1;
@@ -100,6 +101,7 @@ public class SeeProject extends JInternalFrame implements MouseListener {
 		constraints.gridx=2;
 		constraints.gridy=1;
 		pPanel.add(ptfOwner, constraints);
+		ptfOwner.setEditable(false);
 
 		plMaster = new JLabel("Scrum Master: ");
 		constraints.gridx=1;
@@ -110,6 +112,7 @@ public class SeeProject extends JInternalFrame implements MouseListener {
 		constraints.gridx=2;
 		constraints.gridy=2;
 		pPanel.add(ptfMaster, constraints);
+		ptfMaster.setEditable(false);
 
 		constraints.gridwidth=2;
 
@@ -117,18 +120,13 @@ public class SeeProject extends JInternalFrame implements MouseListener {
 		constraints.gridx=1;
 		constraints.gridy=3;
 		pPanel.add(ptaDescipcion, constraints);
+		ptaDescipcion.setEditable(false);
 
 		pbMostrarSpecs = new JButton("Mostrar especificaciones");
 		constraints.gridx=1;
 		constraints.gridy=5;
 		pPanel.add(pbMostrarSpecs, constraints);
-		if(Login.sUserGroup.equals(Main.hmUser.get(UserType.ScrumMaster))) {
-			pbMostrarSpecs.setEnabled(true);
-		}else if(Login.sUserGroup.equals(Main.hmUser.get(UserType.ProductOwner))) {
-			pbMostrarSpecs.setEnabled(true);
-		}else {
-			pbMostrarSpecs.setEnabled(false);
-		}
+		pbMostrarSpecs.setEnabled(true);
 
 		constraints.gridwidth=1;
 		

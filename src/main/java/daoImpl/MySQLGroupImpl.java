@@ -20,15 +20,15 @@ public class MySQLGroupImpl implements IGroup{
 		try{
 			Query query = entityManager.createQuery(sql);
 			grupo = (Grupo) query.getSingleResult();
+			entityManager.close();
+			factory.close();
+			return grupo.getpID();
 		}catch(NoResultException e) {
 			System.out.println(e.getMessage());
+			entityManager.close();
+			factory.close();
 			return -1;
 		}
-
-		entityManager.close();
-		factory.close();
-		
-		return grupo.getpID();
 	}
 
 }

@@ -37,6 +37,8 @@ public class Specs extends JPanel {
 		constraints.gridx=0;
 		constraints.gridy=0;
 		add(pcbSprints, constraints);
+		pcbSprints.addItem("Sprint "+Sprint);
+		pcbSprints.setEnabled(false);
 		
 		plHoras = new JLabel("Numero de horas");
 		constraints.gridx=1;
@@ -47,6 +49,7 @@ public class Specs extends JPanel {
 		constraints.gridx=2;
 		constraints.gridy=0;
 		add(psHoras, constraints);
+		psHoras.setEnabled(false);
 		
 		pbGuardar = new JButton("Guradar cambios");
 		constraints.gridx=3;
@@ -58,6 +61,7 @@ public class Specs extends JPanel {
 		constraints.gridy=0;
 		add(pcbMarcar, constraints);
 		pcbMarcar.setSelected(marcada==1);
+		pcbMarcar.setEnabled(false);
 
 		psPanel = new JScrollPane(new JTextArea(Descripcion));
 		constraints.gridx=0;
@@ -65,8 +69,6 @@ public class Specs extends JPanel {
 		constraints.gridwidth=5;
 		add(psPanel, constraints);
 		psPanel.setPreferredSize(new Dimension(0, 80));
-		
-//		panel.add(this);
 	}
 
 }

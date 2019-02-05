@@ -5,6 +5,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -17,8 +21,10 @@ import javax.swing.JScrollPane;
 
 import components.Specs;
 import daoImpl.Conexion;
+import main.Main;
 import model.Especificaciones;
 import model.Project;
+import model.UserType;
 
 public class SeeSpecs extends JInternalFrame implements ActionListener{
 
@@ -43,8 +49,9 @@ public class SeeSpecs extends JInternalFrame implements ActionListener{
 		setTitle("Especificaciones");//hard
 		setResizable(true);
 		setClosable(true);
-		setMaximumSize(new Dimension(this.pFrame.getWidth()/5*3,this.pFrame.getHeight()/3*2));
+//		setMaximumSize(new Dimension(this.pFrame.getWidth()/5*3,this.pFrame.getHeight()/3*2));
 		pack();
+		setSize(getWidth()+30, this.pFrame.getHeight()/2);
 //		setLocation(pFrame.getHeight()/2-this.getHeight(), pFrame.getWidth()/2-this.getWidth());
 		setVisible(true);
 	}
@@ -67,6 +74,13 @@ public class SeeSpecs extends JInternalFrame implements ActionListener{
 		pNorthPanel.add(pbEliminar);
 
 		pbAnadir.addActionListener(this);
+		if(Login.sUserGroup.equals(Main.hmUser.get(UserType.ScrumMaster))) {
+			pbAnadir.setEnabled(true);
+		}else if(Login.sUserGroup.equals(Main.hmUser.get(UserType.ProductOwner))) {
+			pbAnadir.setEnabled(true);
+		}else {
+			pbAnadir.setEnabled(false);
+		}
 
 		specs = Conexion.getISpecs().getAllSpecs();
 		

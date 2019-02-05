@@ -37,6 +37,7 @@ public class MySQLSpecsImpl implements ISpecs{
 	public boolean createSpec(String desc, double horas, int idProject, int sprint) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
 		EntityManager entityManager = factory.createEntityManager();
+		entityManager.getTransaction().begin();
 		
 		Especificaciones spec = new Especificaciones(0, desc, horas, idProject, sprint);
 		
@@ -64,13 +65,14 @@ public class MySQLSpecsImpl implements ISpecs{
 		String sql =  "SELECT e from Especificaciones e WHERE DESCRIPCION = '"+desc+"' and HORAS ="+horas+" and IDPROYECTO ="+idProject+" and SPRINT ="+sprint;
 		try{
 			Query query = entityManager.createQuery(sql);
-			Project project = (Project) query.getSingleResult();
+			query.getSingleResult();
+			entityManager.close();
+			factory.close();
+			return true;
 		}catch(NoResultException e) {
+			entityManager.close();
+			factory.close();
 			return false;
 		}
-		
-		entityManager.close();
-		factory.close();
-		return true;
 	}
 }
