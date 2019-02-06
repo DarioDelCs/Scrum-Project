@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-02-2019 a las 17:01:26
+-- Tiempo de generación: 06-02-2019 a las 15:20:26
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 5.6.38
 
@@ -48,6 +48,13 @@ CREATE TABLE `especificaciones` (
   `Marcada` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `especificaciones`
+--
+
+INSERT INTO `especificaciones` (`IdEspecificacion`, `Descripcion`, `Horas`, `idProyecto`, `Sprint`, `Marcada`) VALUES
+(1, 'Spec for persist', 1, 1, 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -58,6 +65,13 @@ CREATE TABLE `grupo` (
   `IdGrupo` int(11) NOT NULL,
   `idProyecto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `grupo`
+--
+
+INSERT INTO `grupo` (`IdGrupo`, `idProyecto`) VALUES
+(1, 2);
 
 -- --------------------------------------------------------
 
@@ -78,7 +92,8 @@ CREATE TABLE `proyecto` (
 --
 
 INSERT INTO `proyecto` (`idProyecto`, `nombre`, `Descripcion`, `ScrumMaster`, `ProductOwner`) VALUES
-(1, 'persist', 'creacion de persistencia', 5, 3);
+(1, 'persist', 'creacion de persistencia', 5, 3),
+(2, 'Proyecto 1', 'Proyecto principal', 5, 3);
 
 -- --------------------------------------------------------
 
@@ -101,9 +116,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`USER_ID`, `LOGIN_ID`, `NOMBRE`, `PASSWORD`, `EMAIL`, `PROFILENAME`, `USERGROUP`) VALUES
-(1, 'admin', 'admin', '123', 'bjnjn', 'Administrator', NULL),
-(3, 'owner', 'ProductOwner', '123', 'mail', 'ProductOwner', NULL),
-(5, 'master', 'ScrumMaster', '123', 'mail', 'ScrumMaster', NULL);
+(1, 'admin', 'admin', '123', 'bjnjn', 'Administrador', NULL),
+(3, 'owner', 'ProductOwner', '123', 'mail', 'ProductOwner', 1),
+(5, 'master', 'ScrumMaster', '123', 'mail', 'ScrumMaster', NULL),
+(6, 'developer', 'Desarrollador', '123', 'email', 'Developer', 1);
 
 --
 -- Índices para tablas volcadas
@@ -144,25 +160,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `especificaciones`
 --
 ALTER TABLE `especificaciones`
-  MODIFY `IdEspecificacion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdEspecificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `grupo`
 --
 ALTER TABLE `grupo`
-  MODIFY `IdGrupo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdGrupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `proyecto`
 --
 ALTER TABLE `proyecto`
-  MODIFY `idProyecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idProyecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `USER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `USER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Restricciones para tablas volcadas
