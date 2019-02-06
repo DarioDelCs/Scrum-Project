@@ -33,11 +33,13 @@ public class MySQLProjectImpl implements IProject {
 		}
 	}
 	
-	public List<Project> getProjects() {
+	public List<Project> getProjects(int userId) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
 		EntityManager entityManager = factory.createEntityManager();
 		
-		String sql =  "SELECT p from Project p ";
+//		String sql =  "SELECT p from Project p WHERE p.idproyecto = (SELECT g.idproject from Grupo g WHERE g.usergroupid = (SELECT u.usergroup from Usuari u WHERE user_id = "+userId+"))";
+
+		String sql =  "SELECT p from Project p";
 		
 		try{
 			Query query = entityManager.createQuery(sql);
@@ -46,6 +48,9 @@ public class MySQLProjectImpl implements IProject {
 			factory.close();
 			return projects;
 		}catch(NoResultException e) {
+			sql =  "SELECT p from Project p";
+			Query query = entityManager.createQuery(sql);
+			List<Project> projects = query.getResultList();
 			entityManager.close();
 			factory.close();
 			return null;

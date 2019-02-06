@@ -22,3 +22,7 @@ INSERT INTO users (nombre, login_id, password, profilename, email) VALUES ('a d 
 INSERT INTO proyecto (nombre, descripcion, scrummaster, productowner) VALUES ('proj1', 'aaa', '0', '0');
 INSERT INTO proyecto (nombre, descripcion, scrummaster, productowner) VALUES ('proj1', 'aaa', '0', '0');
 INSERT INTO proyecto (nombre, descripcion, scrummaster, productowner) VALUES ('proj2', 'sdad', '0', '0');
+INSERT INTO proyecto (nombre, descripcion, scrummaster, productowner) VALUES ('aa', '1af', '0', '0');
+INSERT INTO especificaciones (Marcada,Descripcion,Horas,idProyecto,Sprint) VALUES (0,'adsadf',1.0,0,1)
+INSERT INTO especificaciones (Marcada,Descripcion,Horas,idProyecto,Sprint) VALUES (0,'asdf',1.0,0,1)
+INSERT INTO especificaciones (Marcada,Descripcion,Horas,idProyecto,Sprint) VALUES (0,'asdf',1.0,0,1)

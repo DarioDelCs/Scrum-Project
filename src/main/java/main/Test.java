@@ -32,12 +32,40 @@ public class Test {
 	private static void aux(int num1, int num2) {
 		
 
-		JSpinner pSpinner = new JSpinner(new SpinnerNumberModel(5, 0, 99, 1));
-
-
-		System.out.println((Integer)pSpinner.getValue());
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
 		
+		String sql =  "SELECT * from proyecto";
 		
+		Statement stmt  = conn.createStatement();
+		
+		ResultSet rs = stmt.executeQuery(sql);
+
+		List<Project> projects=new ArrayList<Project>();
+        while(rs.next()) {
+    	System.out.println((rs.getString(1)));
+        }
+		if(rs.next()) {
+			System.out.println("next");
+	        while(rs.next()) {
+        	System.out.println((rs.getString(1)));
+	        }
+		}else {
+			System.out.println("Aa");
+		}
+		
+        while(rs.next()) {
+        	projects.add(new Project(rs.getString("nombre"),rs.getString("descripcion"),
+        			rs.getInt("scrummaster"), rs.getInt("productowner")));
+    		System.out.println(projects.get(0));
+        }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        
 		
 //		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
 //		EntityManager entityManager = factory.createEntityManager();
@@ -90,18 +118,18 @@ public class Test {
 			e.printStackTrace();
 		}
 		*/
-		
-		
-		if (Conexion.isConnected()) {
-			System.out.println(true);
-		}else {
-			System.out.println(false);
-		}
-		
-		
-		
-		
-		System.out.println("AAAAAAAAAAAAAA");
+//		
+//		
+//		if (Conexion.isConnected()) {
+//			System.out.println(true);
+//		}else {
+//			System.out.println(false);
+//		}
+//		
+//		
+//		
+//		
+//		System.out.println("AAAAAAAAAAAAAA");
 		
 		
 //		Conexion.getConexion();

@@ -37,7 +37,7 @@ public class Login extends JInternalFrame implements ActionListener{
 	
 	private JButton pbEnviar;
 
-	public static String sUserGroup;
+	private static Usuari user;
 	
 	public Login(JFrame frame, JDesktopPane dPanel) {
 		this.pjdPanel = dPanel;
@@ -101,7 +101,7 @@ public class Login extends JInternalFrame implements ActionListener{
 		Usuari user = Conexion.getIUser().getUsuari(ptfLogin.getText());
 		if(user != null) {
 			if(user.getpPass().equals(ppfPassword.getText())) {
-				sUserGroup=user.getpProfile();
+				this.user=user;
 				this.hide();
 				JOptionPane.showMessageDialog(null, "Usuari y contraseña correctos", "Log in", JOptionPane.INFORMATION_MESSAGE);
 				try {
@@ -109,20 +109,20 @@ public class Login extends JInternalFrame implements ActionListener{
 				} catch (PropertyVetoException e1) {
 					System.out.println("Error, no se ha podido cerrar la ventana de login");
 				}
-				if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
+				if(user.getpProfile().equals(Main.hmUser.get(UserType.AdministradorUsers))) {
 					Tittle.newUser(true);
 					Tittle.userInUse("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");
 					Tittle.buttonExitLoginText("Salir");
-				}else if(sUserGroup.equals(Main.hmUser.get(UserType.ScrumMaster))){
+				}else if(user.getpProfile().equals(Main.hmUser.get(UserType.ScrumMaster))){
 					Tittle.newProyect(true);
 					Tittle.seeProyects(true);
 					Tittle.userInUse("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");
 					Tittle.buttonExitLoginText("Salir");
-				}else if(sUserGroup.equals(Main.hmUser.get(UserType.ProductOwner))){
+				}else if(user.getpProfile().equals(Main.hmUser.get(UserType.ProductOwner))){
 					Tittle.seeProyects(true);
 					Tittle.userInUse("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");
 					Tittle.buttonExitLoginText("Salir");
-				}else if(sUserGroup.equals(Main.hmUser.get(UserType.Developer))){
+				}else if(user.getpProfile().equals(Main.hmUser.get(UserType.Developer))){
 					Tittle.seeProyects(true);
 					Tittle.userInUse("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");
 					Tittle.buttonExitLoginText("Salir");
@@ -133,6 +133,10 @@ public class Login extends JInternalFrame implements ActionListener{
 		}else {
 			JOptionPane.showMessageDialog(null, "Usuario incorrecto", "Error en el login", JOptionPane.WARNING_MESSAGE);
 		}
+	}
+	
+	public static Usuari getUser() {
+		return user;
 	}
 
 }

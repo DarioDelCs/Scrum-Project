@@ -9,3 +9,6 @@ alli se tiene que poner la ip del servidor (o localhost), i el puerto en caso de
 
 
 Hay un zip con la base de datos embebida ("backup", solamente elimina todos los archivos .sqlite y extrae el zip donde esta)
+
+
+las retroespectivas estan en el mismo sitio que las bases de datos (al principio del proyecto)

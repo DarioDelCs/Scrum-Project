@@ -26,7 +26,7 @@ public class SQLiteSpecsImpl implements ISpecs {
 			List<Especificaciones> specs=new ArrayList<Especificaciones>();
 	        while(rs.next()) {
 	        	specs.add(new Especificaciones(rs.getInt("marcada"),rs.getString("descripcion"),rs.getDouble("horas"),
-		        		rs.getInt("idproject"),rs.getInt("sprint")));
+		        		rs.getInt("idproyecto"),rs.getInt("sprint")));
 	        }
 	        
 	        stmt.close();
@@ -71,15 +71,15 @@ public class SQLiteSpecsImpl implements ISpecs {
 			Statement stmt  = conn.createStatement();
 			
 			ResultSet rs = stmt.executeQuery(sql);
-			rs.next();
+			boolean end = rs.next();
 			stmt.close();
 			rs.close();
 	        conn.close();
-	        return true;
+	        return end;
 	        
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			return false;
+			return true;
 		}
 	}
 }

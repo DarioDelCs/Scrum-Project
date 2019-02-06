@@ -65,22 +65,39 @@ public class SQLiteProjectImpl implements IProject{
 //		}
 	}
 
-	public List<Project> getProjects() {
+	public List<Project> getProjects(int userId) {
 		try {
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
 			
-			String sql =  "SELECT * from especificaciones";
-			Statement stmt  = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			String sql =  "SELECT * from proyecto WHERE idProyecto = (SELECT idProyecto from grupo WHERE IdGrupo = (SELECT USERGROUP from users WHERE USER_ID = "+userId+"))";
+			
+			Statement stmta  = conn.createStatement();
+			ResultSet rsa = stmta.executeQuery(sql);
 
 			List<Project> projects=new ArrayList<Project>();
-	        while(rs.next()) {
-	        	projects.add(new Project(rs.getString("nombre"),rs.getString("descripcion"),
-	        			rs.getInt("scrummaster"), rs.getInt("productowner")));
-	        }
+			if(rsa.next()) {
+				System.out.println("A");
+				do {
+					System.out.println("V");
+		        	projects.add(new Project(rsa.getString("nombre"),rsa.getString("descripcion"),
+		        			rsa.getInt("scrummaster"), rsa.getInt("productowner")));
+				}while(rsa.next());
+		        stmta.close();
+		        rsa.close();
+			}else {
+		        stmta.close();
+		        rsa.close();
+				sql = "SELECT * from proyecto";
+				Statement stmtb  = conn.createStatement();
+				ResultSet rsb = stmtb.executeQuery(sql);
+				while(rsb.next()) {
+		        	projects.add(new Project(rsb.getString("nombre"),rsb.getString("descripcion"),
+		        			rsb.getInt("scrummaster"), rsb.getInt("productowner")));
+				}
+		        stmtb.close();
+		        rsb.close();
+			}
 	        
-	        stmt.close();
-	        rs.close();
 	        conn.close();
 	        return projects;
 	        

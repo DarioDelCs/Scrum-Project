@@ -130,11 +130,11 @@ public class SeeProject extends JInternalFrame implements MouseListener {
 
 		constraints.gridwidth=1;
 		
-		projects = Conexion.getIProject().getProjects();
+		projects = Conexion.getIProject().getProjects(Login.getUser().getpID());
 		for (Project project : projects) {
-			JLabel label = new JLabel(project.getpName());
-			pPanelS.add(label);
-			label.addMouseListener(this);
+				JLabel label = new JLabel(project.getpName());
+				pPanelS.add(label);
+				label.addMouseListener(this);
 		}
 		pbMostrarSpecs.addMouseListener(this);
 		

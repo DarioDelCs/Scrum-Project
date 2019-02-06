@@ -74,9 +74,9 @@ public class SeeSpecs extends JInternalFrame implements ActionListener{
 		pNorthPanel.add(pbEliminar);
 
 		pbAnadir.addActionListener(this);
-		if(Login.sUserGroup.equals(Main.hmUser.get(UserType.ScrumMaster))) {
+		if(Login.getUser().getpProfile().equals(Main.hmUser.get(UserType.ScrumMaster))) {
 			pbAnadir.setEnabled(true);
-		}else if(Login.sUserGroup.equals(Main.hmUser.get(UserType.ProductOwner))) {
+		}else if(Login.getUser().getpProfile().equals(Main.hmUser.get(UserType.ProductOwner))) {
 			pbAnadir.setEnabled(true);
 		}else {
 			pbAnadir.setEnabled(false);
