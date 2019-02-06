@@ -12,6 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.StoredProcedureQuery;
 
 import components.WriteLogController;
 import idao.IUsuari;
@@ -46,7 +47,32 @@ public class SQLiteUsuariImpl implements IUsuari{
 			return null;
 		}
 	}
+	public String getUsuariFromId(int user_id) {
+        // create a connection to the database
+		try {
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
+			
+			String sql =  "SELECT * from users WHERE user_id = '"+user_id+"'";
+			Statement stmt  = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
 
+			Usuari user=null;
+	        while(rs.next()) {
+		        user = new Usuari(rs.getString("email"),rs.getString("login_id"),rs.getString("nombre"),
+		        		rs.getString("password"),rs.getString("profilename"));
+		        break;
+	        }
+	        
+	        stmt.close();
+	        rs.close();
+	        conn.close();
+	        return user.getpName();
+	        
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
 	public boolean existUser(String login) {
 		boolean result;
 		try {

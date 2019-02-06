@@ -15,68 +15,68 @@ public class Especificaciones {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int pID;
-	@Column(name = "NOMBRE")
-	private String pName;
+	@Column(name = "MARCADA")
+	private int pMarcada;
 	@Column(name = "DESCRIPCION")
 	private String pDescripcion;
 	@Column(name = "HORAS")
 	private double pHoras;
-	@Column(name = "IDPROJECT")
+	@Column(name = "IDPROYECTO")
 	private int pIdProject;
-	@Column(name = "NOMBRESPRINT")
-	private String pNombreSprint;
+	@Column(name = "SPRINT")
+	private int pSprint;
 	
 	public Especificaciones() {}
 	
-	public Especificaciones(String Name, String Descripcion, double Horas, int IdProject, String NombreSprint) {
-		this.pName = Name;
+	public Especificaciones(int marcada, String Descripcion, double Horas, int IdProject, int Sprint) {
+		this.pMarcada = marcada;
 		this.pDescripcion = Descripcion;
 		this.pHoras = Horas;
 		this.pIdProject = IdProject;
-		this.pNombreSprint = NombreSprint;
+		this.pSprint = Sprint;
 	}
 
-	public int getpID() {
+	public int getID() {
 		return pID;
 	}
 	
-	public String getpName() {
-		return pName;
+	public int getMarcada() {
+		return pMarcada;
 	}
 
-	public void setpName(String pName) {
-		this.pName = pName;
+	public void setName(int marcada) {
+		this.pMarcada = marcada;
 	}
 
-	public String getpDescripcion() {
+	public String getDescripcion() {
 		return pDescripcion;
 	}
 
-	public void setpDescripcion(String pDescripcion) {
+	public void setDescripcion(String pDescripcion) {
 		this.pDescripcion = pDescripcion;
 	}
 
-	public double getpHoras() {
+	public double getHoras() {
 		return pHoras;
 	}
 
-	public void setpHoras(double pHoras) {
-		this.pHoras = pHoras;
+	public void setHoras(double horas) {
+		this.pHoras = horas;
 	}
 
-	public int getpIdProject() {
+	public int getIdProject() {
 		return pIdProject;
 	}
 
-	public void setpIdProject(int pIdProject) {
+	public void setIdProject(int pIdProject) {
 		this.pIdProject = pIdProject;
 	}
 
-	public String getpNombreSprint() {
-		return pNombreSprint;
+	public int getSprint() {
+		return pSprint;
 	}
 
-	public void setpNombreSprint(String pNombreSprint) {
-		this.pNombreSprint = pNombreSprint;
+	public void setSprint(int pSprint) {
+		this.pSprint = pSprint;
 	}
 }

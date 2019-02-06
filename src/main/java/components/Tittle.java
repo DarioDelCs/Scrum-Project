@@ -18,23 +18,24 @@ import model.Usuari;
 import view.CreateUser;
 import view.CreateProject;
 import view.Login;
+import view.SeeProject;
 
 public class Tittle {
 
-	public static JFrame sFrame;
-	public static JDesktopPane jdPanel;
+	private static JFrame sFrame;
+	private static JDesktopPane jdPanel;
 	
-	public static JMenuBar spMenu;
-	public static JMenu smProyecto;
-	public static JMenu smUsuarios;
-	public static JMenuItem smiNewUser,smiSearchModUser,smiNewProyect,smiSeeProyects;
+	private static JMenuBar spMenu;
+	private static JMenu smProyecto;
+	private static JMenu smUsuarios;
+	private static JMenuItem smiNewUser,smiSearchModUser,smiNewProyect,smiSeeProyects;
 	
-	public static JPanel sNorthPanel;
+	private static JPanel sNorthPanel;
 
-	public static JButton sbSalirLogin;
+	private static JButton sbSalirLogin;
 	
-	public static JLabel slUser;
-	public static Usuari sUsuari;
+	private static JLabel slUser;
+	private static Usuari sUsuari;
 	
 	public static void addMenu(JFrame frame, JDesktopPane dPanel) {
 		sFrame = frame;
@@ -72,6 +73,12 @@ public class Tittle {
 				jdPanel.add(new CreateProject(sFrame, jdPanel));
 			}
 		});
+		smiSeeProyects.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				jdPanel.add(new SeeProject(sFrame, jdPanel));
+			}
+		});
 		frame.add(spMenu, BorderLayout.NORTH);
 	}
 	
@@ -100,10 +107,9 @@ public class Tittle {
 	
 	public static void listenerLoginExit() {		
 		if(sbSalirLogin.getText().equals("Salir")) {
-			sbSalirLogin.setText("Login");
-			slUser.setText("");
-			Tittle.smiNewUser.setEnabled(false);
-			Tittle.smiNewProyect.setEnabled(false);
+			buttonExitLoginText("Login");
+			userInUse("");
+			allMenuItems(false);
 			jdPanel.removeAll();
 			jdPanel.repaint();
 			jdPanel.add(new Login(sFrame, jdPanel));
@@ -112,19 +118,33 @@ public class Tittle {
 		}
 	}
 	
-//	public void actionPerformed(ActionEvent e) {
-//		if(e.getSource() == smiNewUser) {
-//			new AdminView(sFrame, jdPanel);
-//		}/*else if (e.getSource() == pbEnviar){
-//			IUsuari users = new JPAUsuariImpl();
-//			users.addUsuari(ptfNombre.getText(), ptfLogin.getText(), ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
-//			JOptionPane.showMessageDialog(null, "Usuario insertado", "Insert", JOptionPane.INFORMATION_MESSAGE);
-//			ptfNombre.setText("");
-//			ptfLogin.setText("");
-//			ptfMail.setText("");
-//			ppfPass.setText("");
-//			ppfPass2.setText("");
-//		}*/
-//	}
-
+	//Menu items enabled
+	public static void newUser(boolean enabled) {
+		smiNewUser.setEnabled(enabled);
+	}
+	public static void searchModUser(boolean enabled) {
+		smiSearchModUser.setEnabled(enabled);
+	}
+	public static void newProyect(boolean enabled) {
+		smiNewProyect.setEnabled(enabled);
+	}
+	public static void seeProyects(boolean enabled) {
+		smiSeeProyects.setEnabled(enabled);
+	}
+	public static void allMenuItems(boolean enabled) {
+		smiNewUser.setEnabled(enabled);
+		smiSearchModUser.setEnabled(enabled);
+		smiNewProyect.setEnabled(enabled);
+		smiSeeProyects.setEnabled(enabled);
+	}
+	
+	//name of user loged
+	public static void userInUse(String user) {
+		Tittle.slUser.setText(user);//cambiar por nombre y grupo
+	}
+	
+	//text of button to exit or login
+	public static void buttonExitLoginText(String text) {
+		Tittle.sbSalirLogin.setText(text);
+	}
 }

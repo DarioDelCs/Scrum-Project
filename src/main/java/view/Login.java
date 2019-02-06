@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 
 import components.Tittle;
 import daoImpl.Conexion;
-import idao.IUsuari;
 import main.Main;
 import model.UserType;
 import model.Usuari;
@@ -38,7 +37,7 @@ public class Login extends JInternalFrame implements ActionListener{
 	
 	private JButton pbEnviar;
 
-	public static String sUserGroup;
+	private static Usuari user;
 	
 	public Login(JFrame frame, JDesktopPane dPanel) {
 		this.pjdPanel = dPanel;
@@ -49,7 +48,6 @@ public class Login extends JInternalFrame implements ActionListener{
 		setTitle("Login");//hard
 		setResizable(true);
 		setClosable(true);
-//		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 //		setSize(this.pFrame.getWidth()/2,this.pFrame.getHeight()/2);
 		pack();
 //		setLocation(pFrame.getHeight()/2-this.getHeight(), pFrame.getWidth()/2-this.getWidth());
@@ -100,10 +98,10 @@ public class Login extends JInternalFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Usuari user = Conexion.getIUser().getUsuari(ptfLogin.getText());//, ppfPassword.getText()
+		Usuari user = Conexion.getIUser().getUsuari(ptfLogin.getText());
 		if(user != null) {
 			if(user.getpPass().equals(ppfPassword.getText())) {
-				sUserGroup=user.getpProfile();
+				this.user=user;
 				this.hide();
 				JOptionPane.showMessageDialog(null, "Usuari y contraseña correctos", "Log in", JOptionPane.INFORMATION_MESSAGE);
 				try {
@@ -111,16 +109,23 @@ public class Login extends JInternalFrame implements ActionListener{
 				} catch (PropertyVetoException e1) {
 					System.out.println("Error, no se ha podido cerrar la ventana de login");
 				}
-				if(sUserGroup.equals(Main.hmUser.get(UserType.AdministradorUsers))) {
-					Tittle.smiNewUser.setEnabled(true);
-					Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
-					Tittle.sbSalirLogin.setText("Salir");
-				}else if(sUserGroup.equals(Main.hmUser.get(UserType.ScrumMaster))){
-					Tittle.smiNewProyect.setEnabled(true);
-					Tittle.slUser.setText("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");//cambiar por nombre y grupo
-					Tittle.sbSalirLogin.setText("Salir");
-				}else {
-					JOptionPane.showMessageDialog(null, "Grupo de usuario no implementado", "Disculpen las molestias", JOptionPane.WARNING_MESSAGE);
+				if(user.getpProfile().equals(Main.hmUser.get(UserType.AdministradorUsers))) {
+					Tittle.newUser(true);
+					Tittle.userInUse("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");
+					Tittle.buttonExitLoginText("Salir");
+				}else if(user.getpProfile().equals(Main.hmUser.get(UserType.ScrumMaster))){
+					Tittle.newProyect(true);
+					Tittle.seeProyects(true);
+					Tittle.userInUse("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");
+					Tittle.buttonExitLoginText("Salir");
+				}else if(user.getpProfile().equals(Main.hmUser.get(UserType.ProductOwner))){
+					Tittle.seeProyects(true);
+					Tittle.userInUse("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");
+					Tittle.buttonExitLoginText("Salir");
+				}else if(user.getpProfile().equals(Main.hmUser.get(UserType.Developer))){
+					Tittle.seeProyects(true);
+					Tittle.userInUse("Usuari: "+user.getpName()+" ("+user.getpProfile()+")");
+					Tittle.buttonExitLoginText("Salir");
 				}
 			}else {
 				JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Error en el login", JOptionPane.WARNING_MESSAGE);
@@ -128,21 +133,10 @@ public class Login extends JInternalFrame implements ActionListener{
 		}else {
 			JOptionPane.showMessageDialog(null, "Usuario incorrecto", "Error en el login", JOptionPane.WARNING_MESSAGE);
 		}
-		
-		/*//admin
-		try {
-			this.setClosed(true);
-		} catch (PropertyVetoException e1) {
-			System.out.println("Error, no se ha podido cerrar la ventana de login");
-		}
-		Tittle.smiNewUser.setEnabled(true);
-		Tittle.slUser.setText("Usuari: "+ptfLogin.getText());//cambiar por nombre y grupo
-		Tittle.sbSalirLogin.setText("Salir");
-		
-		//scrummaster
-		Tittle.smiNewProyect.setEnabled(true);
-		//mas todo lo de arriba (menos lo de smiNewUser)
-		*/
+	}
+	
+	public static Usuari getUser() {
+		return user;
 	}
 
 }

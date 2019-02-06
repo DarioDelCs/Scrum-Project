@@ -20,14 +20,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import daoImpl.Conexion;
-import model.Usuari;
 
 public class CreateProject extends JInternalFrame implements ActionListener {
 
 	private JFrame pFrame;
 	private JPanel pCenterPanel;
 	private JDesktopPane pjdPanel;
-	private Usuari pUsuari;
 
 	private JLabel plNombreProyecto, plDescripcion, plScrumMaster, plProductOwner;
 	private JTextField ptfNombreProyecto;
@@ -128,14 +126,18 @@ public class CreateProject extends JInternalFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == pbAnadir) {
-			if(Conexion.getIProject().addProject(ptfNombreProyecto.getText(), ptfDescripcion.getText(), pcbScrumMaster.getSelectedItem().toString(), pcbProductOwner.getSelectedItem().toString())) {
-				JOptionPane.showMessageDialog(null, "Proyecto añadido", "Insercion", JOptionPane.INFORMATION_MESSAGE);
-				ptfDescripcion.setText("");
+			if(!Conexion.getIProject().existProject(ptfNombreProyecto.getText())) {
+				if(Conexion.getIProject().addProject(ptfNombreProyecto.getText(), ptfDescripcion.getText(), pcbScrumMaster.getSelectedItem().toString(), pcbProductOwner.getSelectedItem().toString())) {
+					JOptionPane.showMessageDialog(null, "Proyecto añadido", "Insercion", JOptionPane.INFORMATION_MESSAGE);
+					ptfDescripcion.setText("");
+				}else {
+					JOptionPane.showMessageDialog(null, "Error al añadir un proyecto", "Insercion ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+				ptfNombreProyecto.setText("");
+			}else {
+	            JOptionPane.showMessageDialog(null, "El proyecto ya existe", "Error añadir proyecto", JOptionPane.WARNING_MESSAGE);
 			}
-			ptfNombreProyecto.setText("");
 		}
 	}
-	
-	
 
 }

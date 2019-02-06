@@ -1,19 +1,21 @@
 package main;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 import daoImpl.Conexion;
+import model.Project;
 import model.UserType;
 import model.Usuari;
 
@@ -24,8 +26,114 @@ public class Test {
 	public static UserType eUserType;
 	
 	public static void main(String[] args) {
-//		Conexion.getConexion();
+		aux(2,2);
+	}
+	
+	private static void aux(int num1, int num2) {
 		
+
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
+		
+		String sql =  "SELECT * from proyecto";
+		
+		Statement stmt  = conn.createStatement();
+		
+		ResultSet rs = stmt.executeQuery(sql);
+
+		List<Project> projects=new ArrayList<Project>();
+        while(rs.next()) {
+    	System.out.println((rs.getString(1)));
+        }
+		if(rs.next()) {
+			System.out.println("next");
+	        while(rs.next()) {
+        	System.out.println((rs.getString(1)));
+	        }
+		}else {
+			System.out.println("Aa");
+		}
+		
+        while(rs.next()) {
+        	projects.add(new Project(rs.getString("nombre"),rs.getString("descripcion"),
+        			rs.getInt("scrummaster"), rs.getInt("productowner")));
+    		System.out.println(projects.get(0));
+        }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        
+		
+//		EntityManagerFactory factory = Persistence.createEntityManagerFactory("scrum_adc");
+//		EntityManager entityManager = factory.createEntityManager();
+//		try{
+//			entityManager.getTransaction().begin();
+//			StoredProcedureQuery query = entityManager
+//				.createStoredProcedureQuery("aux")//nombre procedure
+//
+//			    .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)//el primer valor que tipo es y si es in o out
+//			    .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
+//			    
+//			    .setParameter(1, num1)
+//			    .setParameter(2, num2);
+//		    
+//			query.execute();
+////			System.out.println("Fin OK");
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//			System.out.println("Fin KO");
+//		}
+//
+//		entityManager.getTransaction().commit();
+//		entityManager.close();
+//		factory.close();
+		/*Connection conn;
+		try {
+			conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");
+//			Statement stmt  = conn.createStatement();
+
+		    String proc3StoredProcedure = "{ call inserUser(?, ?, ?, ?, ?) }";
+		    CallableStatement cs = conn.prepareCall(proc3StoredProcedure);
+
+		    cs.setString(1, "AA");
+		    cs.setString(2, "login");
+		    cs.setString(3, "pass");
+		    cs.setString(4, "altre");
+		    cs.setString(5, "email");;
+
+		    cs.registerOutParameter(1, Types.VARCHAR);
+		    cs.registerOutParameter(2, Types.VARCHAR);
+		    cs.registerOutParameter(3, Types.VARCHAR);
+		    cs.registerOutParameter(4, Types.VARCHAR);
+		    cs.registerOutParameter(5, Types.VARCHAR);
+
+		    cs.execute();
+
+		    conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+//		
+//		
+//		if (Conexion.isConnected()) {
+//			System.out.println(true);
+//		}else {
+//			System.out.println(false);
+//		}
+//		
+//		
+//		
+//		
+//		System.out.println("AAAAAAAAAAAAAA");
+		
+		
+//		Conexion.getConexion();
+		/*
 		 Connection conn;
 			try {
 				conn = DriverManager.getConnection("jdbc:sqlite:./data.sqlite");

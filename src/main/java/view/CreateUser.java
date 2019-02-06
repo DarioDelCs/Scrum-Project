@@ -66,7 +66,7 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 		ptfNombre.addFocusListener(this);
 		pCenterPanel.add(ptfNombre, constraints);
 		
-		plLogin = new JLabel("Login generado");//hard		//LUEGO HACER AUTOGENERADO
+		plLogin = new JLabel("Login generado");//hard
 		constraints.gridx=0;
 		constraints.gridy=1;
 		pCenterPanel.add(plLogin, constraints);
@@ -140,7 +140,6 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 		setResizable(true);
 		setClosable(true);
 		pack();
-	
 //		setSize(this.pFrame.getWidth()/2,this.pFrame.getHeight()/2);
 //		setLocation(pFrame.getHeight()/2-this.getHeight()/2, pFrame.getWidth()/2-this.getWidth()/2);
 		setVisible(true);
@@ -173,13 +172,16 @@ public class CreateUser extends JInternalFrame implements ActionListener, FocusL
 						ptfLogin.setText(login+addNum);
 						addNum++;
 					}
-					Conexion.getIUser().addUsuari(ptfNombre.getText(), login, ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText());
-					JOptionPane.showMessageDialog(null, "Usuario insertado\nTu login va a ser: "+ptfLogin.getText(), "Insert", JOptionPane.INFORMATION_MESSAGE);
-					ptfNombre.setText("");
-					ptfLogin.setText("");
-					ptfMail.setText("");
-					ppfPass.setText("");
-					ppfPass2.setText("");
+					if(Conexion.getIUser().addUsuari(ptfNombre.getText(), login, ppfPass.getText(), pcbPerfil.getSelectedItem().toString(), ptfMail.getText())) {
+						JOptionPane.showMessageDialog(null, "Usuario insertado\nTu login va a ser: "+ptfLogin.getText(), "Insert", JOptionPane.INFORMATION_MESSAGE);
+						ptfNombre.setText("");
+						ptfLogin.setText("");
+						ptfMail.setText("");
+						ppfPass.setText("");
+						ppfPass2.setText("");
+					}else {
+						JOptionPane.showMessageDialog(null, "No se ha podido insertar el usuario", "Insert ERROR", JOptionPane.ERROR_MESSAGE);
+					}
 				} else {
 					if (!correoOk) {
 			            JOptionPane.showMessageDialog(null, "El formato del email no es valido", "Error email", JOptionPane.ERROR_MESSAGE);

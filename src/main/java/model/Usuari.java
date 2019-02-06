@@ -48,6 +48,13 @@ public class Usuari {
 		}
 		this.pEmail = pEmail;
 	}
+	public Usuari(String pEmail, String pLoginId, String pName, String pPass, String pProfileId,boolean NoUsarFuncion) {
+		this.pName = pName;
+		this.pLoginId = pLoginId;
+		this.pPass = pPass;
+		this.pProfile = pProfileId;
+		this.pEmail = pEmail;
+	}
 	
 	public int getpID() {
 		return pID;
